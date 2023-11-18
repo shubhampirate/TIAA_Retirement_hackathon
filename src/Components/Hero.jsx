@@ -21,11 +21,11 @@ import CustomButton from "./CustomButton";
 import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 import HandshakeIcon from '@mui/icons-material/Handshake';
 import EmailIcon from '@mui/icons-material/Email';
-
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
-
+import { Link, useNavigate } from "react-router-dom";
 
 const Hero = () => {
+
   const CustomBox = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
@@ -70,12 +70,12 @@ const Hero = () => {
 
   return (
     <>
-    <Box sx={{ backgroundColor: "#ffffff"}}>
-      <Container>
-        <Navbar />
-        <CustomBox>
-          <Box sx={{ flex: "1"}}>
-            {/* <Typography
+      <Box sx={{ backgroundColor: "#ffffff" }}>
+        <Container>
+          <Navbar />
+          <CustomBox>
+            <Box sx={{ flex: "1" }}>
+              {/* <Typography
               variant="body2"
               sx={{
                 fontSize: "40px",
@@ -87,292 +87,289 @@ const Hero = () => {
             >
               <span >Empower Your Retirement with</span> <span sx={{color:"#387FF5 !important"}}>    AI-Driven Insights </span>
             </Typography> */}
-            <Typography
-  variant="body2"
-  sx={{
-    fontSize: "40px",
-    fontWeight: "bold",
-    mt: 10,
-    mb: 4,
-  }}
->
-  <span>Empower Your Retirement with</span>{" "}
-  <span style={{ color: "#387FF5", fontWeight: "bold" }}>
-    AI-Driven Insights
-  </span>
-</Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: "40px",
+                  fontWeight: "bold",
+                  mt: 10,
+                  mb: 4,
+                }}
+              >
+                <span>Empower Your Retirement with</span>{" "}
+                <span style={{ color: "#387FF5", fontWeight: "bold" }}>
+                  AI-Driven Insights
+                </span>
+              </Typography>
 
 
-            <Typography
-              variant="body2"
-              sx={{ fontSize: "18px", color: "#1C1F25", my: 4 }}
-            >
-              Nimbus harnesses the power of artificial intelligence to transform your retirement goals into actionable insights, propelling you to new heights of legacy!
-            </Typography>
-            <div style={containerStyle}>
-            <CustomButton
-              backgroundColor="#387FF5"
-              color="#fff"
-              buttonText="Sign In"
-              heroBtn={true}
-            />
-           {isLargeScreen && (
-        <Button
-          variant="contained"
-          style={{
-            backgroundColor: '#fff',
-            color: '#000',
-            ...secondButtonStyle,
-          }}
-        >
-<PlayCircleIcon/>
-          Watch Video
-        </Button>
-      )}   </div>
-          </Box>
+              <Typography
+                variant="body2"
+                sx={{ fontSize: "18px", color: "#1C1F25", my: 4 }}
+              >
+                Nimbus harnesses the power of artificial intelligence to transform your retirement goals into actionable insights, propelling you to new heights of legacy!
+              </Typography>
+              <div style={containerStyle}>
+                <Button
+                  sx={{ backgroundColor: "#387FF5", color: "white", textDecoration: "none" }}
+                ><Link to="/signin" style={{ textDecoration: "none", color: "white" }}>Sign In</Link></Button>
+                {isLargeScreen && (
+                  <Button
+                    variant="contained"
+                    style={{
+                      backgroundColor: '#fff',
+                      color: '#000',
+                      ...secondButtonStyle,
+                    }}
+                  >
+                    <PlayCircleIcon />
+                    Watch Video
+                  </Button>
+                )}   </div>
+            </Box>
 
-          <Box sx={{ flex: "0.75" }}>
+            <Box sx={{ flex: "0.75" }}>
+              <img
+                src={heroImg}
+                alt="heroImg"
+                style={{ maxWidth: "100%", maxHeight: "80%" }}
+              />
+            </Box>
+          </CustomBox>
+          {/* <Companies /> */}
+          <br />
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center', // Align items vertically in the center
+            border: '0.5px solid #4B5162',
+            paddingRight: '20px',
+            paddingLeft: '20px',
+            borderRadius: '30px'
+          }}>
+
             <img
-              src={heroImg}
-              alt="heroImg"
-              style={{ maxWidth: "100%", maxHeight: "80%"}}
+              style={{
+                maxWidth: '50px',
+                maxHeight: '45px', // Adjust as needed
+              }}
+              src={heroImg_3}
+              alt="Description"
             />
-          </Box>
-        </CustomBox>
-        {/* <Companies /> */}
-        <br />
-        <div style={{
-           display: 'inline-flex',
-           alignItems: 'center', // Align items vertically in the center
-           border: '0.5px solid #4B5162',
-           paddingRight: '20px',
-           paddingLeft: '20px',
-           borderRadius: '30px'
-    }}>
-     
-      <img
-        style={{
-          maxWidth: '50px',
-          maxHeight: '45px', // Adjust as needed
-        }}
-        src={heroImg_3}
-        alt="Description"
-      />
-       <p >Who We Are</p>
-    </div>
-        <CustomBox>
-        <Box sx={{ flex: "0.75" }}>
-            <img
-              src={heroImg_2}
-              alt="heroImg_2"
-              style={{ maxWidth: "100%", maxHeight: "90%", marginRight: "4rem", borderRadius: "5%"}}
-            />
-          </Box>
-          <Box sx={{ flex: "1.25"}}>
-          <Title variant="h1" sx={{color: "#1C1F25"}}>
-              Your Trusted Retirement Partner
-            </Title>
-            <Typography
-              variant="body2"
-              sx={{ fontSize: "18px", color: "#1C1F25", my: 4 }}
-            >
-              At TIAA,We take pride as your trusted retirement planners, committed to fostering enduring relationships. Our dedication extends to delivering personalized solutions with round-the-clock customer service, ensuring your long-term financial well-being!
-            </Typography>
-            <List>
-  <ListItem>
-   <ListItemButton>
-     <ListItemDecorator><EmojiObjectsIcon /></ListItemDecorator>
-     <ListItemContent>Personalized Solutions</ListItemContent>
-     {/* <KeyboardArrowRight /> */}
-   </ListItemButton>
-  </ListItem>
-  <br/>
-  <ListItem>
-   <ListItemButton>
-     <ListItemDecorator><PeopleIcon /></ListItemDecorator>
-     <ListItemContent>Trusted Experts</ListItemContent>
-     {/* <KeyboardArrowRight /> */}
-   </ListItemButton>
-  </ListItem>
-  <br/>
-  <ListItem>
-   <ListItemButton>
-     <ListItemDecorator><HandshakeIcon /></ListItemDecorator>
-     <ListItemContent>Long Term Relationships</ListItemContent>
-     {/* <KeyboardArrowRight /> */}
-   </ListItemButton>
-  </ListItem>
-  <br/>
-  <ListItem>
-   <ListItemButton>
-     <ListItemDecorator><DocumentScannerIcon /></ListItemDecorator>
-     <ListItemContent>Your Data, Your Way</ListItemContent>
-     {/* <KeyboardArrowRight /> */}
-   </ListItemButton>
-  </ListItem>
-</List>
-        
-          </Box>
+            <p >Who We Are</p>
+          </div>
+          <CustomBox>
+            <Box sx={{ flex: "0.75" }}>
+              <img
+                src={heroImg_2}
+                alt="heroImg_2"
+                style={{ maxWidth: "100%", maxHeight: "90%", marginRight: "4rem", borderRadius: "5%" }}
+              />
+            </Box>
+            <Box sx={{ flex: "1.25" }}>
+              <Title variant="h1" sx={{ color: "#1C1F25" }}>
+                Your Trusted Retirement Partner
+              </Title>
+              <Typography
+                variant="body2"
+                sx={{ fontSize: "18px", color: "#1C1F25", my: 4 }}
+              >
+                At TIAA,We take pride as your trusted retirement planners, committed to fostering enduring relationships. Our dedication extends to delivering personalized solutions with round-the-clock customer service, ensuring your long-term financial well-being!
+              </Typography>
+              <List>
+                <ListItem>
+                  <ListItemButton>
+                    <ListItemDecorator><EmojiObjectsIcon /></ListItemDecorator>
+                    <ListItemContent>Personalized Solutions</ListItemContent>
+                    {/* <KeyboardArrowRight /> */}
+                  </ListItemButton>
+                </ListItem>
+                <br />
+                <ListItem>
+                  <ListItemButton>
+                    <ListItemDecorator><PeopleIcon /></ListItemDecorator>
+                    <ListItemContent>Trusted Experts</ListItemContent>
+                    {/* <KeyboardArrowRight /> */}
+                  </ListItemButton>
+                </ListItem>
+                <br />
+                <ListItem>
+                  <ListItemButton>
+                    <ListItemDecorator><HandshakeIcon /></ListItemDecorator>
+                    <ListItemContent>Long Term Relationships</ListItemContent>
+                    {/* <KeyboardArrowRight /> */}
+                  </ListItemButton>
+                </ListItem>
+                <br />
+                <ListItem>
+                  <ListItemButton>
+                    <ListItemDecorator><DocumentScannerIcon /></ListItemDecorator>
+                    <ListItemContent>Your Data, Your Way</ListItemContent>
+                    {/* <KeyboardArrowRight /> */}
+                  </ListItemButton>
+                </ListItem>
+              </List>
 
-        </CustomBox>
-      {/* <Guide /> */}
-      </Container>
-    </Box>
+            </Box>
+
+          </CustomBox>
+          {/* <Guide /> */}
+        </Container>
+      </Box>
       <Properties />
 
       {/* <Details />
       <GetStarted /> */}
-      <Box sx={{ backgroundColor: "#ffffff"}}>
-      <Container>
-      <Title_2 >
-      <div style={{
-        display: 'inline-flex',
-        alignItems: 'center', // Align items vertically in the center
-        border: '0.5px solid #4B5162',
-        paddingRight: '20px',
-        paddingLeft: '20px',
-        borderRadius: '30px',
-        backgroundColor: '#fff'
-        
-      }}>
-     
-      <img
-        style={{
-          maxWidth: '50px',
-          maxHeight: '45px', // Adjust as needed
-        }}
-        src={heroImg_3}
-        alt="Description"
-        />
-       <p >Contact </p>
-    </div>
-        </Title_2>
-      {isLargeScreen && ( <PropertiesTextBox>
-        <Title variant="h1" sx={{color: "#1C1F25", marginLeft:"7rem", marginRight:"7rem"}}>
-        Ask Us Your Questions and Join Us on Your Future Journey
+      <Box sx={{ backgroundColor: "#ffffff" }}>
+        <Container>
+          <Title_2 >
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center', // Align items vertically in the center
+              border: '0.5px solid #4B5162',
+              paddingRight: '20px',
+              paddingLeft: '20px',
+              borderRadius: '30px',
+              backgroundColor: '#fff'
+
+            }}>
+
+              <img
+                style={{
+                  maxWidth: '50px',
+                  maxHeight: '45px', // Adjust as needed
+                }}
+                src={heroImg_3}
+                alt="Description"
+              />
+              <p >Contact </p>
+            </div>
+          </Title_2>
+          {isLargeScreen && (<PropertiesTextBox>
+            <Title variant="h1" sx={{ color: "#1C1F25", marginLeft: "7rem", marginRight: "7rem" }}>
+              Ask Us Your Questions and Join Us on Your Future Journey
             </Title>
 
-        </PropertiesTextBox>
-      )}
-      <CustomBox>
-        <Box sx={{ flex: "0.75" }}>
-        <Typography
-              variant="body2"
-              sx={{
-                fontSize: "40px",
-                // color: "#1C1F25",
-                fontWeight: "bold",
-              
-                mb: 4,
-              }}
-            >
-              <span >Have Questions ?</span> <span sx={{color:"#387FF5 !important"}}>   Get In Touch</span>
-            </Typography>
-            <List>
-  <ListItem>
-   <ListItemButton>
-     <ListItemDecorator><Home /></ListItemDecorator>
-     <ListItemContent>India — 723 17th Street, Office 478 Mumbai, IM 81566 (address dekh lena net)</ListItemContent>
-     {/* <KeyboardArrowRight /> */}
-   </ListItemButton>
-  </ListItem>
-  <br/>
-  <ListItem>
-   <ListItemButton>
-     <ListItemDecorator><EmailIcon /></ListItemDecorator>
-     <ListItemContent>tiaa@gmail.com</ListItemContent>
-     {/* <KeyboardArrowRight /> */}
-   </ListItemButton>
-  </ListItem>
-  <br/>
-  <ListItem>
-   <ListItemButton>
-     <ListItemDecorator><LocalPhoneIcon /></ListItemDecorator>
-     <ListItemContent>+91 123456789</ListItemContent>
-     {/* <KeyboardArrowRight /> */}
-   </ListItemButton>
-  </ListItem>
-  
- 
-</List>
-          </Box>
-          <Box sx={{ flex: "1.25"}}>
-          
-      
-        
-        <form style={{ padding: '30px 0 0 0' }}>
-          <div style={{ display: 'flex', margin: '32px 0' }}>
-            <div style={{ width: '48%', marginRight: '4%' }}>
-              <div style={{ width: '100%', height: '40px', position: 'relative' }}>
-                <input type="text" required style={{ display: 'block', width: '100%', height: '100%', border: 'none', fontSize: '17px', borderBottom: '2px solid rgba(0,0,0, 0.12)' }}  placeholder="First Name"/>
-                  <div style={{ position: 'absolute', bottom: '0', height: '2px', width: '100%' }}>
-                  <div style={{ position: 'absolute', content: '', height: '2px', width: '100%', background: '#3498db', transform: 'scaleX(0)', transformOrigin: 'center', transition: 'transform 0.3s ease' }}></div>
-                </div>
-              </div>
-            </div>
-            <div style={{ width: '48%' }}>
-              <div style={{ width: '100%', height: '40px', position: 'relative' }}>
-                <input type="text" required style={{ display: 'block', width: '100%', height: '100%', border: 'none', fontSize: '17px', borderBottom: '2px solid rgba(0,0,0, 0.12)' }}  placeholder="Last Name" />
-                 <div style={{ position: 'absolute', bottom: '0', height: '2px', width: '100%' }}>
-                  <div style={{ position: 'absolute', content: '', height: '2px', width: '100%', background: '#3498db', transform: 'scaleX(0)', transformOrigin: 'center', transition: 'transform 0.3s ease' }}></div>
-                </div>
-              </div>
-            </div>
-          </div>
+          </PropertiesTextBox>
+          )}
+          <CustomBox>
+            <Box sx={{ flex: "0.75" }}>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: "40px",
+                  // color: "#1C1F25",
+                  fontWeight: "bold",
 
-          <div style={{ display: 'flex', margin: '32px 0' }}>
-            <div style={{ width: '48%', marginRight: '4%' }}>
-              <div style={{ width: '100%', height: '40px', position: 'relative' }}>
-                <input type="text" required style={{ display: 'block', width: '100%', height: '100%', border: 'none', fontSize: '17px', borderBottom: '2px solid rgba(0,0,0, 0.12)' }} placeholder="Email Address" />
-                <div style={{ position: 'absolute', bottom: '0', height: '2px', width: '100%' }}>
-                  <div style={{ position: 'absolute', content: '', height: '2px', width: '100%', background: '#3498db', transform: 'scaleX(0)', transformOrigin: 'center', transition: 'transform 0.3s ease' }}></div>
+                  mb: 4,
+                }}
+              >
+                <span >Have Questions ?</span> <span sx={{ color: "#387FF5 !important" }}>   Get In Touch</span>
+              </Typography>
+              <List>
+                <ListItem>
+                  <ListItemButton>
+                    <ListItemDecorator><Home /></ListItemDecorator>
+                    <ListItemContent>India — 723 17th Street, Office 478 Mumbai, IM 81566 (address dekh lena net)</ListItemContent>
+                    {/* <KeyboardArrowRight /> */}
+                  </ListItemButton>
+                </ListItem>
+                <br />
+                <ListItem>
+                  <ListItemButton>
+                    <ListItemDecorator><EmailIcon /></ListItemDecorator>
+                    <ListItemContent>tiaa@gmail.com</ListItemContent>
+                    {/* <KeyboardArrowRight /> */}
+                  </ListItemButton>
+                </ListItem>
+                <br />
+                <ListItem>
+                  <ListItemButton>
+                    <ListItemDecorator><LocalPhoneIcon /></ListItemDecorator>
+                    <ListItemContent>+91 123456789</ListItemContent>
+                    {/* <KeyboardArrowRight /> */}
+                  </ListItemButton>
+                </ListItem>
+
+
+              </List>
+            </Box>
+            <Box sx={{ flex: "1.25" }}>
+
+
+
+              <form style={{ padding: '30px 0 0 0' }}>
+                <div style={{ display: 'flex', margin: '32px 0' }}>
+                  <div style={{ width: '48%', marginRight: '4%' }}>
+                    <div style={{ width: '100%', height: '40px', position: 'relative' }}>
+                      <input type="text" required style={{ display: 'block', width: '100%', height: '100%', border: 'none', fontSize: '17px', borderBottom: '2px solid rgba(0,0,0, 0.12)' }} placeholder="First Name" />
+                      <div style={{ position: 'absolute', bottom: '0', height: '2px', width: '100%' }}>
+                        <div style={{ position: 'absolute', content: '', height: '2px', width: '100%', background: '#3498db', transform: 'scaleX(0)', transformOrigin: 'center', transition: 'transform 0.3s ease' }}></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ width: '48%' }}>
+                    <div style={{ width: '100%', height: '40px', position: 'relative' }}>
+                      <input type="text" required style={{ display: 'block', width: '100%', height: '100%', border: 'none', fontSize: '17px', borderBottom: '2px solid rgba(0,0,0, 0.12)' }} placeholder="Last Name" />
+                      <div style={{ position: 'absolute', bottom: '0', height: '2px', width: '100%' }}>
+                        <div style={{ position: 'absolute', content: '', height: '2px', width: '100%', background: '#3498db', transform: 'scaleX(0)', transformOrigin: 'center', transition: 'transform 0.3s ease' }}></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div style={{ width: '48%' }}>
-              <div style={{ width: '100%', height: '40px', position: 'relative' }}>
-                <input type="text" required style={{ display: 'block', width: '100%', height: '100%', border: 'none', fontSize: '17px', borderBottom: '2px solid rgba(0,0,0, 0.12)' }} placeholder="subject"/>
-                <div style={{ position: 'absolute', bottom: '0', height: '2px', width: '100%' }}>
-                  <div style={{ position: 'absolute', content: '', height: '2px', width: '100%', background: '#3498db', transform: 'scaleX(0)', transformOrigin: 'center', transition: 'transform 0.3s ease' }}></div>
+
+                <div style={{ display: 'flex', margin: '32px 0' }}>
+                  <div style={{ width: '48%', marginRight: '4%' }}>
+                    <div style={{ width: '100%', height: '40px', position: 'relative' }}>
+                      <input type="text" required style={{ display: 'block', width: '100%', height: '100%', border: 'none', fontSize: '17px', borderBottom: '2px solid rgba(0,0,0, 0.12)' }} placeholder="Email Address" />
+                      <div style={{ position: 'absolute', bottom: '0', height: '2px', width: '100%' }}>
+                        <div style={{ position: 'absolute', content: '', height: '2px', width: '100%', background: '#3498db', transform: 'scaleX(0)', transformOrigin: 'center', transition: 'transform 0.3s ease' }}></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ width: '48%' }}>
+                    <div style={{ width: '100%', height: '40px', position: 'relative' }}>
+                      <input type="text" required style={{ display: 'block', width: '100%', height: '100%', border: 'none', fontSize: '17px', borderBottom: '2px solid rgba(0,0,0, 0.12)' }} placeholder="subject" />
+                      <div style={{ position: 'absolute', bottom: '0', height: '2px', width: '100%' }}>
+                        <div style={{ position: 'absolute', content: '', height: '2px', width: '100%', background: '#3498db', transform: 'scaleX(0)', transformOrigin: 'center', transition: 'transform 0.3s ease' }}></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div style={{ width: '100%' }}>
-              <div style={{ width: '100%', height: '40px', position: 'relative' }}>
-                <input type="text" required style={{ display: 'block', width: '100%', height: '100%', border: 'none', fontSize: '17px', borderBottom: '2px solid rgba(0,0,0, 0.12)' }} placeholder="How can we help you ? Feel free to get in touch!"/>
-               <br/>
-               <br/>
-                <div style={{ position: 'absolute', bottom: '0', height: '2px', width: '100%' }}>
-                  <div style={{ position: 'absolute', content: '', height: '2px', width: '100%', background: '#3498db', transform: 'scaleX(0)', transformOrigin: 'center', transition: 'transform 0.3s ease' }}></div>
+                <div style={{ width: '100%' }}>
+                  <div style={{ width: '100%', height: '40px', position: 'relative' }}>
+                    <input type="text" required style={{ display: 'block', width: '100%', height: '100%', border: 'none', fontSize: '17px', borderBottom: '2px solid rgba(0,0,0, 0.12)' }} placeholder="How can we help you ? Feel free to get in touch!" />
+                    <br />
+                    <br />
+                    <div style={{ position: 'absolute', bottom: '0', height: '2px', width: '100%' }}>
+                      <div style={{ position: 'absolute', content: '', height: '2px', width: '100%', background: '#3498db', transform: 'scaleX(0)', transformOrigin: 'center', transition: 'transform 0.3s ease' }}></div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-<br />
-<br />
-          <CustomButton
-              backgroundColor="#387FF5"
-              color="#fff"
-              buttonText="Get In Touch !"
-              heroBtn={true}
-            />
+                <br />
+                <br />
+                <CustomButton
+                  backgroundColor="#387FF5"
+                  color="#fff"
+                  buttonText="Get In Touch !"
+                  heroBtn={true}
+                />
 
-          {/* <div style={{ overflow: 'hidden', height: '45px!important', width: '25%!important' }} className="submit-btn"> */}
-            {/* <div style={{ height: '100%', width: '300%', position: 'absolute', left: '-100%', background: '-webkit-linear-gradient(right, #56d8e4, #9f01ea, #56d8e4, #9f01ea)', transition: 'all 0.4s' }} className="inner"></div> */}
-            {/* <input type="submit" value="submit" style={{ background: 'none', border: 'none', color: '#fff', fontSize: '17px', fontWeight: '500', textTransform: 'uppercase', letterSpacing: '1px', cursor: 'pointer', position: 'relative', zIndex: '2' }} /> */}
-          {/* </div> */}
-        </form>
+                {/* <div style={{ overflow: 'hidden', height: '45px!important', width: '25%!important' }} className="submit-btn"> */}
+                {/* <div style={{ height: '100%', width: '300%', position: 'absolute', left: '-100%', background: '-webkit-linear-gradient(right, #56d8e4, #9f01ea, #56d8e4, #9f01ea)', transition: 'all 0.4s' }} className="inner"></div> */}
+                {/* <input type="submit" value="submit" style={{ background: 'none', border: 'none', color: '#fff', fontSize: '17px', fontWeight: '500', textTransform: 'uppercase', letterSpacing: '1px', cursor: 'pointer', position: 'relative', zIndex: '2' }} /> */}
+                {/* </div> */}
+              </form>
 
-       
-    
 
-        
-          </Box>
 
-        </CustomBox>
-      {/* <Guide /> */}
-      </Container>
-    </Box>
+
+
+            </Box>
+
+          </CustomBox>
+          {/* <Guide /> */}
+        </Container>
+      </Box>
       <Footer />
 
     </>

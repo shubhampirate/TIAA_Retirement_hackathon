@@ -12,7 +12,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {  styled } from "@mui/material";
+import { styled } from "@mui/material";
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
+
 // function Copyright(props) {
 //   return (
 //     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -29,13 +32,53 @@ import {  styled } from "@mui/material";
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
+    const searchData = {
+      email: data.get('email'),
+      password: data.get('password'),
+    }
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
+
+    fetch(`https://wixstocle.pythonanywhere.com/api/login/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(searchData),
+    }).then((response) => response.json())
+      .then((data) => {
+        // console.log(data);
+        if (data.status == true) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfully Logged In',
+            showConfirmButton: false,
+            timer: 3000
+          })
+          navigate('/dashboard')
+        }
+        else {
+          Swal.fire({
+            icon: 'error',
+            title: data.message,
+            showConfirmButton: false,
+            timer: 3000
+          })
+        }
+      })
+      .catch((error) => {
+        // console.error(error);
+      });
+
   };
   const Title = styled(Typography)(({ theme }) => ({
     fontSize: "40px",
@@ -47,6 +90,8 @@ export default function SignIn() {
       fontSize: "40px",
     },
   }));
+
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -59,12 +104,12 @@ export default function SignIn() {
             alignItems: 'center',
           }}
         >
-        
-          <Title variant="h1" sx={{color: "#1C1F25"}}>
-              Sign In
-            </Title>
-          <Typography component="h2" variant="h5" sx={{fontSize:"18px"}}>
-          Sign in and take control of your life planning!
+
+          <Title variant="h1" sx={{ color: "#1C1F25" }}>
+            Sign In
+          </Title>
+          <Typography component="h2" variant="h5" sx={{ fontSize: "18px" }}>
+            Sign in and take control of your life planning!
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -105,42 +150,42 @@ export default function SignIn() {
                   Forgot password?
                 </Link>
               </Grid>
-          
+
             </Grid>
           </Box>
         </Box>
-        </Container>
-        <div>
-      <svg
-        style={{
-          position: 'relative',
-          width: '100%',
-          height: '21vh',
-        //   marginBottom: '-7px',
-        //   minHeight: '100px',
-        //   maxHeight: '150px',
-        }}
-        xmlns="http://www.w3.org/2000/svg"
-        xmlnsXlink="http://www.w3.org/1999/xlink"
-        viewBox="0 24 150 28"
-        preserveAspectRatio="none"
-        shapeRendering="auto"
-      >
-        <defs>
-          <path
-            id="gentle-wave"
-            d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
-          />
-        </defs>
-        <g className="parallax">
-          <use xlinkHref="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7)" />
-          <use xlinkHref="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
-          <use xlinkHref="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
-          <use xlinkHref="#gentle-wave" x="48" y="7" fill="#387FF5" />
-        </g>
-      </svg>
-      <style>
-        {`
+      </Container>
+      <div>
+        <svg
+          style={{
+            position: 'relative',
+            width: '100%',
+            height: '21vh',
+            //   marginBottom: '-7px',
+            //   minHeight: '100px',
+            //   maxHeight: '150px',
+          }}
+          xmlns="http://www.w3.org/2000/svg"
+          xmlnsXlink="http://www.w3.org/1999/xlink"
+          viewBox="0 24 150 28"
+          preserveAspectRatio="none"
+          shapeRendering="auto"
+        >
+          <defs>
+            <path
+              id="gentle-wave"
+              d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+            />
+          </defs>
+          <g className="parallax">
+            <use xlinkHref="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7)" />
+            <use xlinkHref="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+            <use xlinkHref="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+            <use xlinkHref="#gentle-wave" x="48" y="7" fill="#387FF5" />
+          </g>
+        </svg>
+        <style>
+          {`
           .parallax > use {
             animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
           }
@@ -175,9 +220,9 @@ export default function SignIn() {
             }
           }
         `}
-      </style>
-    </div>
-     
+        </style>
+      </div>
+
     </ThemeProvider>
   );
 }

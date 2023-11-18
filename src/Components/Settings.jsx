@@ -33,18 +33,18 @@ import LinearProgress from '@mui/material/LinearProgress';
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import InputBase from '@mui/material/InputBase';
+import useAlan from '../Hooks/useAlan';
 
-
-  const Title = styled(Typography)(({ theme }) => ({
-    fontSize: "25px",
-    color: "#042A57",
-    fontWeight: "bold",
-    textAlign: "left",
-    margin: theme.spacing(4, 0, 4, 0),
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "30px",
-    },
-  }));
+const Title = styled(Typography)(({ theme }) => ({
+  fontSize: "25px",
+  color: "#042A57",
+  fontWeight: "bold",
+  textAlign: "left",
+  margin: theme.spacing(4, 0, 4, 0),
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "30px",
+  },
+}));
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -65,37 +65,37 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-  
+
 const ProgressBarBox = ({ title, value }) => {
-    let indicatorText = '';
-    let color = '';
-  
-    if (value <= 30) {
-      indicatorText = 'Less';
-      color = '#BDFF7B';
-    } else if (value <= 70) {
-      indicatorText = 'Nearby Full';
-      color = '#FFE779';
-    } else {
-      indicatorText = 'Completely Full';
-      color = '#FC8965';
-    }
-  
-    return (
-      <Grid item xs={12} sm={6} md={4}>
-        <Paper
-          sx={{
-            p: 2,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            borderRadius: '16px',
-          }}
-        >
-          <Typography variant="h6" sx={{ mb: 1, color: "#0066FF" }}>
-            {title}
-          </Typography>
-          <LinearProgress
+  let indicatorText = '';
+  let color = '';
+
+  if (value <= 30) {
+    indicatorText = 'Less';
+    color = '#BDFF7B';
+  } else if (value <= 70) {
+    indicatorText = 'Nearby Full';
+    color = '#FFE779';
+  } else {
+    indicatorText = 'Completely Full';
+    color = '#FC8965';
+  }
+
+  return (
+    <Grid item xs={12} sm={6} md={4}>
+      <Paper
+        sx={{
+          p: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          borderRadius: '16px',
+        }}
+      >
+        <Typography variant="h6" sx={{ mb: 1, color: "#0066FF" }}>
+          {title}
+        </Typography>
+        <LinearProgress
           variant="determinate"
           value={value}
           sx={{
@@ -109,22 +109,22 @@ const ProgressBarBox = ({ title, value }) => {
             },
           }}
         />
-         
-          <Box
+
+        <Box
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
             width: '100%',
-           
+
           }}
         >
           <Typography variant="body2">{indicatorText}</Typography>
           <Typography variant="body2">{value}%</Typography>
         </Box>
-        </Paper>
-      </Grid>
-    );
-  };
+      </Paper>
+    </Grid>
+  );
+};
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     '& .MuiDrawer-paper': {
@@ -155,28 +155,30 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const defaultTheme = createTheme();
 
 export default function Settings() {
-    const [isEditing, setIsEditing] = useState(false);
-    const [userData, setUserData] = useState({
-      username: 'Dummy Username',
-      dob: '01/01/1990',
-      firstName: 'Dummy First Name',
-      lastName: 'Dummy Last Name',
-      email: 'dummy@email.com',
-      password: '********',
-    });
-  
-    const handleEdit = (field) => {
-      setIsEditing(!isEditing);
-    };
-  
-    const handleChange = (field, value) => {
-      setUserData((prevData) => ({
-        ...prevData,
-        [field]: value,
-      }));
-    };
-  
-    const [open, setOpen] = React.useState(true);
+
+  useAlan();
+  const [isEditing, setIsEditing] = useState(false);
+  const [userData, setUserData] = useState({
+    username: 'Dummy Username',
+    dob: '01/01/1990',
+    firstName: 'Dummy First Name',
+    lastName: 'Dummy Last Name',
+    email: 'dummy@email.com',
+    password: '********',
+  });
+
+  const handleEdit = (field) => {
+    setIsEditing(!isEditing);
+  };
+
+  const handleChange = (field, value) => {
+    setUserData((prevData) => ({
+      ...prevData,
+      [field]: value,
+    }));
+  };
+
+  const [open, setOpen] = React.useState(true);
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -186,32 +188,32 @@ export default function Settings() {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex', borderRadius: '16px', overflow: 'hidden', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }} >
         <CssBaseline />
-  
-<AppBar position="absolute" open={open} sx={{ backgroundColor: "whitesmoke", boxShadow: 'none' }}>
-  <Toolbar
-    sx={{
-      pr: '24px', // keep right padding when drawer closed
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-    }}
-  >
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <IconButton
-        edge="start"
-        aria-label="open drawer"
-        onClick={toggleDrawer}
-        sx={{
-          marginRight: '36px',
-          ...(open && { display: 'none' }),
-          backgroundColor: "#fff"
-        }}
-      >
-        <MenuIcon  />
-      </IconButton>
 
-      {/* Search tab */}
-      {/* <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: '4px', padding: '4px' }}>
+        <AppBar position="absolute" open={open} sx={{ backgroundColor: "whitesmoke", boxShadow: 'none' }}>
+          <Toolbar
+            sx={{
+              pr: '24px', // keep right padding when drawer closed
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <IconButton
+                edge="start"
+                aria-label="open drawer"
+                onClick={toggleDrawer}
+                sx={{
+                  marginRight: '36px',
+                  ...(open && { display: 'none' }),
+                  backgroundColor: "#fff"
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
+
+              {/* Search tab */}
+              {/* <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: '4px', padding: '4px' }}>
         <IconButton>
           <SearchIcon />
         </IconButton>
@@ -221,23 +223,23 @@ export default function Settings() {
         />
       </Box> */}
 
-    </Box>
+            </Box>
 
-    <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#B9D2FD', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', borderRadius: '40px', padding: '8px' }}>
-      {/* User profile image */}
-      <img
-        src={heroImg_4}
-        alt="User Profile"
-        style={{ borderRadius: '50%', width: '40px', height: '40px', marginRight: '10px' }}
-      />
-      
-      {/* Settings button */}
-      <IconButton>
-        <SettingsIcon />
-      </IconButton>
-    </Box>
-  </Toolbar>
-</AppBar>
+            <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#B9D2FD', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', borderRadius: '40px', padding: '8px' }}>
+              {/* User profile image */}
+              <img
+                src={heroImg_4}
+                alt="User Profile"
+                style={{ borderRadius: '50%', width: '40px', height: '40px', marginRight: '10px' }}
+              />
+
+              {/* Settings button */}
+              <IconButton>
+                <SettingsIcon />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </AppBar>
 
         <Drawer variant="permanent" open={open}>
           <Toolbar
@@ -269,190 +271,190 @@ export default function Settings() {
             flexGrow: 1,
             height: '100vh',
             overflow: 'auto',
-            
+
           }}
         >
           <Toolbar />
           {/* </Container> */}
 
-          
+
           {/* Start Here */}
           <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '16px',
-      }}
-    >
-      {/* Language Button */}
-      <Button variant="contained" sx={{ margin: 'auto' }}>
-        English (default) <ArrowDropDownIcon />
-      </Button>
-      {/* Logout Button */}
-      <Button variant="contained" sx={{ margin: 'auto' }}>
-        Logout <LogoutIcon />
-      </Button>
-    </Box>
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '16px',
+            }}
+          >
+            {/* Language Button */}
+            <Button variant="contained" sx={{ margin: 'auto' }}>
+              English (default) <ArrowDropDownIcon />
+            </Button>
+            {/* Logout Button */}
+            <Button variant="contained" sx={{ margin: 'auto' }}>
+              Logout <LogoutIcon />
+            </Button>
+          </Box>
           <Container sx={{ mt: 4 }}>
-        <Grid container spacing={3}>
-          {/* Single Column for Upload Picture, Username, and DOB */}
-          <Grid item xs={12} md={6}>
-            {/* <Paper sx={{ p: 3, borderRadius: '16px' }}> */}
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <input
-                  type="file"
-                  accept="image/*"
-                  style={{
-                    display: 'none',
-                  }}
-                  id="account-pic-input"
-                />
-                 <img
-        src={heroImg_5}
-        alt="User Profile"
-        style={{ borderRadius: '100%', width: '20%', height: '30%' }}
-      />
-      <br />
-                <label htmlFor="account-pic-input">
-                  <Button variant="outlined" component="span">
-                    Upload Picture
-                  </Button>
-                </label>
-                <TextField sx={{backgroundColor: '#FFFFFF'}}
-                  label="Username"
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  value={userData.username}
-                  onChange={(e) => handleChange('username', e.target.value)}
-                  disabled={!isEditing}
-                  InputProps={{
-                    endAdornment: (
-                      <IconButton color="primary" onClick={handleEdit}>
-                        <EditIcon />
-                      </IconButton>
-                    ),
-                  }}
-                />
-                <TextField sx={{backgroundColor: '#FFFFFF'}}
-                  label="Date of Birth"
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  value={userData.dob}
-                  onChange={(e) => handleChange('dob', e.target.value)}
-                  disabled={!isEditing}
-                  InputProps={{
-                    endAdornment: (
-                      <IconButton color="primary" onClick={handleEdit}>
-                        <EditIcon />
-                      </IconButton>
-                    ),
-                  }}
-                />
-              </Box>
-            {/* </Paper> */}
-          </Grid>
+            <Grid container spacing={3}>
+              {/* Single Column for Upload Picture, Username, and DOB */}
+              <Grid item xs={12} md={6}>
+                {/* <Paper sx={{ p: 3, borderRadius: '16px' }}> */}
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    style={{
+                      display: 'none',
+                    }}
+                    id="account-pic-input"
+                  />
+                  <img
+                    src={heroImg_5}
+                    alt="User Profile"
+                    style={{ borderRadius: '100%', width: '20%', height: '30%' }}
+                  />
+                  <br />
+                  <label htmlFor="account-pic-input">
+                    <Button variant="outlined" component="span">
+                      Upload Picture
+                    </Button>
+                  </label>
+                  <TextField sx={{ backgroundColor: '#FFFFFF' }}
+                    label="Username"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={userData.username}
+                    onChange={(e) => handleChange('username', e.target.value)}
+                    disabled={!isEditing}
+                    InputProps={{
+                      endAdornment: (
+                        <IconButton color="primary" onClick={handleEdit}>
+                          <EditIcon />
+                        </IconButton>
+                      ),
+                    }}
+                  />
+                  <TextField sx={{ backgroundColor: '#FFFFFF' }}
+                    label="Date of Birth"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={userData.dob}
+                    onChange={(e) => handleChange('dob', e.target.value)}
+                    disabled={!isEditing}
+                    InputProps={{
+                      endAdornment: (
+                        <IconButton color="primary" onClick={handleEdit}>
+                          <EditIcon />
+                        </IconButton>
+                      ),
+                    }}
+                  />
+                </Box>
+                {/* </Paper> */}
+              </Grid>
 
-          {/* Single Column for First Name, Last Name, Email, and Password */}
-          <Grid item xs={12} md={6}>
-            {/* <Paper sx={{ p: 3, borderRadius: '16px' }}> */}
-              <Box>
-                <TextField sx={{backgroundColor: '#FFFFFF'}}
-                  label="First Name"
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  value={userData.firstName}
-                  onChange={(e) => handleChange('firstName', e.target.value)}
-                  disabled={!isEditing}
-                  InputProps={{
-                    endAdornment: (
-                      <IconButton color="primary" onClick={handleEdit}>
-                        <EditIcon />
-                      </IconButton>
-                    ),
-                  }}
-                />
-                <TextField sx={{backgroundColor: '#FFFFFF'}}
-                  label="Last Name"
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  value={userData.lastName}
-                  onChange={(e) => handleChange('lastName', e.target.value)}
-                  disabled={!isEditing}
-                  InputProps={{
-                    endAdornment: (
-                      <IconButton color="primary" onClick={handleEdit}>
-                        <EditIcon />
-                      </IconButton>
-                    ),
-                  }}
-                />
-                <TextField sx={{backgroundColor: '#FFFFFF'}}
-                  label="Email ID"
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  value={userData.email}
-                  onChange={(e) => handleChange('email', e.target.value)}
-                  disabled={!isEditing}
-                  InputProps={{
-                    endAdornment: (
-                      <IconButton color="primary" onClick={handleEdit}>
-                        <EditIcon />
-                      </IconButton>
-                    ),
-                  }}
-                />
-                <TextField sx={{backgroundColor: '#FFFFFF'}}
-                  label="Password"
-                  type="password"
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  value={userData.password}
-                  onChange={(e) => handleChange('password', e.target.value)}
-                  disabled={!isEditing}
-                  InputProps={{
-                    endAdornment: (
-                      <IconButton color="primary" onClick={handleEdit}>
-                        <EditIcon />
-                      </IconButton>
-                    ),
-                  }}
-                />
-              </Box>
-            {/* </Paper> */}
-          </Grid>
-          <Grid item xs={12}>
-            {/* <Paper sx={{ p: 3, borderRadius: '16px' }}> */}
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <TextField sx={{backgroundColor: '#FFFFFF'}}
-                  label="Address"
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  value={userData.address}
-                  onChange={(e) => handleChange('address', e.target.value)}
-                  disabled={!isEditing}
-                  InputProps={{
-                    endAdornment: (
-                      <IconButton color="primary" onClick={handleEdit}>
-                        <EditIcon />
-                      </IconButton>
-                    ),
-                  }}
-                />
-              </Box>
-            {/* </Paper> */}
-          </Grid>
-        </Grid>
-      </Container>
+              {/* Single Column for First Name, Last Name, Email, and Password */}
+              <Grid item xs={12} md={6}>
+                {/* <Paper sx={{ p: 3, borderRadius: '16px' }}> */}
+                <Box>
+                  <TextField sx={{ backgroundColor: '#FFFFFF' }}
+                    label="First Name"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={userData.firstName}
+                    onChange={(e) => handleChange('firstName', e.target.value)}
+                    disabled={!isEditing}
+                    InputProps={{
+                      endAdornment: (
+                        <IconButton color="primary" onClick={handleEdit}>
+                          <EditIcon />
+                        </IconButton>
+                      ),
+                    }}
+                  />
+                  <TextField sx={{ backgroundColor: '#FFFFFF' }}
+                    label="Last Name"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={userData.lastName}
+                    onChange={(e) => handleChange('lastName', e.target.value)}
+                    disabled={!isEditing}
+                    InputProps={{
+                      endAdornment: (
+                        <IconButton color="primary" onClick={handleEdit}>
+                          <EditIcon />
+                        </IconButton>
+                      ),
+                    }}
+                  />
+                  <TextField sx={{ backgroundColor: '#FFFFFF' }}
+                    label="Email ID"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={userData.email}
+                    onChange={(e) => handleChange('email', e.target.value)}
+                    disabled={!isEditing}
+                    InputProps={{
+                      endAdornment: (
+                        <IconButton color="primary" onClick={handleEdit}>
+                          <EditIcon />
+                        </IconButton>
+                      ),
+                    }}
+                  />
+                  <TextField sx={{ backgroundColor: '#FFFFFF' }}
+                    label="Password"
+                    type="password"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={userData.password}
+                    onChange={(e) => handleChange('password', e.target.value)}
+                    disabled={!isEditing}
+                    InputProps={{
+                      endAdornment: (
+                        <IconButton color="primary" onClick={handleEdit}>
+                          <EditIcon />
+                        </IconButton>
+                      ),
+                    }}
+                  />
+                </Box>
+                {/* </Paper> */}
+              </Grid>
+              <Grid item xs={12}>
+                {/* <Paper sx={{ p: 3, borderRadius: '16px' }}> */}
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <TextField sx={{ backgroundColor: '#FFFFFF' }}
+                    label="Address"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={userData.address}
+                    onChange={(e) => handleChange('address', e.target.value)}
+                    disabled={!isEditing}
+                    InputProps={{
+                      endAdornment: (
+                        <IconButton color="primary" onClick={handleEdit}>
+                          <EditIcon />
+                        </IconButton>
+                      ),
+                    }}
+                  />
+                </Box>
+                {/* </Paper> */}
+              </Grid>
+            </Grid>
+          </Container>
         </Box>
-        </Box>
+      </Box>
       {/* </Box> */}
     </ThemeProvider>
   );

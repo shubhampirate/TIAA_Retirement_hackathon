@@ -1,0 +1,21 @@
+.center-table {
+    text-align: center; /* Center the table horizontally */
+    margin: 10px; /* Center the table horizontally */
+    font-size: 0.95rem; /* Optional: Limit the maximum width of the table */
+  }
+  
+  table {
+    width: 100%; /* Make the table fill the container */
+    border-collapse: collapse;
+  }
+  
+  table, th, td {
+    border: 1px solid #000; /* Optional: Add borders to table, header, and data cells */
+    padding: 4px;
+    text-align: center; /* Center text within cells */
+  }
+  
+  th {
+    background-color: rgb(156, 208, 226); /* Optional: Header background color */
+  }
+  

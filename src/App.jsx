@@ -6,11 +6,12 @@ import Health from "./Components/Health";
 import Settings from "./Components/Settings";
 import Questions from "./Components/Questions";
 import { Route, Routes } from "react-router-dom";
+
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/SignIn" element={<><SignIn /></>} />
+        <Route path="/signin" element={<><SignIn /></>} />
         <Route path="/dashboard" element={<><Dashboard /></>} />
         <Route path="/education" element={<><Education /></>} />
         <Route path="/health" element={<><Health /></>} />
@@ -18,7 +19,7 @@ function App() {
         <Route path="/questions" element={<><Questions /></>} />
         <Route path="/" element={<><Hero /></>} />
       </Routes>
- 
+
     </>
   );
 }
