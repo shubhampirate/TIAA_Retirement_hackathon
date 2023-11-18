@@ -14,16 +14,83 @@ import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+// import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+// import NotificationsIcon from '@mui/icons-material/Notifications';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { mainListItems } from './listItems';
-import YoutubeSearchSection from './YoutubeSection';
-import heroImg_4 from "../media/img_4.jpeg";
+// import Chart from './Chart';
+import Deposits from './Deposits';
 
+import heroImg_4 from "../media/img_4.jpeg";
+import Button from '@mui/material/Button';
+import LinearProgress from '@mui/material/LinearProgress';
+import YourComponent from './YourComponent';
 import SearchIcon from '@mui/icons-material/Search';
 
 import InputBase from '@mui/material/InputBase';
+const YoutubeSearchSection = () => {
+    const [query, setQuery] = useState('European history');
+    const [searchResults, setSearchResults] = useState(null);
+  
+    const searchYouTube = async (q) => {
+      q = encodeURIComponent(q);
+      const response = await fetch("https://youtube-search-results.p.rapidapi.com/youtube-search/?q=" + q, {
+        "method": "GET",
+        "headers": {
+          "x-rapidapi-host": "youtube-search-results.p.rapidapi.com",
+          "x-rapidapi-key": "9c7a4c6703mshb9d3604341529d1p1c70ddjsnf5506a762ba0"/* Paste your RapidAPI key here. */
+        }
+      });
+      const body = await response.json();
+      console.log(body);
+      return body.items.filter(item => item.type === 'video');
+    };
+  
+    const search = (e) => {
+      e.preventDefault();
+      searchYouTube(query).then(setSearchResults);
+    };
+  
+    return (
+      <Paper elevation={3} sx={{ p: 3, backgroundColor: '#fff', border: '20px solid #fff', borderRadius: '20px', marginTop: '20px' }}>
+        <Typography variant="h6" mb={2}>YouTube Search</Typography>
+        <form onSubmit={search}>
+          <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: '4px', padding: '4px' }}>
+            <input autoFocus value={query} onChange={e => setQuery(e.target.value)} />
+            <button type="submit">Search YouTube</button>
+          </Box>
+        </form>
+  
+        {/* Display search results */}
+        {searchResults &&
+          (searchResults.length === 0
+            ? <p>No results</p>
+            : (
+              <ul>
+                {searchResults.map(item => (
+                  <li key={item.id}>
+                    <div>
+                      <b><a href={item.link}>{item.title}</a></b>
+                      <p>{item.description}</p>
+                    </div>
+                    <ul>
+                      <li>By: <a href={item.author.ref}>{item.author.name}</a></li>
+                      <li>Views: {item.views}</li>
+                      <li>Duration: {item.duration}</li>
+                      <li>Uploaded: {item.uploaded_at}</li>
+                    </ul>
+                    <img alt="" src={item.thumbnail} />
+                  </li>
+                ))}
+              </ul>
+            )
+          )
+        }
+      </Paper>
+    );
+  };
 const YoutubeSearchSection_1 = () => {
     const [searchQuery, setSearchQuery] = useState('financevideos');
     const [searchResults, setSearchResults] = useState([]);
@@ -45,34 +112,29 @@ const YoutubeSearchSection_1 = () => {
   
       try {
         const response = await fetch(url, options);
-        const result = await response.json(); 
-        console.log(result)// Assuming the API returns JSON
+        const result = await response.json(); // Assuming the API returns JSON
   
         setSearchResults(result.items || []);
       } catch (error) {
         console.error(error);
       }
     };
-    const handleSearchButtonClick = () => {
-        fetchYoutubeResults();
-      };
-    
+  
     useEffect(() => {
       if (searchQuery.trim() !== '') {
         // Fetch results only if the search query is not empty
         fetchYoutubeResults();
-        // console.log(fetchYoutubeResults);
+        console.log(fetchYoutubeResults);
       } else {
         setSearchResults([]); // Clear results if search query is empty
       }
-    }, []);
+    }, [searchQuery]);
   
     return (
       <Paper elevation={3} sx={{ p: 3, backgroundColor: '#fff', border: '20px solid #fff', borderRadius: '20px', marginTop: '20px' }}>
         <Typography variant="h6" mb={2}>YouTube Search</Typography>
-        {/* <form onSubmit={search}> */}
         <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: '4px', padding: '4px' }}>
-          <IconButton onClick={handleSearchButtonClick}>
+          <IconButton>
             <SearchIcon />
           </IconButton>
           <InputBase
@@ -82,7 +144,7 @@ const YoutubeSearchSection_1 = () => {
             onChange={handleSearchChange}
           />
         </Box>
-        {/* </form> */}
+  
         {/* Display search results */}
         <ul>
           {searchResults.map((result) => (
@@ -124,7 +186,48 @@ const AppBar = styled(MuiAppBar, {
 }));
 
   
-
+const ProgressBarBox = ({ title, value }) => {
+    let indicatorText = '';
+    let color = '';
+  
+    if (value <= 30) {
+      indicatorText = 'Less';
+      color = '#BDFF7B';
+    } else if (value <= 70) {
+      indicatorText = 'Nearby Full';
+      color = '#FFE779';
+    } else {
+      indicatorText = 'Completely Full';
+      color = '#FC8965';
+    }
+  
+    return (
+      <Grid item xs={12} sm={6} md={4}>
+        <Paper
+          sx={{
+            p: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            borderRadius: '16px',
+          }}
+        >
+                  
+          <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+           
+          }}
+        >
+          <Typography variant="body2">{indicatorText}</Typography>
+          <Typography variant="body2">{value}%</Typography>
+        </Box>
+        </Paper>
+      </Grid>
+    );
+  };
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     '& .MuiDrawer-paper': {
@@ -251,7 +354,7 @@ export default function Education() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4 , mb: 3 }} 
+          <Container maxWidth="lg" sx={{ mt: 4 , mb: 4 }} 
         //   sx={{border: '15px solid #fff', borderRadius: '20px'}}
           >
             {/* <Grid container spacing={2}> */}
@@ -263,10 +366,10 @@ export default function Education() {
             </Title>
             {/* Recommendations */}
     
-<Grid container spacing={2} >
+<Grid container spacing={2}>
   {/* Video 1 */}
   <Grid item xs={12} md={4}>
-    <Paper elevation={3} sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', borderRadius:'20px' }}>
+    <Paper elevation={3} sx={{ p: 2,pb:0, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', borderRadius:'20px' }}>
       {/* <Typography variant="h6" mb={2}>Video 1</Typography> */}
       <iframe
         width="100%"
@@ -316,7 +419,7 @@ export default function Education() {
 
          
             </Grid>
-            <YoutubeSearchSection/>
+            <YoutubeSearchSection />
          {/* Start here    */}
           </Container>
         </Box>

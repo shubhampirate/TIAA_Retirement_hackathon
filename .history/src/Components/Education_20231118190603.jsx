@@ -1,5 +1,4 @@
 import * as React from 'react';
-    import {useState, useEffect} from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -14,84 +13,24 @@ import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+// import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+// import NotificationsIcon from '@mui/icons-material/Notifications';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { mainListItems } from './listItems';
-import YoutubeSearchSection from './YoutubeSection';
-import heroImg_4 from "../media/img_4.jpeg";
+// import Chart from './Chart';
+import Deposits from './Deposits';
 
+import heroImg_4 from "../media/img_4.jpeg";
+import Button from '@mui/material/Button';
+import LinearProgress from '@mui/material/LinearProgress';
+import YourComponent from './YourComponent';
 import SearchIcon from '@mui/icons-material/Search';
 
 import InputBase from '@mui/material/InputBase';
-const YoutubeSearchSection_1 = () => {
-    const [searchQuery, setSearchQuery] = useState('financevideos');
-    const [searchResults, setSearchResults] = useState([]);
-  
-    const handleSearchChange = (event) => {
-      setSearchQuery(event.target.value);
-    };
-  
-    const fetchYoutubeResults = async () => {
-      // Use the fetch code you provided earlier
-      const url = `https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${encodeURIComponent(searchQuery)}`;
-      const options = {
-        method: 'GET',
-        headers: {
-          'X-RapidAPI-Key': '9c7a4c6703mshb9d3604341529d1p1c70ddjsnf5506a762ba0',
-          'X-RapidAPI-Host': 'youtube-search-results.p.rapidapi.com'
-        }
-      };
-  
-      try {
-        const response = await fetch(url, options);
-        const result = await response.json(); 
-        console.log(result)// Assuming the API returns JSON
-  
-        setSearchResults(result.items || []);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    const handleSearchButtonClick = () => {
-        fetchYoutubeResults();
-      };
-    
-    useEffect(() => {
-      if (searchQuery.trim() !== '') {
-        // Fetch results only if the search query is not empty
-        fetchYoutubeResults();
-        // console.log(fetchYoutubeResults);
-      } else {
-        setSearchResults([]); // Clear results if search query is empty
-      }
-    }, []);
-  
-    return (
-      <Paper elevation={3} sx={{ p: 3, backgroundColor: '#fff', border: '20px solid #fff', borderRadius: '20px', marginTop: '20px' }}>
-        <Typography variant="h6" mb={2}>YouTube Search</Typography>
-        {/* <form onSubmit={search}> */}
-        <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: '4px', padding: '4px' }}>
-          <IconButton onClick={handleSearchButtonClick}>
-            <SearchIcon />
-          </IconButton>
-          <InputBase
-            placeholder="Search on YouTube..."
-            sx={{ ml: 1 }}
-            value={searchQuery}
-            onChange={handleSearchChange}
-          />
-        </Box>
-        {/* </form> */}
-        {/* Display search results */}
-        <ul>
-          {searchResults.map((result) => (
-            <li key={result.id}>{result.title}</li>
-          ))}
-        </ul>
-      </Paper>
-    );
-  };
+
+
 
   const Title = styled(Typography)(({ theme }) => ({
     fontSize: "25px",
@@ -124,7 +63,65 @@ const AppBar = styled(MuiAppBar, {
 }));
 
   
-
+const ProgressBarBox = ({ title, value }) => {
+    let indicatorText = '';
+    let color = '';
+  
+    if (value <= 30) {
+      indicatorText = 'Less';
+      color = '#BDFF7B';
+    } else if (value <= 70) {
+      indicatorText = 'Nearby Full';
+      color = '#FFE779';
+    } else {
+      indicatorText = 'Completely Full';
+      color = '#FC8965';
+    }
+  
+    return (
+      <Grid item xs={12} sm={6} md={4}>
+        <Paper
+          sx={{
+            p: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            borderRadius: '16px',
+          }}
+        >
+          <Typography variant="h6" sx={{ mb: 1, color: "#0066FF" }}>
+            {title}
+          </Typography>
+          <LinearProgress
+          variant="determinate"
+          value={value}
+          sx={{
+            width: '100%',
+            height: '12px',
+            borderRadius: '8px',
+            backgroundColor: '#f0f0f0',
+            marginBottom: '8px',
+            '& .MuiLinearProgress-bar': {
+              backgroundColor: color,
+            },
+          }}
+        />
+         
+          <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+           
+          }}
+        >
+          <Typography variant="body2">{indicatorText}</Typography>
+          <Typography variant="body2">{value}%</Typography>
+        </Box>
+        </Paper>
+      </Grid>
+    );
+  };
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     '& .MuiDrawer-paper': {
@@ -251,73 +248,49 @@ export default function Education() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4 , mb: 3 }} 
+          <Container maxWidth="lg" sx={{ mt: 4 , mb: 4 }} 
         //   sx={{border: '15px solid #fff', borderRadius: '20px'}}
           >
-            {/* <Grid container spacing={2}> */}
+            <Grid container spacing={3}>
              
             <Grid item xs={12} md={8} lg={9}>
 
   <Title variant="h4" sx={{color: "#042A57"}}>
              Recommendations 
             </Title>
-            {/* Recommendations */}
-    
-<Grid container spacing={2} >
-  {/* Video 1 */}
-  <Grid item xs={12} md={4}>
-    <Paper elevation={3} sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', borderRadius:'20px' }}>
-      {/* <Typography variant="h6" mb={2}>Video 1</Typography> */}
-      <iframe
-        width="100%"
-        height="100%"
-        src="https://www.youtube.com/embed/Bd89RijKF9I?si=d4g0xoBkujeVX_BY"
-        title="Video 1"
-        frameBorder="0"
-        allowFullScreen
-        style={{ borderRadius: '10px' }}
-      ></iframe>
-    </Paper>
-  </Grid>
-
-  {/* Video 2 */}
-  <Grid item xs={12} md={4}>
-    <Paper elevation={3} sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', borderRadius: '20px' }}>
-      {/* <Typography variant="h6" mb={2}>Video 2</Typography> */}
-      <iframe
-        width="100%"
-        height="100%"
-        src="https://www.youtube.com/embed/pjR3wIGOZsc?si=PnA_FOQh9G2iVRwy  "
-        title="Video 2"
-        frameBorder="0"
-        allowFullScreen
-        style={{ borderRadius: '10px' }}
-      ></iframe>
-    </Paper>
-  </Grid>
-
-  {/* Video 3 */}
-  <Grid item xs={12} md={4}>
-    <Paper elevation={3} sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', borderRadius: '20px' }}>
-      {/* <Typography variant="h6" mb={2}>Video 3</Typography> */}
-      <iframe
-        width="100%"
-        height="100%"
-        src="https://www.youtube.com/embed/ifykklPqqxg?si=AMCgomt-rIGPfYu3"
-        title="Video 3"
-        frameBorder="0"
-        allowFullScreen
-        style={{ borderRadius: '10px' }}
-      ></iframe>
-    </Paper>
-  </Grid>
+            <Grid container spacing={3}>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/ifykklPqqxg?si=AMCgomt-rIGPfYu3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/Bd89RijKF9I?si=d4g0xoBkujeVX_BY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/pjR3wIGOZsc?si=PnA_FOQh9G2iVRwy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/GjfjqfqDzCg?si=risPgT5snaMnKhoB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <ProgressBarBox title="Income" value={60} />
+      <ProgressBarBox title="Expense" value={30} />
+      <ProgressBarBox title="Savings" value={90} />
+    </Grid>
 </Grid>
-<br /><br />
 
-         
+
+               {/* Recent Deposits */}
+              {/* <Grid item xs={12} md={4} lg={3}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 240,
+                  }}
+                >
+                  <Deposits />
+                </Paper>
+              </Grid> */}
+              {/* Recent Orders */}
+              <Grid item xs={12}>
+                {/* <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}> */}
+                  <YourComponent />
+                {/* </Paper> */}
+              </Grid>
             </Grid>
-            <YoutubeSearchSection/>
-         {/* Start here    */}
+            
           </Container>
         </Box>
       </Box>

@@ -45,34 +45,30 @@ const YoutubeSearchSection_1 = () => {
   
       try {
         const response = await fetch(url, options);
-        const result = await response.json(); 
-        console.log(result)// Assuming the API returns JSON
+        const result = await response.json(); // Assuming the API returns JSON
   
         setSearchResults(result.items || []);
       } catch (error) {
         console.error(error);
       }
     };
-    const handleSearchButtonClick = () => {
-        fetchYoutubeResults();
-      };
-    
+  
     useEffect(() => {
       if (searchQuery.trim() !== '') {
         // Fetch results only if the search query is not empty
-        fetchYoutubeResults();
-        // console.log(fetchYoutubeResults);
+        fetchYoutubeResults(searchQuery);
+        console.log(fetchYoutubeResults);
       } else {
         setSearchResults([]); // Clear results if search query is empty
       }
-    }, []);
+    }, [searchQuery]);
   
     return (
       <Paper elevation={3} sx={{ p: 3, backgroundColor: '#fff', border: '20px solid #fff', borderRadius: '20px', marginTop: '20px' }}>
         <Typography variant="h6" mb={2}>YouTube Search</Typography>
-        {/* <form onSubmit={search}> */}
+        <form onSubmit={search}>
         <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: '4px', padding: '4px' }}>
-          <IconButton onClick={handleSearchButtonClick}>
+          <IconButton>
             <SearchIcon />
           </IconButton>
           <InputBase
@@ -82,7 +78,7 @@ const YoutubeSearchSection_1 = () => {
             onChange={handleSearchChange}
           />
         </Box>
-        {/* </form> */}
+        </form>
         {/* Display search results */}
         <ul>
           {searchResults.map((result) => (
@@ -316,7 +312,7 @@ export default function Education() {
 
          
             </Grid>
-            <YoutubeSearchSection/>
+            <YoutubeSearchSection_1 />
          {/* Start here    */}
           </Container>
         </Box>

@@ -60,12 +60,12 @@ const YoutubeSearchSection_1 = () => {
     useEffect(() => {
       if (searchQuery.trim() !== '') {
         // Fetch results only if the search query is not empty
-        fetchYoutubeResults();
+        fetchYoutubeResults(searchQuery);
         // console.log(fetchYoutubeResults);
       } else {
         setSearchResults([]); // Clear results if search query is empty
       }
-    }, []);
+    }, [searchQuery]);
   
     return (
       <Paper elevation={3} sx={{ p: 3, backgroundColor: '#fff', border: '20px solid #fff', borderRadius: '20px', marginTop: '20px' }}>

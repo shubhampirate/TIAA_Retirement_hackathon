@@ -65,7 +65,7 @@ const YoutubeSearchSection_1 = () => {
       } else {
         setSearchResults([]); // Clear results if search query is empty
       }
-    }, []);
+    }, [searchQuery]);
   
     return (
       <Paper elevation={3} sx={{ p: 3, backgroundColor: '#fff', border: '20px solid #fff', borderRadius: '20px', marginTop: '20px' }}>

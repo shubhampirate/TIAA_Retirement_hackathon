@@ -316,7 +316,7 @@ export default function Education() {
 
          
             </Grid>
-            <YoutubeSearchSection/>
+            <YoutubeSearchSection_1/>
          {/* Start here    */}
           </Container>
         </Box>
