@@ -37,6 +37,10 @@ const healthTopics = [
       content: 'Content for calculating health insurance...',
     },
     {
+      label: 'Renew Health Insurance',
+      content: 'Content for renewing health insurance...',
+    },
+    {
       label: 'Mediclaim Coverage',
       content: 'Content for determining mediclaim coverage...',
     },

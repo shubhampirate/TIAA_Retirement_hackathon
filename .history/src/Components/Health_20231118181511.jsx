@@ -37,6 +37,10 @@ const healthTopics = [
       content: 'Content for calculating health insurance...',
     },
     {
+      label: 'Renew Health Insurance',
+      content: 'Content for renewing health insurance...',
+    },
+    {
       label: 'Mediclaim Coverage',
       content: 'Content for determining mediclaim coverage...',
     },
@@ -60,15 +64,10 @@ const healthTopics = [
     const handleAddBill = () => {
       setBills([...bills, { amount: 0 }]);
     };
-    const [finalAmount, setFinalAmount] = useState(0);
+  
     const handleBillAmountChange = (index, amount) => {
       const updatedBills = [...bills];
       updatedBills[index].amount = amount;
-      setBills(updatedBills);
-    };
-    const handlePdfUpload = (index, file) => {
-      const updatedBills = [...bills];
-      updatedBills[index].pdf = file;
       setBills(updatedBills);
     };
     const  healthinsurance = 500000;
@@ -109,7 +108,6 @@ const healthTopics = [
       console.log("Room Charges Surplus Deduction:", roomChargesSurplus);
       console.log("Doctor Charges Surplus Deduction:", doctorChargesSurplus);
       console.log("Final Amount after Deductions:", finalAmount);
-      setFinalAmount(finalAmount)
     };
 
     return (
@@ -163,41 +161,20 @@ const healthTopics = [
      
 
       {/* Bills */}
-     <Grid container spacing={2} alignItems="center">
-        {bills.map((bill, index) => (
-          <Grid item xs={12} md={6} key={index}>
-            <Typography variant="h6" mt={3}>{`Bill ${index + 1}:`}</Typography>
-            <TextField
-              label="Amount"
-              type="number"
-              value={bill.amount}
-              onChange={(e) => handleBillAmountChange(index, e.target.value)}
-              fullWidth
-              sx={{ marginBottom: 1 }}
-            />
-            <input
-              type="file"
-              accept=".pdf"
-              onChange={(e) => handlePdfUpload(index, e.target.files[0])}
-              sx={{ marginTop: 1 }} // Add some spacing for the file input
-            />
-          </Grid>
-        ))}
-        <Grid item xs={12} md={6}>
-          <Button variant="outlined" onClick={handleAddBill} sx={{ marginTop: 1 }}>Add Another Bill</Button>
-        </Grid>
-      </Grid>
+      <Typography variant="h6" mt={3}>Bills:</Typography>
+      {bills.map((bill, index) => (
+        <div key={index} mt={1}>
+          <TextField
+            label={`Bill ${index + 1}`}
+            type="number"
+            value={bill.amount}
+            onChange={(e) => handleBillAmountChange(index, e.target.value)}
+          />
+        </div>
+      ))}
+      <Button variant="outlined" mt={2} onClick={handleAddBill}>Add Another</Button>
 
-      {/* Calculate Button */}
-      <Grid container spacing={2} alignItems="center">
-        <Grid item xs={12} md={6}>
-          <Button variant="contained" onClick={handleCalculate} sx={{ marginTop: 3 }}>Calculate</Button>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Typography variant="h6" mt={3}>Final Amount: {finalAmount}</Typography>
-        </Grid>
-      </Grid>
-  
+      <Button variant="contained" mt={3} onClick={handleCalculate}>Calculate</Button>
     </Box>
     );
   };
