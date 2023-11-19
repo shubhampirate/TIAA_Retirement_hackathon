@@ -70,23 +70,11 @@ const Hero = () => {
 
   return (
     <>
-      <Box sx={{ backgroundColor: "#ffffff" }}>
+      <Box sx={{ backgroundColor: "#ffffff", marginTop: "8rem" }}>
         <Container>
-          <Navbar />
+          {/* <Navbar /> */}
           <CustomBox>
             <Box sx={{ flex: "1" }}>
-              {/* <Typography
-              variant="body2"
-              sx={{
-                fontSize: "40px",
-                // color: "#1C1F25",
-                fontWeight: "bold",
-                mt: 10,
-                mb: 4,
-              }}
-            >
-              <span >Empower Your Retirement with</span> <span sx={{color:"#387FF5 !important"}}>    AI-Driven Insights </span>
-            </Typography> */}
               <Typography
                 variant="body2"
                 sx={{
@@ -111,8 +99,11 @@ const Hero = () => {
               </Typography>
               <div style={containerStyle}>
                 <Button
-                  sx={{ backgroundColor: "#387FF5", color: "white", textDecoration: "none" }}
-                ><Link to="/signin" style={{ textDecoration: "none", color: "white" }}>Sign In</Link></Button>
+                  sx={{ backgroundColor: "#387FF5", color: "white", textDecoration: "none", padding: "10px 20px" }}
+                >
+                  <Link to="/signin" style={{ textDecoration: "none", color: "white", textTransform: "capitalize" }}>
+                    Sign In</Link>
+                </Button>
                 {isLargeScreen && (
                   <Button
                     variant="contained"

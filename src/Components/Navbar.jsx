@@ -9,9 +9,9 @@ import HomeIcon from "@mui/icons-material/Home";
 import ContactsIcon from "@mui/icons-material/Contacts";
 import logoImg from "../media/logo.png";
 import { Container } from "@mui/system";
-import CustomButton from "./CustomButton";
 import {
   Drawer,
+  Button,
   List,
   ListItem,
   ListItemButton,
@@ -21,6 +21,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { LinkOffTwoTone } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   const [mobileMenu, setMobileMenu] = useState({
@@ -46,7 +47,7 @@ export const Navbar = () => {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Home","About", "Services", "Contact"].map(
+        {["Home", "About", "Services", "Contact"].map(
           (text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
@@ -152,12 +153,9 @@ export const Navbar = () => {
         }}
       >
         {/* <NavLink variant="body2">Sign Up</NavLink> */}
-        <CustomButton
-          backgroundColor="#387FF5"
-          color="#fff"
-          buttonText="Sign In"
-          
-        />
+        <Button
+          sx={{ backgroundColor: "#387FF5", color: "white", textDecoration: "none", padding: "10px 20px" }}
+        ><Link to="/signin" style={{ textDecoration: "none", color: "white", textTransform: "capitalize" }}>Sign In</Link></Button>
       </Box>
     </NavbarContainer>
   );

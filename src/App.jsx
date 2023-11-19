@@ -6,6 +6,7 @@ import Health from "./Components/Health";
 import Settings from "./Components/Settings";
 import Questions from "./Components/Questions";
 import { Route, Routes } from "react-router-dom";
+import Finance from "./Components/Finance";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/education" element={<><Education /></>} />
         <Route path="/health" element={<><Health /></>} />
         <Route path="/settings" element={<><Settings /></>} />
+        <Route path="/finance" element={<><Finance /></>} />
         <Route path="/questions" element={<><Questions /></>} />
         <Route path="/" element={<><Hero /></>} />
       </Routes>

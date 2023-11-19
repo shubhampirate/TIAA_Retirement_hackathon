@@ -98,7 +98,7 @@ export default function SignIn() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 12,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -155,7 +155,7 @@ export default function SignIn() {
           </Box>
         </Box>
       </Container>
-      <div>
+      <div style={{ marginTop: "2.3rem", marginBottom: "-2rem" }}>
         <svg
           style={{
             position: 'relative',

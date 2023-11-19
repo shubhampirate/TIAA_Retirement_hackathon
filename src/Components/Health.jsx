@@ -23,6 +23,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import InputBase from '@mui/material/InputBase';
@@ -32,7 +33,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
 import Doctormap from '../Hooks/Doctormap';
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
 
 const healthTopics = [
   {
@@ -58,41 +60,50 @@ const HealthTabContent = ({ label, content }) => (
 const CalculateMediclaimTabContent = ({ label, content }) => {
   const [roomCharges, setRoomCharges] = useState(0);
   const [doctorCharges, setDoctorCharges] = useState(0);
-  const [bills, setBills] = useState([{ amount: 0 }]);
+  const [bills, setBills] = useState([]);
+  const [finalAmount, setFinalAmount] = useState(0);
+  const [roomChargesDeduction, setRoomChargesDeduction] = useState(0);
+  const [doctorChargesDeduction, setDoctorChargesDeduction] = useState(0);
+  const [savedAmount, setSaveAmount] = useState(0);
+  const [calculations, setCalculations] = useState([]);
+  const [calculationId, setCalculationId] = useState(1);
 
   const handleAddBill = () => {
-    setBills([...bills, { amount: 0 }]);
+    setBills([...bills, { amount: 0, pdf: null }]);
   };
-  const [finalAmount, setFinalAmount] = useState(0);
-  const handleBillAmountChange = (index, amount) => {
+
+  const handleDeleteBill = (index) => {
     const updatedBills = [...bills];
-    updatedBills[index].amount = amount;
+    updatedBills.splice(index, 1);
     setBills(updatedBills);
   };
+
+
+  const handleBillAmountChange = (index, amount) => {
+    const updatedBills = [...bills];
+    updatedBills[index].amount = parseFloat(amount) || 0;
+    setBills(updatedBills);
+  };
+
   const handlePdfUpload = (index, file) => {
     const updatedBills = [...bills];
     updatedBills[index].pdf = file;
     setBills(updatedBills);
   };
-  const healthinsurance = 500000;
-  const roomChargesDeduction = (15 / 100) * healthinsurance;
-  const doctorChargesDeduction = (25 / 100) * healthinsurance;
+
   const handleCalculate = () => {
+
     const roomChargesValue = parseFloat(roomCharges);
     const doctorChargesValue = parseFloat(doctorCharges);
-    // const doctorChargesDeduction = (25 / 100) * healthinsurance;
     const healthinsurance = 500000;
-    // Calculate total amount from room and doctor charges
 
     const total = roomChargesValue + doctorChargesValue;
+    const totalBills = total + bills.reduce((total, bill) => total + bill.amount, 0)
 
-    // Calculate total bills
-    const totalBills = total + bills.reduce((total, bill) => total + parseFloat(bill.amount), 0);
+    const totalBillamount = bills.reduce((total, bill) => total + bill.amount, 0)
 
-
-    // Calculate deductions for room charges (15%) and doctor charges (25%)
-    const roomChargesDeduction = (15 / 100) * healthinsurance;
-    const doctorChargesDeduction = (25 / 100) * healthinsurance;
+    setRoomChargesDeduction((15 / 100) * healthinsurance);
+    setDoctorChargesDeduction((25 / 100) * healthinsurance)
 
     // Check if room charges exceed 15%
     const roomChargesExceed = roomCharges > roomChargesDeduction;
@@ -106,13 +117,28 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
     // Deduct surplus amounts from the total bills
     const finalAmount = totalBills - roomChargesSurplus - doctorChargesSurplus;
 
+    setSaveAmount(roomChargesDeduction + doctorChargesDeduction);
+
+    const calculationDetails = {
+      id: calculationId,
+      roomCharges,
+      doctorCharges,
+      totalBillamount,
+      finalAmount: finalAmount.toFixed(2),
+    };
+
+    setCalculations([...calculations, calculationDetails]);
+    setCalculationId(calculationId + 1);
+
     // You can use the calculated values as needed, such as displaying them or further processing.
     console.log("Total Room and Doctor Charges:", total);
     console.log("Total Bills:", totalBills);
     console.log("Room Charges Surplus Deduction:", roomChargesSurplus);
     console.log("Doctor Charges Surplus Deduction:", doctorChargesSurplus);
     console.log("Final Amount after Deductions:", finalAmount);
-    setFinalAmount(finalAmount)
+    setFinalAmount(finalAmount);
+
+
   };
 
   return (
@@ -121,82 +147,143 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
 
       {/* Hospital room charges */}
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6}></Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={7}>
+          <div style={{ textAlign: "center", marginBottom: "0.5rem" }}>Transactions History</div>
+          <div className="center-table">
+            <table>
+              <thead>
+                <tr>
+                  <th style={{ width: '4%', textAlign: "left" }}>Sr.No</th>
+                  <th style={{ width: '24%', textAlign: "left" }}>Room Charges</th>
+                  <th style={{ width: '24%', textAlign: "left" }}>Doctor Charges</th>
+                  <th style={{ width: '24%', textAlign: "left" }}>Bill Amount</th>
+                  <th style={{ width: '24%', textAlign: "left" }}>Final Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                {calculations?.map((doc) => {
+                  return (
+                    <tr>
+                      <td style={{ textAlign: 'left' }}>{doc?.id}</td>
+                      <td style={{ textAlign: 'left' }}>{doc?.roomCharges}</td>
+                      <td style={{ textAlign: 'left' }}>{doc?.doctorCharges}</td>
+                      <td style={{ textAlign: 'left' }}>{doc?.totalBillamount}</td>
+                      <td style={{ textAlign: 'left' }}>{doc?.finalAmount}</td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        </Grid>
+        <Grid item xs={12} md={5}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Typography mb={1}>Enter your hospital room charges:</Typography>
-              <TextField
-                type="text"
-                value={roomCharges}
-                onChange={(e) => setRoomCharges(e.target.value)}
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography mb={1} >15% Deduction:</Typography>
-              <TextField
-                disabled
-                value={(roomChargesDeduction).toFixed(2)}
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography mb={1} mt={3}>Enter your doctor charges:</Typography>
-              <TextField
-                type="text"
-                value={doctorCharges}
-                onChange={(e) => setDoctorCharges(e.target.value)}
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography mb={1} mt={3}>25% Deduction:</Typography>
-              <TextField
-                disabled
-                value={(doctorChargesDeduction).toFixed(2)}
-
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Grid container spacing={2} alignItems="center">
-                {bills.map((bill, index) => (
-                  <Grid item xs={12} key={index}>
-                    <Typography variant="h6" mt={3}>{`Bill ${index + 1}:`}</Typography>
-                    <TextField
-                      label="Amount"
-                      type="number"
-                      value={bill.amount}
-                      onChange={(e) => handleBillAmountChange(index, e.target.value)}
-                      fullWidth
-                      sx={{ marginBottom: 1 }}
-                    />
-                    <input
-                      type="file"
-                      accept=".pdf"
-                      onChange={(e) => handlePdfUpload(index, e.target.files[0])}
-                      sx={{ marginTop: 1 }} // Add some spacing for the file input
-                    />
-                  </Grid>
-                ))}
-                <Grid item xs={12}>
-                  <Button variant="outlined" onClick={handleAddBill} sx={{ marginTop: 1 }}>Add Another Bill</Button>
+              <Grid container spacing={1}>
+                <Grid item xs={7}>
+                  <div style={{ textAlign: "left", marginBottom: "0.5rem" }}>Hospital Room Charges</div>
+                  <TextField
+                    type="text"
+                    value={roomCharges}
+                    size='small'
+                    sx={{ height: "50%", width: "100%" }}
+                    onChange={(e) => setRoomCharges(e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={5}>
+                  <div style={{ textAlign: "left", marginBottom: "0.5rem" }}>After 15% Deduction</div>
+                  <TextField
+                    disabled
+                    size='small'
+                    value={(roomChargesDeduction).toFixed(2)}
+                    fullWidth
+                  />
                 </Grid>
               </Grid>
             </Grid>
             <Grid item xs={12}>
-              <Button variant="contained" onClick={handleCalculate} sx={{ marginTop: 3 }}>Calculate</Button>
+              <Grid container spacing={1}>
+                <Grid item xs={7}>
+                  <div style={{ textAlign: "left", marginBottom: "0.5rem" }}>Doctor Charges</div>
+                  <TextField
+                    type="text"
+                    value={doctorCharges}
+                    size='small'
+                    onChange={(e) => setDoctorCharges(e.target.value)}
+                    sx={{ height: "50%", width: "100%" }}
+                  />
+                </Grid>
+                <Grid item xs={5}>
+                  <div style={{ textAlign: "left", marginBottom: "0.5rem" }}>After 25% Deduction</div>
+                  <TextField
+                    disabled
+                    size='small'
+                    value={(doctorChargesDeduction).toFixed(2)}
+                    fullWidth
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+
+            <Grid item xs={12}>
+              <div style={{ textAlign: 'left', marginBottom: '0.5rem' }}>Billing Transactions /
+                <span onClick={handleAddBill} style={{ cursor: "pointer" }}>Add Bills</span></div>
+              <Grid container spacing={2} alignItems="center">
+                {bills.map((bill, index) => (
+                  <Grid item xs={12} key={index}>
+                    <Grid container spacing={1}>
+                      <Grid item xs={8}>
+                        <div style={{ textAlign: 'left', marginBottom: '0.5rem' }}>{`Bill ${index + 1} Amount:`}</div>
+                        <TextField
+                          type="number"
+                          value={bill.amount}
+                          size='small'
+                          onChange={(e) => handleBillAmountChange(index, e.target.value)}
+                          sx={{ height: '50%', width: '100%' }}
+                        />
+                      </Grid>
+                      <Grid item xs={1} style={{ marginTop: '2rem' }}>
+                        <UploadFileIcon
+                          sx={{ fontSize: 35, cursor: 'pointer' }}
+                          type="file"
+                          size='small'
+                          accept=".pdf"
+                          onChange={(e) => handlePdfUpload(index, e.target.files[0])}
+                        />
+                      </Grid>
+                      <Grid item xs={1} style={{ marginTop: '2rem' }}>
+                        <DeleteIcon sx={{ fontSize: 35, cursor: 'pointer' }} onClick={() => handleDeleteBill(index)} />
+                      </Grid>
+                      <Grid item xs={1} style={{ marginTop: '2rem' }}>
+                        <NoteAddIcon sx={{ fontSize: 35, cursor: 'pointer' }} onClick={handleAddBill} />
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                ))}
+              </Grid>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="h6" mt={3}>Final Amount: {finalAmount}</Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={4}>
+                  <Button onClick={handleCalculate}
+                    sx={{ backgroundColor: "#387FF5", color: "white", textDecoration: "none", padding: "10px 20px", width: "100%" }}
+                  >Calculate </Button>
+                </Grid>
+                <Grid item xs={8}>
+                  <div style={{ textAlign: 'left', marginBottom: '0.5rem' }}>
+                    Your Final Amount is ₹ {finalAmount.toFixed(2)}<br />
+                    You have Saved ₹ {savedAmount.toFixed(2)}
+                  </div>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-    </Box>
+    </Box >
   );
 };
+
 const Title = styled(Typography)(({ theme }) => ({
   fontSize: "25px",
   color: "#042A57",
@@ -357,17 +444,6 @@ export default function Health() {
                 <MenuIcon />
               </IconButton>
 
-              {/* Search tab */}
-              {/* <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: '4px', padding: '4px' }}>
-        <IconButton>
-          <SearchIcon />
-        </IconButton>
-        <InputBase
-          placeholder="Search..."
-          sx={{ ml: 1 }}
-        />
-      </Box> */}
-
             </Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#B9D2FD', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', borderRadius: '40px', padding: '8px' }}>
@@ -420,30 +496,7 @@ export default function Health() {
           }}
         >
           <Toolbar />
-          {/* </Container> */}
 
-
-          {/* Start Here */}
-          {/* {isSmallScreen ? (
-            <Tabs value={selectedTabIndex} onChange={handleTabChange} centered>
-              {healthTopics.map((topic, index) => (
-                <Tab key={index} label={topic.label} />
-              ))}
-            </Tabs>
-          ) : (
-            <Tabs value={selectedTabIndex} onChange={handleTabChange} variant="scrollable" scrollButtons="auto">
-              {healthTopics.map((topic, index) => (
-                <Tab key={index} label={topic.label} />
-              ))}
-            </Tabs>
-          )}
-
-          // {/* Health-related content based on the selected tab */}
-          {/* // {healthTopics.map((topic, index) => ( */}
-          {/* //   selectedTabIndex === index && ( */}
-          {/* //     <HealthTabContent key={index} label={topic.label} content={topic.content} /> */}
-          {/* //   ) */}
-          {/* // ))} */}
           {isSmallScreen ? (
             <Tabs value={selectedTabIndex} onChange={handleTabChange} centered>
               {healthTopics.map((topic, index) => (

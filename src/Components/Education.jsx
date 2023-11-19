@@ -1,5 +1,5 @@
 import * as React from 'react';
-    import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -24,85 +24,94 @@ import heroImg_4 from "../media/img_4.jpeg";
 import SearchIcon from '@mui/icons-material/Search';
 
 import InputBase from '@mui/material/InputBase';
+import CarouselAd from '../Hooks/Carousel';
+
 const YoutubeSearchSection_1 = () => {
-    const [searchQuery, setSearchQuery] = useState('financevideos');
-    const [searchResults, setSearchResults] = useState([]);
-  
-    const handleSearchChange = (event) => {
-      setSearchQuery(event.target.value);
-    };
-  
-    const fetchYoutubeResults = async () => {
-      // Use the fetch code you provided earlier
-      const url = `https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${encodeURIComponent(searchQuery)}`;
-      const options = {
-        method: 'GET',
-        headers: {
-          'X-RapidAPI-Key': '9c7a4c6703mshb9d3604341529d1p1c70ddjsnf5506a762ba0',
-          'X-RapidAPI-Host': 'youtube-search-results.p.rapidapi.com'
-        }
-      };
-  
-      try {
-        const response = await fetch(url, options);
-        const result = await response.json(); 
-        console.log(result)// Assuming the API returns JSON
-  
-        setSearchResults(result.items || []);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    const handleSearchButtonClick = () => {
-        fetchYoutubeResults();
-      };
-    
-    useEffect(() => {
-      if (searchQuery.trim() !== '') {
-        // Fetch results only if the search query is not empty
-        fetchYoutubeResults();
-        // console.log(fetchYoutubeResults);
-      } else {
-        setSearchResults([]); // Clear results if search query is empty
-      }
-    }, []);
-  
-    return (
-      <Paper elevation={3} sx={{ p: 3, backgroundColor: '#fff', border: '20px solid #fff', borderRadius: '20px', marginTop: '20px' }}>
-        <Typography variant="h6" mb={2}>YouTube Search</Typography>
-        {/* <form onSubmit={search}> */}
-        <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: '4px', padding: '4px' }}>
-          <IconButton onClick={handleSearchButtonClick}>
-            <SearchIcon />
-          </IconButton>
-          <InputBase
-            placeholder="Search on YouTube..."
-            sx={{ ml: 1 }}
-            value={searchQuery}
-            onChange={handleSearchChange}
-          />
-        </Box>
-        {/* </form> */}
-        {/* Display search results */}
-        <ul>
-          {searchResults.map((result) => (
-            <li key={result.id}>{result.title}</li>
-          ))}
-        </ul>
-      </Paper>
-    );
+  const [searchQuery, setSearchQuery] = useState('financevideos');
+  const [searchResults, setSearchResults] = useState([]);
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
   };
 
-  const Title = styled(Typography)(({ theme }) => ({
-    fontSize: "25px",
-    color: "#042A57",
-    fontWeight: "bold",
-    textAlign: "left",
-    margin: theme.spacing(2, 0, 2, 0),
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "30px",
-    },
-  }));
+  const fetchYoutubeResults = async () => {
+    // Use the fetch code you provided earlier
+    const url = `https://youtube-search-results.p.rapidapi.com/youtube-search/?q=${encodeURIComponent(searchQuery)}`;
+    const options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': '9c7a4c6703mshb9d3604341529d1p1c70ddjsnf5506a762ba0',
+        'X-RapidAPI-Host': 'youtube-search-results.p.rapidapi.com'
+      }
+    };
+
+    try {
+      const response = await fetch(url, options);
+      const result = await response.json();
+      console.log(result)// Assuming the API returns JSON
+
+      setSearchResults(result.items || []);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleSearchButtonClick = () => {
+    fetchYoutubeResults();
+  };
+
+  useEffect(() => {
+    if (searchQuery.trim() !== '') {
+      // Fetch results only if the search query is not empty
+      fetchYoutubeResults();
+      // console.log(fetchYoutubeResults);
+    } else {
+      setSearchResults([]); // Clear results if search query is empty
+    }
+  }, []);
+
+  return (
+    <Box>
+      {/* <Grid container spacing={2}>
+        <Grid item xs={12}>
+
+        </Grid>
+        <Paper elevation={3} sx={{ p: 3, backgroundColor: '#fff', border: '20px solid #fff', borderRadius: '20px', marginTop: '20px' }}>
+          <Typography variant="h6" mb={2}>YouTube Search</Typography>
+          
+          <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: '4px', padding: '4px' }}>
+            <IconButton onClick={handleSearchButtonClick}>
+              <SearchIcon />
+            </IconButton>
+            <InputBase
+              placeholder="Search on YouTube..."
+              sx={{ ml: 1 }}
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
+          </Box>
+          
+          <ul>
+            {searchResults.map((result) => (
+              <li key={result.id}>{result.title}</li>
+            ))}
+          </ul>
+        </Paper>
+      </Grid> */}
+    </Box>
+
+  );
+};
+
+const Title = styled(Typography)(({ theme }) => ({
+  fontSize: "25px",
+  color: "#042A57",
+  fontWeight: "bold",
+  textAlign: "left",
+  margin: theme.spacing(2, 0, 2, 0),
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "30px",
+  },
+}));
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -123,7 +132,7 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-  
+
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -164,32 +173,32 @@ export default function Education() {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex', borderRadius: '16px', overflow: 'hidden', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }} >
         <CssBaseline />
-      
-<AppBar position="absolute" open={open} sx={{ backgroundColor: "whitesmoke", boxShadow: 'none' }}>
-  <Toolbar
-    sx={{
-      pr: '24px', // keep right padding when drawer closed
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-    }}
-  >
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <IconButton
-        edge="start"
-        aria-label="open drawer"
-        onClick={toggleDrawer}
-        sx={{
-          marginRight: '36px',
-          ...(open && { display: 'none' }),
-          backgroundColor: "#fff"
-        }}
-      >
-        <MenuIcon  />
-      </IconButton>
 
-      {/* Search tab */}
-      <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: '4px', padding: '4px' }}>
+        <AppBar position="absolute" open={open} sx={{ backgroundColor: "whitesmoke", boxShadow: 'none' }}>
+          <Toolbar
+            sx={{
+              pr: '24px', // keep right padding when drawer closed
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <IconButton
+                edge="start"
+                aria-label="open drawer"
+                onClick={toggleDrawer}
+                sx={{
+                  marginRight: '36px',
+                  ...(open && { display: 'none' }),
+                  backgroundColor: "#fff"
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
+
+              {/* Search tab */}
+              {/* <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: '4px', padding: '4px' }}>
         <IconButton>
           <SearchIcon />
         </IconButton>
@@ -197,25 +206,25 @@ export default function Education() {
           placeholder="Search..."
           sx={{ ml: 1 }}
         />
-      </Box>
+      </Box> */}
 
-    </Box>
+            </Box>
 
-    <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#B9D2FD', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', borderRadius: '40px', padding: '8px' }}>
-      {/* User profile image */}
-      <img
-        src={heroImg_4}
-        alt="User Profile"
-        style={{ borderRadius: '50%', width: '40px', height: '40px', marginRight: '10px' }}
-      />
-      
-      {/* Settings button */}
-      <IconButton>
-        <SettingsIcon />
-      </IconButton>
-    </Box>
-  </Toolbar>
-</AppBar>
+            <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#B9D2FD', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', borderRadius: '40px', padding: '8px' }}>
+              {/* User profile image */}
+              <img
+                src={heroImg_4}
+                alt="User Profile"
+                style={{ borderRadius: '50%', width: '40px', height: '40px', marginRight: '10px' }}
+              />
+
+              {/* Settings button */}
+              <IconButton>
+                <SettingsIcon />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </AppBar>
 
         <Drawer variant="permanent" open={open}>
           <Toolbar
@@ -247,77 +256,25 @@ export default function Education() {
             flexGrow: 1,
             height: '100vh',
             overflow: 'auto',
-            
+
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4 , mb: 3 }} 
-        //   sx={{border: '15px solid #fff', borderRadius: '20px'}}
+          <Container maxWidth="lg" sx={{ mb: 3 }}
+          //   sx={{border: '15px solid #fff', borderRadius: '20px'}}
           >
             {/* <Grid container spacing={2}> */}
-             
+
             <Grid item xs={12} md={8} lg={9}>
 
-  <Title variant="h4" sx={{color: "#042A57"}}>
-             Recommendations 
-            </Title>
-            {/* Recommendations */}
-    
-<Grid container spacing={2} >
-  {/* Video 1 */}
-  <Grid item xs={12} md={4}>
-    <Paper elevation={3} sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', borderRadius:'20px' }}>
-      {/* <Typography variant="h6" mb={2}>Video 1</Typography> */}
-      <iframe
-        width="100%"
-        height="100%"
-        src="https://www.youtube.com/embed/Bd89RijKF9I?si=d4g0xoBkujeVX_BY"
-        title="Video 1"
-        frameBorder="0"
-        allowFullScreen
-        style={{ borderRadius: '10px' }}
-      ></iframe>
-    </Paper>
-  </Grid>
+              <div style={{ textAlign: "left", fontWeight: "750", fontSize: "1.5rem", marginBottom: "0.5rem", paddingTop: "2rem" }}>
+                Recommendations</div>
+              {/* Recommendations */}
+              <CarouselAd style={{ paddingLeft: "-3rem" }} />
 
-  {/* Video 2 */}
-  <Grid item xs={12} md={4}>
-    <Paper elevation={3} sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', borderRadius: '20px' }}>
-      {/* <Typography variant="h6" mb={2}>Video 2</Typography> */}
-      <iframe
-        width="100%"
-        height="100%"
-        src="https://www.youtube.com/embed/pjR3wIGOZsc?si=PnA_FOQh9G2iVRwy  "
-        title="Video 2"
-        frameBorder="0"
-        allowFullScreen
-        style={{ borderRadius: '10px' }}
-      ></iframe>
-    </Paper>
-  </Grid>
-
-  {/* Video 3 */}
-  <Grid item xs={12} md={4}>
-    <Paper elevation={3} sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', borderRadius: '20px' }}>
-      {/* <Typography variant="h6" mb={2}>Video 3</Typography> */}
-      <iframe
-        width="100%"
-        height="100%"
-        src="https://www.youtube.com/embed/ifykklPqqxg?si=AMCgomt-rIGPfYu3"
-        title="Video 3"
-        frameBorder="0"
-        allowFullScreen
-        style={{ borderRadius: '10px' }}
-      ></iframe>
-    </Paper>
-  </Grid>
-</Grid>
-<br /><br />
-
-         
             </Grid>
-            <YoutubeSearchSection/>
-         {/* Start here    */}
+            <YoutubeSearchSection />
+            {/* Start here    */}
           </Container>
         </Box>
       </Box>

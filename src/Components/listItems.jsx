@@ -29,7 +29,7 @@ export const mainListItems = (
         <ListItemText primary="HeathCare" />
       </ListItemButton>
     </Link>
-    <Link to="/dashboard" style={{ textDecoration: "none", color: "black" }}>
+    <Link to="/finance" style={{ textDecoration: "none", color: "black" }}>
       <ListItemButton>
         <ListItemIcon>
           <SavingsIcon />

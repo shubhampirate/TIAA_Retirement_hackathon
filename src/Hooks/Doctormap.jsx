@@ -108,7 +108,6 @@ const Doctormap = () => {
 
                 </div>
                 <div className="center-table">
-
                     <table>
                         <thead>
                             <tr>
@@ -122,7 +121,7 @@ const Doctormap = () => {
                             {doctors?.map((doc) => {
                                 return (
                                     <tr onClick={() => fetchLocation(doc.mapbox_id)}
-                                        className="bg-white h-[50px] shadow cursor-pointer">
+                                        style={{ cursor: "pointer" }}>
                                         <td style={{ textAlign: 'left' }}>{doc?.name}</td>
                                         <td style={{ textAlign: 'left' }}>{doc?.full_address}</td>
                                         <td style={{ textAlign: 'left' }}>{doc?.context?.locality?.name}</td>
@@ -133,57 +132,7 @@ const Doctormap = () => {
                         </tbody>
                     </table>
                 </div>
-                {/* <div className="p-6">
-                    <table className="table-auto w-full">
-                        <thead className="bg-neutral-100 h-[50px] shadow">
-                            <tr>
-                                <th>
-                                    <h3 className="text-lg font-bold text-teal-800">Name</h3>
-                                </th>
-                                <th>
-                                    <h3 className="text-lg font-bold text-blue-800 ">Address</h3>
-                                </th>
-                                <th>
-                                    <h3 className="text-lg font-bold text-sky-900 ">Colony</h3>
-                                </th>
-                                <th>
-                                    <h3 className="text-lg font-bold text-green-800 ">Type</h3>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {doctors?.map((doc) => (
-                                <tr
-                                    onClick={() => fetchLocation(doc.mapbox_id)}
-                                    className="bg-white h-[50px] shadow cursor-pointer"
-                                >
-                                    <td>
-                                        <h3 className="text-lg font-semibold text-teal-800 px-2">
-                                            {doc?.name}
-                                        </h3>
-                                    </td>
-                                    <td>
-                                        <h3 className="text-lg font-semibold text-blue-800 ">
-                                            {doc?.full_address}
-                                        </h3>
-                                    </td>
-                                    <td>
-                                        <h3 className="text-lg font-semibold text-sky-900 ">
-                                            {doc?.context?.locality?.name}
-                                        </h3>
-                                    </td>
-                                    <td>
-                                        <h3 className="text-lg font-semibold text-green-800 ">
-                                            {doc?.poi_category[0]}
-                                        </h3>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div> */}
-
-                <div ref={mapContainer} style={{ height: "400px", width: "99%", marginLeft: "10px", marginRight: "8px" }} />
+                <div ref={mapContainer} style={{ height: "400px", width: "99%", marginLeft: "10px", paddingRight: "15px" }} />
             </div>
         </div>
     );
