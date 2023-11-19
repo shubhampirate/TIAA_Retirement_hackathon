@@ -32,16 +32,16 @@ import InputBase from '@mui/material/InputBase';
 
 
 
-  const Title = styled(Typography)(({ theme }) => ({
-    fontSize: "25px",
-    color: "#042A57",
-    fontWeight: "bold",
-    textAlign: "left",
-    margin: theme.spacing(4, 0, 4, 0),
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "30px",
-    },
-  }));
+const Title = styled(Typography)(({ theme }) => ({
+  fontSize: "25px",
+  color: "#042A57",
+  fontWeight: "bold",
+  textAlign: "left",
+  margin: theme.spacing(4, 0, 4, 0),
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "30px",
+  },
+}));
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -62,37 +62,29 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-  
+
 const ProgressBarBox = ({ title, value }) => {
-    let indicatorText = '';
-    let color = '';
-  
-    if (value <= 30) {
-      indicatorText = 'Less';
-      color = '#BDFF7B';
-    } else if (value <= 70) {
-      indicatorText = 'Nearby Full';
-      color = '#FFE779';
-    } else {
-      indicatorText = 'Completely Full';
-      color = '#FC8965';
-    }
-  
-    return (
-      <Grid item xs={12} sm={6} md={4}>
-        <Paper
-          sx={{
-            p: 2,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            borderRadius: '16px',
-          }}
-        >
-          <Typography variant="h6" sx={{ mb: 1, color: "#0066FF" }}>
-            {title}
-          </Typography>
-          <LinearProgress
+  let indicatorText = '';
+  let color = '';
+
+  if (value <= 30) {
+    indicatorText = 'Less';
+    color = '#BDFF7B';
+  } else if (value <= 70) {
+    indicatorText = 'Nearby Full';
+    color = '#FFE779';
+  } else {
+    indicatorText = 'Completely Full';
+    color = '#FC8965';
+  }
+
+  return (
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Typography variant="h6" sx={{ mb: 1, color: "#0066FF" }}>
+          {title}
+        </Typography>
+        <LinearProgress
           variant="determinate"
           value={value}
           sx={{
@@ -106,22 +98,22 @@ const ProgressBarBox = ({ title, value }) => {
             },
           }}
         />
-         
-          <Box
+
+        <Box
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
             width: '100%',
-           
+
           }}
         >
           <Typography variant="body2">{indicatorText}</Typography>
           <Typography variant="body2">{value}%</Typography>
         </Box>
-        </Paper>
       </Grid>
-    );
-  };
+    </Grid>
+  );
+};
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     '& .MuiDrawer-paper': {
@@ -161,98 +153,46 @@ export default function Dashboard() {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex', borderRadius: '16px', overflow: 'hidden', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }} >
         <CssBaseline />
-        {/* <AppBar position="absolute" open={open} sx={{ backgroundColor: "whitesmoke", boxShadow: 'none' }}>
-  <Toolbar
-    sx={{
-      pr: '24px', // keep right padding when drawer closed
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-    }}
-  >
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <IconButton
-        edge="start"
-        aria-label="open drawer"
-        onClick={toggleDrawer}
-        sx={{
-          marginRight: '36px',
-          ...(open && { display: 'none' }),
-          backgroundColor: "#fff"
-        }}
-      >
-        <MenuIcon  />
-      </IconButton>
 
-    </Box>
+        <AppBar position="absolute" open={open} sx={{ backgroundColor: "whitesmoke", boxShadow: 'none' }}>
+          <Toolbar
+            sx={{
+              pr: '24px', // keep right padding when drawer closed
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <IconButton
+                edge="start"
+                aria-label="open drawer"
+                onClick={toggleDrawer}
+                sx={{
+                  marginRight: '36px',
+                  ...(open && { display: 'none' }),
+                  backgroundColor: "#fff"
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Box>
 
-    <Box sx={{ display: 'flex', alignItems: 'center', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', borderRadius: '40px', padding: '8px' }}>
-  {/* User profile image */}
-  {/* <img
-    src={heroImg_4}
-    alt="User Profile"
-    style={{ borderRadius: '50%', width: '40px', height: '40px', marginRight: '10px' }}
-  />
-  
-  {/* Settings button */}
-  {/* <IconButton >
+            <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#B9D2FD', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', borderRadius: '40px', padding: '8px' }}>
+              {/* User profile image */}
+              <img
+                src={heroImg_4}
+                alt="User Profile"
+                style={{ borderRadius: '50%', width: '40px', height: '40px', marginRight: '10px' }}
+              />
 
-    <SettingsIcon />
-  </IconButton>
-</Box>
-  </Toolbar> */}
-{/* // </AppBar>  */}
-<AppBar position="absolute" open={open} sx={{ backgroundColor: "whitesmoke", boxShadow: 'none' }}>
-  <Toolbar
-    sx={{
-      pr: '24px', // keep right padding when drawer closed
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-    }}
-  >
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <IconButton
-        edge="start"
-        aria-label="open drawer"
-        onClick={toggleDrawer}
-        sx={{
-          marginRight: '36px',
-          ...(open && { display: 'none' }),
-          backgroundColor: "#fff"
-        }}
-      >
-        <MenuIcon  />
-      </IconButton>
-
-      {/* Search tab */}
-      <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: '4px', padding: '4px' }}>
-        <IconButton>
-          <SearchIcon />
-        </IconButton>
-        <InputBase
-          placeholder="Search..."
-          sx={{ ml: 1 }}
-        />
-      </Box>
-
-    </Box>
-
-    <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#B9D2FD', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', borderRadius: '40px', padding: '8px' }}>
-      {/* User profile image */}
-      <img
-        src={heroImg_4}
-        alt="User Profile"
-        style={{ borderRadius: '50%', width: '40px', height: '40px', marginRight: '10px' }}
-      />
-      
-      {/* Settings button */}
-      <IconButton>
-        <SettingsIcon />
-      </IconButton>
-    </Box>
-  </Toolbar>
-</AppBar>
+              {/* Settings button */}
+              <IconButton>
+                <SettingsIcon />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </AppBar>
 
         <Drawer variant="permanent" open={open}>
           <Toolbar
@@ -284,77 +224,63 @@ export default function Dashboard() {
             flexGrow: 1,
             height: '100vh',
             overflow: 'auto',
-            
+
           }}
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-             
-            <Grid item xs={12} md={8} lg={9}>
-  <Paper
-    sx={{
-      p: 2,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      borderRadius: '16px', // Adjust the value as needed for more or less curvature
-    }}
-  >
-    {/* Left side content */}
-    <Grid container spacing={2} alignItems="center">
-      <Grid item xs={12} md={7 }>
-        <Typography variant="h4" sx={{ mb: 1, fontWeight: 'bold'}}>
-        👋  Hello Ramesh 
-        </Typography>
-        <Typography variant="body1" sx={{color:"#748AAB", paddingLeft:"20px"}}>
-          Check your expenses and investments
-        </Typography>
-      </Grid>
 
-      {/* Right side content */}
-      <Grid item xs={12} md={5} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Button variant="contained"  sx={{ width: '100%', backgroundColor: '#0066FF', color: '#fff', mb: { xs: 1, md: 2 } ,mt:{xs:0, md:2}  }}>
-        Plan your retirement
-        </Button>
-        <Button variant="contained"  sx={{ width: '100%', backgroundColor: '#0066FF', color: '#fff', mb:{xs:1, md:2} }}>
-        Put your savings to work
-        </Button>
-      </Grid>
-    </Grid>
-  </Paper>
-  <Title variant="h4" sx={{color: "#042A57"}}>
-             Expense Tracker 
-            </Title>
-            <Grid container spacing={3}>
-      <ProgressBarBox title="Income" value={60} />
-      <ProgressBarBox title="Expense" value={30} />
-      <ProgressBarBox title="Savings" value={90} />
-    </Grid>
-</Grid>
+              <Grid item xs={12} md={8} lg={9}>
+                <Box>
+                  {/* Left side content */}
+                  <Grid container spacing={2} alignItems="center">
+                    <Grid item xs={12} md={7}>
+                      <div style={{ textAlign: "left", marginBottom: "0.5rem", fontSize: "2rem", fontWeight: "650" }}>
+                        Welcome Ramesh</div>
+                      <div style={{ textAlign: "left", marginBottom: "0.5rem", fontSize: "1rem" }}>
+                        Retire AI is the right platform to check and plan your expenses and investments</div>
+                    </Grid>
+
+                    {/* Right side content */}
+                    <Grid item xs={12} md={5} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                      <Button variant="contained" sx={{ width: '100%', backgroundColor: '#0066FF', color: '#fff', mb: { xs: 1, md: 2 }, mt: { xs: 0, md: 2 } }}>
+                        Plan your retirement
+                      </Button>
+                      <Button variant="contained" sx={{ width: '100%', backgroundColor: '#0066FF', color: '#fff', mb: { xs: 1, md: 2 } }}>
+                        Put your savings to work
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Box>
+                <div style={{ textAlign: "left", marginBottom: "0.5rem", fontSize: "1.5rem", fontWeight: "650", marginTop: "1rem" }}>
+                  Expense Tracker</div>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={4}>
+                    <ProgressBarBox title="Income" value={67} />
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    <ProgressBarBox title="Expense" value={28} />
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    <ProgressBarBox title="Savings" value={88} />
+                  </Grid>
+                </Grid>
+              </Grid>
 
 
-               {/* Recent Deposits */}
+              {/* Recent Deposits */}
               <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Deposits />
-                </Paper>
+                <Deposits />
               </Grid>
               {/* Recent Orders */}
               <Grid item xs={12}>
                 {/* <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}> */}
-                  <YourComponent />
+                <YourComponent />
                 {/* </Paper> */}
               </Grid>
             </Grid>
-            
+
           </Container>
         </Box>
       </Box>

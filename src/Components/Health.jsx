@@ -20,9 +20,8 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { mainListItems } from './listItems';
 import heroImg_4 from "../media/img_4.jpeg";
 import LinearProgress from '@mui/material/LinearProgress';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -51,12 +50,235 @@ const healthTopics = [
   },
 ];
 
-const HealthTabContent = ({ label, content }) => (
-  <Box sx={{ p: 3 }}>
-    <Typography variant="h5" mb={2}>{label}</Typography>
-    <Typography>{content}</Typography>
-  </Box>
-);
+const HealthTabContent = ({ label, content }) => {
+  const itemData = [
+    {
+      img: 'https://www.avivaindia.com/sites/default/files/Retirement.jpg',
+      title: 'Breakfast',
+      rows: 2,
+      cols: 2,
+    },
+    {
+      img: 'https://img.etimg.com/thumb/width-640,height-480,imgsize-1313091,resizemode-75,msid-102796114/wealth/plan/retirement-planning-how-to-save-for-your-retirement/retire-lounge.jpg',
+      title: 'Burger',
+    },
+    {
+      img: 'https://img.freepik.com/premium-photo/senior-indian-asian-couple-accounting-checking-bills-laptop-calculator-money-desk_466689-95914.jpg',
+      title: 'Camera',
+    },
+    {
+      img: 'https://www.dbs.com/in/iwov-resources/media/images/nri-hub/articles/what-is-retirement-planning-1404x630.jpg',
+      title: 'Coffee',
+      cols: 2,
+    },
+    {
+      img: 'https://lifeinsurancebazaar.com/blog/wp-content/uploads/2021/08/retirementplanning.jpg',
+      title: 'Hats',
+      cols: 2,
+    },
+    {
+      img: 'https://www.canarahsbclife.com/content/dam/choice/blog-inner/images/retirment-img.jpg',
+      title: 'Honey',
+      author: '@arwinneil',
+      rows: 2,
+      cols: 2,
+    },
+    {
+      img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSfOr7k6T-2DZR_CGAMwifLwWK1D09rs-wR_TjLzuXwu71gt7kKElPNFPB994mE66O_HY&usqp=CAU',
+      title: 'Basketball',
+      cols: 2
+    },
+  ];
+
+  function srcset(image, size, rows = 1, cols = 1) {
+    return {
+      src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
+      srcSet: `${image}?w=${size * cols}&h=${size * rows
+        }&fit=crop&auto=format&dpr=2 2x`,
+    };
+  }
+  const [userData, setUserData] = useState(
+    {
+      age: '52',
+      sum: '45000',
+      history: 'No',
+      coverage: 'Family',
+      duration: '5 years',
+      med_history: "None",
+      hospital: 'Yes',
+      volunteer: "None",
+      plan: 'Comprehensive'
+    }
+  );
+
+  const handleChange = (field, value) => {
+    setUserData((prevData) => ({
+      ...prevData,
+      [field]: value,
+    }));
+  };
+
+  return (
+    <Box>
+      <Grid container spacing={2} style={{ paddingTop: "1rem" }}>
+        <Grid item xs={12} md={6}>
+          <Grid container spacing={2} style={{ paddingLeft: "0.75rem" }}>
+            <Grid item xs={12}>
+              <div style={{ textAlign: "left", marginBottom: "0.5rem", fontSize: "2rem", fontWeight: "650" }}>
+                Allow us to assist you in discovering the optimal retirement health claim</div>
+            </Grid>
+            <Grid item xs={12} md={6} >
+              <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Age of the Insured</div>
+              <TextField
+                id="age"
+                name="age"
+                color='success'
+                value={userData.age}
+                onChange={(e) => handleChange('age', e.target.value)}
+                sx={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Sum Insured</div>
+              <TextField
+                id="sum"
+                name="sum"
+                color='success'
+                value={userData.sum}
+                onChange={(e) => handleChange('sum', e.target.value)}
+                sx={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Any Pre-existing Medical Conditions</div>
+              <TextField
+                id="history"
+                name="history"
+                color='success'
+                value={userData.history}
+                onChange={(e) => handleChange('history', e.target.value)}
+                sx={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Coverage Type</div>
+              <TextField
+                id="coverage"
+                type='coverage'
+                name="coverage"
+                color='success'
+                disabled
+                value={userData.coverage}
+                onChange={(e) => handleChange('coverage', e.target.value)}
+                sx={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Covergae Duration</div>
+              <TextField
+                id="duration"
+                name="duration"
+                color='success'
+                value={userData.duration}
+                onChange={(e) => handleChange('duration', e.target.value)}
+                sx={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Medical History Details</div>
+              <TextField
+                id="med_history"
+                name="med_history"
+                color='success'
+                value={userData.med_history}
+                onChange={(e) => handleChange('med_history', e.target.value)}
+                sx={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Preffered Hospital Network</div>
+              <TextField
+                id="hospital"
+                name="hospital"
+                color='success'
+                value={userData.hospital}
+                onChange={(e) => handleChange('hospital', e.target.value)}
+                sx={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Voluntary Deductibles</div>
+              <TextField
+                id="volunteer"
+                name="volunteer"
+                color='success'
+                value={userData.volunteer}
+                onChange={(e) => handleChange('volunteer', e.target.value)}
+                sx={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Type of Plan</div>
+              <TextField
+                id="plan"
+                name="plan"
+                color='success'
+                value={userData.plan}
+                onChange={(e) => handleChange('plan', e.target.value)}
+                sx={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Button variant="contained" type="submit"
+                sx={{
+                  width: "100%", height: "3.5rem", fontSize: "1.1rem",
+                  backgroundColor: "#2196F3", boxShadow: "none", color: "white", marginTop: "1rem",
+                  textTransform: "capitalize"
+                  , "&:hover": {
+                    backgroundColor: "#2196F3", boxShadow: "none", color: "white",
+                    fontSize: "1.3rem", cursor: "pointer"
+                  }
+                }} >
+                Submit
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <ImageList
+            sx={{ width: "98%", height: 610, marginLeft: "0.5rem" }}
+            variant="quilted"
+            cols={4}
+            rowHeight={145}
+          >
+            {itemData.map((item) => (
+              <ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1}>
+                <img
+                  style={{ borderRadius: "2%", width: "100%", height: "99%", objectFit: "cover" }}
+                  {...srcset(item.img, 145, item.rows, item.cols)}
+                  alt={item.title}
+                  loading="lazy"
+                />
+              </ImageListItem>
+            ))}
+          </ImageList>
+        </Grid>
+      </Grid>
+
+
+    </Box>)
+
+}
+
+
+// <Box sx={{ p: 3 }}>
+//   <Typography variant="h5" mb={2}>{label}</Typography>
+//   <Typography>{content}</Typography>
+// </Box>
+
+
+
+
 const CalculateMediclaimTabContent = ({ label, content }) => {
   const [roomCharges, setRoomCharges] = useState(0);
   const [doctorCharges, setDoctorCharges] = useState(0);
@@ -148,7 +370,7 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
       {/* Hospital room charges */}
       <Grid container spacing={2}>
         <Grid item xs={12} md={7}>
-          <div style={{ textAlign: "center", marginBottom: "0.5rem" }}>Transactions History</div>
+          <div style={{ textAlign: "center", marginBottom: "0.5rem", fontSize: "1.25rem", fontWeight: "600" }}>Transactions History</div>
           <div className="center-table">
             <table>
               <thead>
@@ -180,6 +402,10 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  <div style={{ textAlign: "left", marginBottom: "0.5rem", fontSize: "2rem", fontWeight: "650" }}>
+                    We'll help calculate your medical claim.</div>
+                </Grid>
                 <Grid item xs={7}>
                   <div style={{ textAlign: "left", marginBottom: "0.5rem" }}>Hospital Room Charges</div>
                   <TextField

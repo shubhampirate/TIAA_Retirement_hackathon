@@ -286,7 +286,7 @@ export default function Questions() {
 
                     <Container>
                         <iframe title="Report Section" width="100%" height="650"
-                            src="https://app.powerbi.com/view?r=eyJrIjoiOGE5NWMyNTYtZWE4ZS00MmU5LWI2ZmItN2RkMDUwZmRhZjI5IiwidCI6ImQxZjE0MzQ4LWYxYjUtNGEwOS1hYzk5LTdlYmYyMTNjYmM4MSIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
+                            src="https://app.powerbi.com/view?r=eyJrIjoiNmFhMjA5YWUtNzVlZi00YWE0LTkyNWYtNGM2OTI3MzA4NjhkIiwidCI6ImQxZjE0MzQ4LWYxYjUtNGEwOS1hYzk5LTdlYmYyMTNjYmM4MSIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
                     </Container>
 
                 </Box>

@@ -1,5 +1,5 @@
 // import * as React from 'react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -10,10 +10,12 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-// import Badge from '@mui/material/Badge';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import { blue, indigo } from '@mui/material/colors';
 // import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -29,22 +31,15 @@ import heroImg_4 from "../media/img_4.jpeg";
 import heroImg_5 from "../media/img_5.jpeg";
 import Button from '@mui/material/Button';
 import LinearProgress from '@mui/material/LinearProgress';
+import Avatar from '@mui/material/Avatar';
+
 // import YourComponent from './YourComponent';
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import InputBase from '@mui/material/InputBase';
 import useAlan from '../Hooks/useAlan';
 
-const Title = styled(Typography)(({ theme }) => ({
-  fontSize: "25px",
-  color: "#042A57",
-  fontWeight: "bold",
-  textAlign: "left",
-  margin: theme.spacing(4, 0, 4, 0),
-  [theme.breakpoints.down("sm")]: {
-    fontSize: "30px",
-  },
-}));
+
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -158,18 +153,29 @@ export default function Settings() {
 
   useAlan();
   const [isEditing, setIsEditing] = useState(false);
-  const [userData, setUserData] = useState({
-    username: 'Dummy Username',
-    dob: '01/01/1990',
-    firstName: 'Dummy First Name',
-    lastName: 'Dummy Last Name',
-    email: 'dummy@email.com',
-    password: '********',
-  });
+  const [userData, setUserData] = useState([]
+    //   {
+    //   username: 'Dummy Username',
+    //   dob: '01/01/1990',
+    //   firstName: 'Dummy First Name',
+    //   lastName: 'Dummy Last Name',
+    //   email: 'dummy@email.com',
+    //   password: '********',
+    // }
+  );
 
-  const handleEdit = (field) => {
-    setIsEditing(!isEditing);
-  };
+  useEffect(() => {
+    loadList();
+  }, []);
+
+  const loadList = async () => {
+    const result = await axios.get(`https://wixstocle.pythonanywhere.com/api/user/tony@gmail.com`, {
+      headers: { "Authorization": `Token 11c868750d92deda81638c5a9a59177bdc7ae41a` },
+    });
+    console.log(result.data.data);
+    setUserData(result.data.data);
+  }
+
 
   const handleChange = (field, value) => {
     setUserData((prevData) => ({
@@ -177,6 +183,38 @@ export default function Settings() {
       [field]: value,
     }));
   };
+
+  const handleEdit = async () => {
+    fetch(`https://wixstocle.pythonanywhere.com/api/user/tony@gmail.com`, {
+      method: 'PUT',
+      headers: {
+        "Authorization": `Token 11c868750d92deda81638c5a9a59177bdc7ae41a`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data);
+        if (data.status == true) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfully Edited the details',
+            showConfirmButton: false,
+            timer: 3000
+          })
+        }
+        else {
+          Swal.fire({
+            icon: 'error',
+            title: data.message,
+            showConfirmButton: false,
+            timer: 3000
+          })
+        }
+        loadList();
+      });
+  }
 
   const [open, setOpen] = React.useState(true);
 
@@ -279,180 +317,166 @@ export default function Settings() {
 
 
           {/* Start Here */}
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: '16px',
-            }}
-          >
-            {/* Language Button */}
-            <Button variant="contained" sx={{ margin: 'auto' }}>
-              English (default) <ArrowDropDownIcon />
-            </Button>
-            {/* Logout Button */}
-            <Button variant="contained" sx={{ margin: 'auto' }}>
-              Logout <LogoutIcon />
-            </Button>
-          </Box>
-          <Container sx={{ mt: 4 }}>
-            <Grid container spacing={3}>
-              {/* Single Column for Upload Picture, Username, and DOB */}
-              <Grid item xs={12} md={6}>
-                {/* <Paper sx={{ p: 3, borderRadius: '16px' }}> */}
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    style={{
-                      display: 'none',
-                    }}
-                    id="account-pic-input"
-                  />
-                  <img
-                    src={heroImg_5}
-                    alt="User Profile"
-                    style={{ borderRadius: '100%', width: '20%', height: '30%' }}
-                  />
-                  <br />
-                  <label htmlFor="account-pic-input">
-                    <Button variant="outlined" component="span">
-                      Upload Picture
-                    </Button>
-                  </label>
-                  <TextField sx={{ backgroundColor: '#FFFFFF' }}
-                    label="Username"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={userData.username}
-                    onChange={(e) => handleChange('username', e.target.value)}
-                    disabled={!isEditing}
-                    InputProps={{
-                      endAdornment: (
-                        <IconButton color="primary" onClick={handleEdit}>
-                          <EditIcon />
-                        </IconButton>
-                      ),
-                    }}
-                  />
-                  <TextField sx={{ backgroundColor: '#FFFFFF' }}
-                    label="Date of Birth"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={userData.dob}
-                    onChange={(e) => handleChange('dob', e.target.value)}
-                    disabled={!isEditing}
-                    InputProps={{
-                      endAdornment: (
-                        <IconButton color="primary" onClick={handleEdit}>
-                          <EditIcon />
-                        </IconButton>
-                      ),
-                    }}
-                  />
-                </Box>
-                {/* </Paper> */}
-              </Grid>
 
-              {/* Single Column for First Name, Last Name, Email, and Password */}
-              <Grid item xs={12} md={6}>
-                {/* <Paper sx={{ p: 3, borderRadius: '16px' }}> */}
-                <Box>
-                  <TextField sx={{ backgroundColor: '#FFFFFF' }}
-                    label="First Name"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={userData.firstName}
-                    onChange={(e) => handleChange('firstName', e.target.value)}
-                    disabled={!isEditing}
-                    InputProps={{
-                      endAdornment: (
-                        <IconButton color="primary" onClick={handleEdit}>
-                          <EditIcon />
-                        </IconButton>
-                      ),
-                    }}
-                  />
-                  <TextField sx={{ backgroundColor: '#FFFFFF' }}
-                    label="Last Name"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={userData.lastName}
-                    onChange={(e) => handleChange('lastName', e.target.value)}
-                    disabled={!isEditing}
-                    InputProps={{
-                      endAdornment: (
-                        <IconButton color="primary" onClick={handleEdit}>
-                          <EditIcon />
-                        </IconButton>
-                      ),
-                    }}
-                  />
-                  <TextField sx={{ backgroundColor: '#FFFFFF' }}
-                    label="Email ID"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={userData.email}
-                    onChange={(e) => handleChange('email', e.target.value)}
-                    disabled={!isEditing}
-                    InputProps={{
-                      endAdornment: (
-                        <IconButton color="primary" onClick={handleEdit}>
-                          <EditIcon />
-                        </IconButton>
-                      ),
-                    }}
-                  />
-                  <TextField sx={{ backgroundColor: '#FFFFFF' }}
-                    label="Password"
-                    type="password"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={userData.password}
-                    onChange={(e) => handleChange('password', e.target.value)}
-                    disabled={!isEditing}
-                    InputProps={{
-                      endAdornment: (
-                        <IconButton color="primary" onClick={handleEdit}>
-                          <EditIcon />
-                        </IconButton>
-                      ),
-                    }}
-                  />
-                </Box>
-                {/* </Paper> */}
+          <Box style={{ margin: "0.5rem 1rem" }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6} md={4}>
+                <Grid container spacing={1}>
+                  <Grid item xs={12} style={{ marginLeft: "30%" }}>
+                    <Avatar alt={userData.first_name} sx={{ width: 150, height: 150, bgcolor: blue[500], fontSize: "2rem" }} > RM</Avatar>
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                {/* <Paper sx={{ p: 3, borderRadius: '16px' }}> */}
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <TextField sx={{ backgroundColor: '#FFFFFF' }}
-                    label="Address"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={userData.address}
-                    onChange={(e) => handleChange('address', e.target.value)}
-                    disabled={!isEditing}
-                    InputProps={{
-                      endAdornment: (
-                        <IconButton color="primary" onClick={handleEdit}>
-                          <EditIcon />
-                        </IconButton>
-                      ),
-                    }}
-                  />
-                </Box>
-                {/* </Paper> */}
+              <Grid item xs={12} sm={6} md={8}>
+                <Grid container spacing={2} >
+                  <Grid item xs={12}>
+                    <div style={{ textAlign: "left", marginBottom: "0.5rem", fontSize: "2rem", fontWeight: "650" }}>
+                      Welcome to TIAA !!</div>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <div style={{ textAlign: "left", fontSize: "0.78rem" }}>First Name</div>
+                    <TextField
+                      id="first_name"
+                      name="first_name"
+                      color='success'
+                      value={userData.first_name}
+                      onChange={(e) => handleChange('first_name', e.target.value)}
+                      sx={{ width: "100%" }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Last Name</div>
+                    <TextField
+                      id="last_name"
+                      name="last_name"
+                      color='success'
+                      value={userData.last_name}
+                      onChange={(e) => handleChange('last_name', e.target.value)}
+                      sx={{ width: "100%" }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Email</div>
+                    <TextField
+                      id="email"
+                      type='email'
+                      name="email"
+                      color='success'
+                      value={userData.email}
+                      onChange={(e) => handleChange('email', e.target.value)}
+                      sx={{ width: "100%" }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Password</div>
+                    <TextField
+                      id="password"
+                      type='password'
+                      name="password"
+                      color='success'
+                      disabled
+                      value={userData.password}
+                      onChange={(e) => handleChange('password', e.target.value)}
+                      sx={{ width: "100%" }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Phone Number</div>
+                    <TextField
+                      id="phone_number"
+                      name="phone_number"
+                      color='success'
+                      value={userData.phone_number}
+                      onChange={(e) => handleChange('phone_number', e.target.value)}
+                      sx={{ width: "100%" }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Date of Birth</div>
+                    <TextField
+                      id="dob"
+                      type="date"
+                      name="dob"
+                      color='success'
+                      value={userData.dob}
+                      onChange={(e) => handleChange('dob', e.target.value)}
+                      sx={{ width: "100%" }}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Address</div>
+                    <TextField
+                      id="address"
+                      name="address"
+                      color='success'
+                      value={userData.address}
+                      onChange={(e) => handleChange('address', e.target.value)}
+                      sx={{ width: "100%" }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Spouse Name</div>
+                    <TextField
+                      id="spouse_name"
+                      name="spouse_name"
+                      color='success'
+                      value={userData.spouse_name}
+                      onChange={(e) => handleChange('spouse_name', e.target.value)}
+                      sx={{ width: "100%" }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Spouse DOB</div>
+                    <TextField
+                      id="spouse_dob"
+                      type="date"
+                      name="spouse_dob"
+                      color='success'
+                      value={userData.spouse_dob}
+                      onChange={(e) => handleChange('spouse_dob', e.target.value)}
+                      sx={{ width: "100%" }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Gender</div>
+                    <TextField
+                      id="gender"
+                      name="gender"
+                      color='success'
+                      value={userData.gender}
+                      onChange={(e) => handleChange('gender', e.target.value)}
+                      sx={{ width: "100%" }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Spouse Gender</div>
+                    <TextField
+                      id="spouse_gender"
+                      name="spouse_gender"
+                      color='success'
+                      value={userData.spouse_gender}
+                      onChange={(e) => handleChange('spouse_gender', e.target.value)}
+                      sx={{ width: "100%" }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Button variant="contained" type="submit"
+                      sx={{
+                        width: "100%", height: "3.5rem", fontSize: "1.1rem",
+                        backgroundColor: "#2196F3", boxShadow: "none", color: "white", marginTop: "1rem",
+                        textTransform: "capitalize"
+                        , "&:hover": {
+                          backgroundColor: "#2196F3", boxShadow: "none", color: "white",
+                          fontSize: "1.3rem", cursor: "pointer"
+                        }
+                      }} onClick={handleEdit}>
+                      Submit
+                    </Button>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
-          </Container>
+          </Box>
         </Box>
       </Box>
       {/* </Box> */}

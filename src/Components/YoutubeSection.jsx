@@ -9,7 +9,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 
 const YoutubeSearchSection = () => {
-  const [query, setQuery] = useState('finances');
+  const [query, setQuery] = useState('Finances');
   const [searchResults, setSearchResults] = useState([]);
   const [linksArray, setLinksArray] = useState([]);
 
