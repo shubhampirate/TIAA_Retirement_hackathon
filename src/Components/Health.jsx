@@ -77,7 +77,7 @@ const HealthTabContent = ({ label, content }) => {
       cols: 2,
     },
     {
-      img: 'https://www.canarahsbclife.com/content/dam/choice/blog-inner/images/retirment-img.jpg',
+      img: 'https://www.paisabazaar.com/wp-content/uploads/2019/07/Types-of-Financial-planning-1.jpg',
       title: 'Honey',
       author: '@arwinneil',
       rows: 2,
