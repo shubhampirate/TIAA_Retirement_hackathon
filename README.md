@@ -54,7 +54,7 @@ We understand the importance of clear communication and user customization. Ther
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-username/your-repository.git
+   git clone https://github.com/shubhampirate/TIAA_Retirement_hackathon.git
    ```
 
 2. **Install Dependencies:**
