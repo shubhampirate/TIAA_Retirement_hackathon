@@ -50,6 +50,7 @@ class User(AbstractUser):
     address = models.CharField(max_length=250)
     dob = models.DateField(blank=True, null=True)
     gender = models.CharField(default = 'NA',max_length = 10)
+    phone_number = models.CharField(max_length=10, blank=True, null=True)
     spouse_name = models.CharField(max_length=100, blank=True, null=True)
     spouse_dob = models.DateField(blank=True, null=True)
     spouse_gender = models.CharField(default = 'NA',max_length = 10)
@@ -116,3 +117,15 @@ class Education(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+class Mediclaim(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    doctor_charges = models.PositiveIntegerField(default=0)
+    room_charges = models.PositiveIntegerField(default=0)
+    bill_amount = models.PositiveIntegerField(default=0)
+    final_amount = models.PositiveIntegerField(default=0)
+    date = models.DateField(blank=True, null=True, auto_now_add=True)
+
+    def __str__(self):
+        return self.user.email

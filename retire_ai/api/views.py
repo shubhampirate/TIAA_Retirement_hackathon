@@ -8,8 +8,8 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login
 from django.db.models import Q
 
-from .serializers import RegisterSerializer,LoginSerializer,UserSerializer,DoctorSerializer,SavingSerializer,ExpenseSerializer,EducationCategorySerializer,EducationSerializer
-from .models import User,Doctor,Saving,Expense,EducationCategory,Education
+from .serializers import RegisterSerializer,LoginSerializer,UserSerializer,DoctorSerializer,SavingSerializer,ExpenseSerializer,EducationCategorySerializer,EducationSerializer, MediclaimSerializer
+from .models import User,Doctor,Saving,Expense,EducationCategory,Education, Mediclaim
 
 import joblib
 import pandas as pd
@@ -330,7 +330,65 @@ class EducationAPI(GenericAPIView):
             return Response({"status" : True ,"data" : {}, "message" : 'Education Deleted Successfully'},status = status.HTTP_200_OK)
         except Exception as e:
             return Response({"status" : False ,"data" : {}, "message" : f"{e}"},status = status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
 
+class MediclaimAPI(GenericAPIView):
+     
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = MediclaimSerializer
+    queryset = Mediclaim.objects.all()
+    
+    def get(self,request,*args,**kwargs):
+        try:
+            expenses = Mediclaim.objects.filter(user=request.user)
+            serializer = self.serializer_class(expenses,many=True)
+            return Response({"status" : True ,"data" : serializer.data, "message" : 'Success'},status = status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"status" : False ,"data" : {}, "message" : f"{e}"},status = status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+    def post(self,request,*args,**kwargs):
+        try:
+            data = request.data
+            serializer = self.serializer_class(data=data)
+            if serializer.is_valid(raise_exception = True):
+                expense = serializer.save()
+                return Response({"status" : True ,"data" : serializer.data, "message" : "Success"},status=status.HTTP_200_OK)
+            return Response({"status" : False ,"data" : serializer.errors, "message" : "Failure"}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({"status" : False ,"data" : {}, "message" : f"{e}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+    def get(self,request,pk=None,*args,**kwargs):
+        try:
+            if not pk:
+                expenses = Mediclaim.objects.filter(user=request.user)
+                serializer = self.serializer_class(expenses,many=True)
+                return Response({"status" : True ,"data" : serializer.data, "message" : 'Success'},status = status.HTTP_200_OK)
+            expense = Mediclaim.objects.get(id = pk)
+            serializer = self.serializer_class(expense)
+            return Response({"status" : True ,"data" : serializer.data, "message" : 'Success'},status = status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"status" : False ,"data" : {}, "message" : f"{e}"},status = status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+    def put(self,request,pk,*args,**kwargs):
+        try:
+            expense = Mediclaim.objects.get(id = pk)
+            data = request.data
+            serializer = self.serializer_class(expense,data=data,partial=True)
+            if serializer.is_valid(raise_exception = True):
+                expense = serializer.save()
+                return Response({"status" : True ,"data" : serializer.data, "message" : "Success"},status=status.HTTP_200_OK)
+            return Response({"status" : False ,"data" : serializer.errors, "message" : "Failure"}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({"status" : False ,"data" : {}, "message" : f"{e}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+    def delete(self,request,pk,*args,**kwargs):
+        try:
+            expense = Mediclaim.objects.get(id = pk)
+            expense.delete()
+            return Response({"status" : True ,"data" : {}, "message" : 'Expense Deleted Successfully'},status = status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"status" : False ,"data" : {}, "message" : f"{e}"},status = status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
 
 @api_view(['GET'])
 def get_credit_risk(request):

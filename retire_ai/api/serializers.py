@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Doctor, Saving, Expense, EducationCategory, Education
+from .models import User, Doctor, Saving, Expense, EducationCategory, Education, Mediclaim
 
 import re
 email_pattern = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
@@ -9,7 +9,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 	
 	class Meta:
 		model = User
-		fields = ['first_name','last_name','email','address','dob','gender','spouse_name','spouse_dob','spouse_gender','profile_pic','password']
+		fields = ['first_name','last_name','email','address','dob','gender','phone_number','spouse_name','spouse_dob','spouse_gender','profile_pic','password']
 
 	def validate(self,attrs):
 		email = attrs.get('email',' ')
@@ -93,3 +93,10 @@ class EducationSerializer(serializers.ModelSerializer):
         instance.yt_link = validated_data.get('yt_link', instance.yt_link)
         instance.save()
         return instance
+
+
+class MediclaimSerializer(serializers.ModelSerializer):
+         
+        class Meta:
+            model = Mediclaim
+            fields = '__all__'
