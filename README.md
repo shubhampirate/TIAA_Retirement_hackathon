@@ -35,6 +35,7 @@ Ensuring a healthy retirement involves more than just financial planning. Our He
 - **Health Insurance Services:** Information and options for health insurance coverage.
 - **Nearby Hospitals:** Locating and accessing healthcare facilities in the user's vicinity.
 - **Mediclaim Coverage Details:** Keeping track of medical insurance coverage.
+- **Google Fit Integration:** Syncing and tracking health and fitness data from Google Fit.
 - **Insurance History:** A comprehensive overview of previous insurance records.
 
 ### 4. Alan AI Integration
