@@ -178,19 +178,7 @@ export default function Dashboard() {
               </IconButton>
             </Box>
 
-            <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#B9D2FD', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', borderRadius: '40px', padding: '8px' }}>
-              {/* User profile image */}
-              <img
-                src={heroImg_4}
-                alt="User Profile"
-                style={{ borderRadius: '50%', width: '40px', height: '40px', marginRight: '10px' }}
-              />
 
-              {/* Settings button */}
-              <IconButton>
-                <SettingsIcon />
-              </IconButton>
-            </Box>
           </Toolbar>
         </AppBar>
 

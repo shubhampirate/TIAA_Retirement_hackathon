@@ -34,6 +34,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Doctormap from '../Hooks/Doctormap';
 import DeleteIcon from '@mui/icons-material/Delete';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import App from '../ComponentGoogle/App/App';
 
 const healthTopics = [
   {
@@ -48,6 +49,10 @@ const healthTopics = [
     label: 'Find Nearby Hospitals',
     content: 'Content for finding nearby hospitals...',
   },
+  {
+    label: 'Google Fit',
+    content: 'Content for finding google fit...'
+  }
 ];
 
 const HealthTabContent = ({ label, content }) => {
@@ -117,6 +122,34 @@ const HealthTabContent = ({ label, content }) => {
       [field]: value,
     }));
   };
+  const insurancePlans = [
+    { name: 'Plan A', premium: 100, rating: 4.5 },
+    { name: 'Plan B', premium: 120, rating: 3.8 },
+    { name: 'Plan C', premium: 150, rating: 4.2 },
+    { name: 'Plan D', premium: 90, rating: 4.8 },
+    { name: 'Plan E', premium: 110, rating: 3.5 },
+    { name: 'Plan F', premium: 130, rating: 4.0 },
+    { name: 'Plan G', premium: 95, rating: 4.7 },
+    { name: 'Plan H', premium: 140, rating: 3.9 },
+    { name: 'Plan I', premium: 105, rating: 4.3 },
+    { name: 'Plan J', premium: 125, rating: 4.6 },
+  ];
+
+  const getRandomPlans = () => {
+    // Shuffle the array to get a random order
+    const shuffledPlans = insurancePlans.sort(() => Math.random() - 0.5);
+
+    // Take the first 5 plans
+    const randomPlans = shuffledPlans.slice(0, 5);
+
+    return randomPlans;
+  };
+
+  const handleButtonClick = () => {
+    const randomPlans = getRandomPlans();
+    console.log(randomPlans);
+    // You can now use these plans as needed, e.g., display them in your UI
+  };
 
   return (
     <Box>
@@ -124,7 +157,7 @@ const HealthTabContent = ({ label, content }) => {
         <Grid item xs={12} md={6}>
           <Grid container spacing={2} style={{ paddingLeft: "0.75rem" }}>
             <Grid item xs={12}>
-              <div style={{ textAlign: "left", marginBottom: "0.5rem", fontSize: "2rem", fontWeight: "650" }}>
+              <div style={{ textAlign: "left", marginBottom: "0.5rem", fontSize: "1.75rem", fontWeight: "650" }}>
                 Allow us to assist you in discovering the optimal retirement health claim</div>
             </Grid>
             <Grid item xs={12} md={6} >
@@ -134,6 +167,7 @@ const HealthTabContent = ({ label, content }) => {
                 name="age"
                 color='success'
                 value={userData.age}
+                size='small'
                 onChange={(e) => handleChange('age', e.target.value)}
                 sx={{ width: "100%" }}
               />
@@ -144,6 +178,7 @@ const HealthTabContent = ({ label, content }) => {
                 id="sum"
                 name="sum"
                 color='success'
+                size='small'
                 value={userData.sum}
                 onChange={(e) => handleChange('sum', e.target.value)}
                 sx={{ width: "100%" }}
@@ -155,6 +190,7 @@ const HealthTabContent = ({ label, content }) => {
                 id="history"
                 name="history"
                 color='success'
+                size='small'
                 value={userData.history}
                 onChange={(e) => handleChange('history', e.target.value)}
                 sx={{ width: "100%" }}
@@ -166,8 +202,8 @@ const HealthTabContent = ({ label, content }) => {
                 id="coverage"
                 type='coverage'
                 name="coverage"
+                size='small'
                 color='success'
-                disabled
                 value={userData.coverage}
                 onChange={(e) => handleChange('coverage', e.target.value)}
                 sx={{ width: "100%" }}
@@ -179,6 +215,7 @@ const HealthTabContent = ({ label, content }) => {
                 id="duration"
                 name="duration"
                 color='success'
+                size='small'
                 value={userData.duration}
                 onChange={(e) => handleChange('duration', e.target.value)}
                 sx={{ width: "100%" }}
@@ -190,6 +227,7 @@ const HealthTabContent = ({ label, content }) => {
                 id="med_history"
                 name="med_history"
                 color='success'
+                size='small'
                 value={userData.med_history}
                 onChange={(e) => handleChange('med_history', e.target.value)}
                 sx={{ width: "100%" }}
@@ -201,6 +239,7 @@ const HealthTabContent = ({ label, content }) => {
                 id="hospital"
                 name="hospital"
                 color='success'
+                size='small'
                 value={userData.hospital}
                 onChange={(e) => handleChange('hospital', e.target.value)}
                 sx={{ width: "100%" }}
@@ -212,6 +251,7 @@ const HealthTabContent = ({ label, content }) => {
                 id="volunteer"
                 name="volunteer"
                 color='success'
+                size='small'
                 value={userData.volunteer}
                 onChange={(e) => handleChange('volunteer', e.target.value)}
                 sx={{ width: "100%" }}
@@ -223,6 +263,7 @@ const HealthTabContent = ({ label, content }) => {
                 id="plan"
                 name="plan"
                 color='success'
+                size='small'
                 value={userData.plan}
                 onChange={(e) => handleChange('plan', e.target.value)}
                 sx={{ width: "100%" }}
@@ -231,14 +272,14 @@ const HealthTabContent = ({ label, content }) => {
             <Grid item xs={12} md={6}>
               <Button variant="contained" type="submit"
                 sx={{
-                  width: "100%", height: "3.5rem", fontSize: "1.1rem",
-                  backgroundColor: "#2196F3", boxShadow: "none", color: "white", marginTop: "1rem",
+                  width: "100%", height: "2.6rem", fontSize: "1.1rem",
+                  backgroundColor: "#2196F3", boxShadow: "none", color: "white", marginTop: "1.1rem",
                   textTransform: "capitalize"
                   , "&:hover": {
                     backgroundColor: "#2196F3", boxShadow: "none", color: "white",
                     fontSize: "1.3rem", cursor: "pointer"
                   }
-                }} >
+                }} onClick={handleButtonClick} >
                 Submit
               </Button>
             </Grid>
@@ -286,7 +327,6 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
   const [finalAmount, setFinalAmount] = useState(0);
   const [roomChargesDeduction, setRoomChargesDeduction] = useState(0);
   const [doctorChargesDeduction, setDoctorChargesDeduction] = useState(0);
-  const [savedAmount, setSaveAmount] = useState(0);
   const [calculations, setCalculations] = useState([]);
   const [calculationId, setCalculationId] = useState(1);
 
@@ -338,8 +378,6 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
 
     // Deduct surplus amounts from the total bills
     const finalAmount = totalBills - roomChargesSurplus - doctorChargesSurplus;
-
-    setSaveAmount(roomChargesDeduction + doctorChargesDeduction);
 
     const calculationDetails = {
       id: calculationId,
@@ -417,7 +455,7 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
                   />
                 </Grid>
                 <Grid item xs={5}>
-                  <div style={{ textAlign: "left", marginBottom: "0.5rem" }}>After 15% Deduction</div>
+                  <div style={{ textAlign: "left", marginBottom: "0.5rem" }}>15% of Health Insurance</div>
                   <TextField
                     disabled
                     size='small'
@@ -440,7 +478,7 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
                   />
                 </Grid>
                 <Grid item xs={5}>
-                  <div style={{ textAlign: "left", marginBottom: "0.5rem" }}>After 25% Deduction</div>
+                  <div style={{ textAlign: "left", marginBottom: "0.5rem" }}>25% Deduction</div>
                   <TextField
                     disabled
                     size='small'
@@ -492,13 +530,16 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
               <Grid container spacing={2}>
                 <Grid item xs={4}>
                   <Button onClick={handleCalculate}
-                    sx={{ backgroundColor: "#387FF5", color: "white", textDecoration: "none", padding: "10px 20px", width: "100%" }}
+                    size='small'
+                    sx={{
+                      backgroundColor: "#387FF5", color: "white", textDecoration: "none",
+                      padding: "10px 20px", width: "100%", height: "2.5rem"
+                    }}
                   >Calculate </Button>
                 </Grid>
                 <Grid item xs={8}>
-                  <div style={{ textAlign: 'left', marginBottom: '0.5rem' }}>
+                  <div style={{ textAlign: 'left', marginBottom: '0.5rem', marginTop: "0.5rem" }}>
                     Your Final Amount is ₹ {finalAmount.toFixed(2)}<br />
-                    You have Saved ₹ {savedAmount.toFixed(2)}
                   </div>
                 </Grid>
               </Grid>
@@ -671,20 +712,6 @@ export default function Health() {
               </IconButton>
 
             </Box>
-
-            <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#B9D2FD', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', borderRadius: '40px', padding: '8px' }}>
-              {/* User profile image */}
-              <img
-                src={heroImg_4}
-                alt="User Profile"
-                style={{ borderRadius: '50%', width: '40px', height: '40px', marginRight: '10px' }}
-              />
-
-              {/* Settings button */}
-              <IconButton>
-                <SettingsIcon />
-              </IconButton>
-            </Box>
           </Toolbar>
         </AppBar>
 
@@ -745,7 +772,10 @@ export default function Health() {
                 topic.label === 'Find Nearby Hospitals' ? (
                   <Doctormap key={index} />
                 ) : (
-                  <HealthTabContent key={index} label={topic.label} content={topic.content} />
+                  topic.label === 'Google Fit' ? (
+                    <App />
+                  ) :
+                    <HealthTabContent key={index} label={topic.label} content={topic.content} />
                 )
               )
             )

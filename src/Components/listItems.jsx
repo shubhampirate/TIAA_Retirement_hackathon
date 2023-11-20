@@ -42,7 +42,7 @@ export const mainListItems = (
         <ListItemIcon>
           <SchoolIcon />
         </ListItemIcon>
-        <ListItemText primary="Educational Services" />
+        <ListItemText primary="Recreational Service" />
       </ListItemButton>
     </Link>
     <Link to="/questions" style={{ textDecoration: "none", color: "black" }}>
@@ -58,7 +58,7 @@ export const mainListItems = (
         <ListItemIcon>
           <SettingsIcon />
         </ListItemIcon>
-        <ListItemText primary="Settings" />
+        <ListItemText primary="Profile" />
       </ListItemButton>
     </Link>
   </React.Fragment >

@@ -53,7 +53,7 @@ const YoutubeSearchSection = () => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <div style={{ textAlign: "left", fontWeight: "750", fontSize: "1.5rem", marginBottom: "0.5rem", paddingTop: "2rem" }}>
-            Transactions History</div>
+            Discover the latest YouTube videos </div>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={2}>

@@ -20,56 +20,15 @@ import { mainListItems } from './listItems';
 import heroImg_4 from "../media/img_4.jpeg";
 import LinearProgress from '@mui/material/LinearProgress';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { Accordion, Accordioncurrent_savingsmary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import { TextField, Button } from '@mui/material';
+import PropTypes from 'prop-types';
 import useAlan from '../Hooks/useAlan';
+import Swal from 'sweetalert2';
 
-const FAQData = [
-    {
-        question: 'How can I plan for my retirement?',
-        answer: 'Planning for retirement involves assessing your financial situation, setting retirement goals, and creating a savings plan. Consider consulting with a financial advisor to develop a comprehensive retirement strategy tailored to your needs and lifestyle.',
-    },
-    {
-        question: 'What are some good investment options for retirees?',
-        answer: 'Retirees may consider a mix of low-risk and income-generating investments. Bonds, dividend-paying stocks, and real estate investment trusts (REITs) are popular choices. Diversifying your investment portfolio can help manage risk and provide a steady income stream during retirement.',
-    },
-    {
-        question: 'How can I access health aid programs?',
-        answer: 'Accessing health aid programs involves understanding the healthcare services available in your area. Contact your local government health services or explore private healthcare providers. Additionally, check for government-sponsored programs that offer financial assistance for medical expenses.',
-    },
-    {
-        question: 'Are there educational services for retirees?',
-        answer: 'Yes, many educational institutions offer programs and courses specifically designed for retirees. Look into local universities, community colleges, and online learning platforms for opportunities to continue learning and pursuing new interests during retirement.',
-    },
-    {
-        question: 'What are the tax implications of retirement withdrawals?',
-        answer: 'Withdrawals from retirement accounts may have tax implications. Its crucial to understand the tax rules associated with different retirement accounts, such as 401(k)s and IRAs. Consider consulting with a tax professional to optimize your withdrawal strategy and minimize tax liabilities.',
-    },
-    {
-        question: 'How can I protect my retirement savings from market volatility?',
-        answer: 'Protecting your retirement savings from market volatility involves diversifying your investments, regularly reviewing and adjusting your portfolio, and having a long-term investment strategy. Consider consulting with a financial advisor to create a plan that aligns with your risk tolerance and financial goals.',
-    },
-    {
-        question: 'Are there government programs for senior citizens?',
-        answer: 'Yes, various government programs provide support and assistance to senior citizens. These programs may include healthcare services, financial aid, and housing assistance. Explore resources offered by federal, state, and local government agencies to determine eligibility and access available benefits.',
-    },
-];
-const FAQItem = ({ question, answer }) => (
-    <Box sx={{ mb: 3 }}>
-        <Typography variant="h6">{question}</Typography>
-        <Typography>{answer}</Typography>
-    </Box>
-);
-const Title = styled(Typography)(({ theme }) => ({
-    fontSize: "25px",
-    color: "#042A57",
-    fontWeight: "bold",
-    textAlign: "left",
-    margin: theme.spacing(4, 0, 4, 0),
-    [theme.breakpoints.down("sm")]: {
-        fontSize: "30px",
-    },
-}));
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -91,65 +50,6 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 
-const ProgressBarBox = ({ title, value }) => {
-    let indicatorText = '';
-    let color = '';
-
-    if (value <= 30) {
-        indicatorText = 'Less';
-        color = '#BDFF7B';
-    } else if (value <= 70) {
-        indicatorText = 'Nearby Full';
-        color = '#FFE779';
-    } else {
-        indicatorText = 'Completely Full';
-        color = '#FC8965';
-    }
-
-    return (
-        <Grid item xs={12} sm={6} md={4}>
-            <Paper
-                sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    borderRadius: '16px',
-                }}
-            >
-                <Typography variant="h6" sx={{ mb: 1, color: "#0066FF" }}>
-                    {title}
-                </Typography>
-                <LinearProgress
-                    variant="determinate"
-                    value={value}
-                    sx={{
-                        width: '100%',
-                        height: '12px',
-                        borderRadius: '8px',
-                        backgroundColor: '#f0f0f0',
-                        marginBottom: '8px',
-                        '& .MuiLinearProgress-bar': {
-                            backgroundColor: color,
-                        },
-                    }}
-                />
-
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        width: '100%',
-
-                    }}
-                >
-                    <Typography variant="body2">{indicatorText}</Typography>
-                    <Typography variant="body2">{value}%</Typography>
-                </Box>
-            </Paper>
-        </Grid>
-    );
-};
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
         '& .MuiDrawer-paper': {
@@ -179,6 +79,39 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
+function CustomTabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{ p: 3 }}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
+
+CustomTabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
+
 export default function Questions() {
 
     useAlan()
@@ -187,6 +120,60 @@ export default function Questions() {
     const toggleDrawer = () => {
         setOpen(!open);
     };
+
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
+    const [loadList, setLoadlist] = useState([]);
+    const [userData, setUserData] = useState(
+        {
+            years: '',
+            current_savings: '',
+            annual_expense: '',
+            return_on_investments: '',
+            inflation_rate: 0.03,
+            other_earnings: ''
+        }
+    );
+
+    const handleChangeplan = (field, value) => {
+        setUserData((prevData) => ({
+            ...prevData,
+            [field]: value,
+        }));
+        console.log(userData)
+    };
+
+    const handlePost = async () => {
+        console.log(userData)
+        fetch(`https://wixstocle.pythonanywhere.com/api/retirement-simulation/`, {
+            method: 'POST',
+            body: userData,
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                // console.log(data);
+                if (data.status == true) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully Edited the details',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: data.message,
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+            });
+    }
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -229,19 +216,7 @@ export default function Questions() {
 
                         </Box>
 
-                        <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#B9D2FD', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', borderRadius: '40px', padding: '8px' }}>
-                            {/* User profile image */}
-                            <img
-                                src={heroImg_4}
-                                alt="User Profile"
-                                style={{ borderRadius: '50%', width: '40px', height: '40px', marginRight: '10px' }}
-                            />
 
-                            {/* Settings button */}
-                            <IconButton>
-                                <SettingsIcon />
-                            </IconButton>
-                        </Box>
                     </Toolbar>
                 </AppBar>
 
@@ -285,8 +260,195 @@ export default function Questions() {
                     {/* Start Here */}
 
                     <Container>
-                        <iframe title="Report Section" width="100%" height="650"
-                            src="https://app.powerbi.com/view?r=eyJrIjoiNmFhMjA5YWUtNzVlZi00YWE0LTkyNWYtNGM2OTI3MzA4NjhkIiwidCI6ImQxZjE0MzQ4LWYxYjUtNGEwOS1hYzk5LTdlYmYyMTNjYmM4MSIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
+                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                                <Tab label="Financial Dashboard" {...a11yProps(0)} />
+                                <Tab label="Retirement Planning" {...a11yProps(1)} />
+                                <Tab label="Portfolio Optimization" {...a11yProps(2)} />
+                            </Tabs>
+                        </Box>
+                        <CustomTabPanel value={value} index={0}>
+                            <iframe title="Report Section" width="100%" height="590"
+                                src="https://app.powerbi.com/view?r=eyJrIjoiNmFhMjA5YWUtNzVlZi00YWE0LTkyNWYtNGM2OTI3MzA4NjhkIiwidCI6ImQxZjE0MzQ4LWYxYjUtNGEwOS1hYzk5LTdlYmYyMTNjYmM4MSIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true">
+                            </iframe>
+                        </CustomTabPanel>
+                        <CustomTabPanel value={value} index={1}>
+                            <Box>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12} md={6}>
+                                        <Grid container spacing={2} style={{ paddingLeft: "0.75rem" }}>
+                                            <Grid item xs={12}>
+                                                <div style={{ textAlign: "left", marginBottom: "0.5rem", fontSize: "1.75rem", fontWeight: "650" }}>
+                                                    Allow us to assist you in discovering the optimal retirement planning</div>
+                                            </Grid>
+                                            <Grid item xs={12}  >
+                                                <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Years</div>
+                                                <TextField
+                                                    id="years"
+                                                    name="years"
+                                                    color='success'
+                                                    value={userData.years}
+                                                    size='small'
+                                                    onChange={(e) => handleChangeplan('years', e.target.value)}
+                                                    sx={{ width: "100%" }}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} >
+                                                <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Current Savings</div>
+                                                <TextField
+                                                    id="current_savings"
+                                                    name="current_savings"
+                                                    color='success'
+                                                    size='small'
+                                                    value={userData.current_savings}
+                                                    onChange={(e) => handleChangeplan('current_savings', e.target.value)}
+                                                    sx={{ width: "100%" }}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} >
+                                                <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Annual Expenses</div>
+                                                <TextField
+                                                    id="annual_expense"
+                                                    name="annual_expense"
+                                                    color='success'
+                                                    size='small'
+                                                    value={userData.annual_expense}
+                                                    onChange={(e) => handleChangeplan('annual_expense', e.target.value)}
+                                                    sx={{ width: "100%" }}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} >
+                                                <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Return of Investment</div>
+                                                <TextField
+                                                    id="return_on_investments"
+                                                    name="return_on_investments"
+                                                    size='small'
+                                                    color='success'
+                                                    value={userData.return_on_investments}
+                                                    onChange={(e) => handleChangeplan('return_on_investments', e.target.value)}
+                                                    sx={{ width: "100%" }}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} >
+                                                <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Other Earnings</div>
+                                                <TextField
+                                                    id="other_earnings"
+                                                    name="other_earnings"
+                                                    size='small'
+                                                    color='success'
+                                                    value={userData.other_earnings}
+                                                    onChange={(e) => handleChangeplan('other_earnings', e.target.value)}
+                                                    sx={{ width: "100%" }}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} >
+                                                <Button variant="contained" type="submit"
+                                                    sx={{
+                                                        width: "100%", height: "2.6rem", fontSize: "1.1rem",
+                                                        backgroundColor: "#2196F3", boxShadow: "none", color: "white", marginTop: "1.1rem",
+                                                        textTransform: "capitalize"
+                                                        , "&:hover": {
+                                                            backgroundColor: "#2196F3", boxShadow: "none", color: "white",
+                                                            fontSize: "1.3rem", cursor: "pointer"
+                                                        }
+                                                    }} onClick={handlePost}>
+                                                    Submit
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Box>
+                        </CustomTabPanel>
+                        <CustomTabPanel value={value} index={2}>
+                            <Box>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12} md={6}>
+                                        <Grid container spacing={2} style={{ paddingLeft: "0.75rem" }}>
+                                            <Grid item xs={12}>
+                                                <div style={{ textAlign: "left", marginBottom: "0.5rem", fontSize: "1.75rem", fontWeight: "650" }}>
+                                                    Allow us to assist you in discovering the Portfolio Management</div>
+                                            </Grid>
+                                            <Grid item xs={12}  >
+                                                <div style={{ textAlign: "left", fontSize: "0.78rem" }}>AEP Adjusted</div>
+                                                <TextField
+                                                    id="years"
+                                                    name="years"
+                                                    color='success'
+                                                    value={userData.years}
+                                                    size='small'
+                                                    onChange={(e) => handleChangeplan('years', e.target.value)}
+                                                    sx={{ width: "100%" }}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} >
+                                                <div style={{ textAlign: "left", fontSize: "0.78rem" }}>DFSVX Adjusted</div>
+                                                <TextField
+                                                    id="current_savings"
+                                                    name="current_savings"
+                                                    color='success'
+                                                    size='small'
+                                                    value={userData.current_savings}
+                                                    onChange={(e) => handleChangeplan('current_savings', e.target.value)}
+                                                    sx={{ width: "100%" }}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} >
+                                                <div style={{ textAlign: "left", fontSize: "0.78rem" }}>DFLVX Adjusted</div>
+                                                <TextField
+                                                    id="annual_expense"
+                                                    name="annual_expense"
+                                                    color='success'
+                                                    size='small'
+                                                    value={userData.annual_expense}
+                                                    onChange={(e) => handleChangeplan('annual_expense', e.target.value)}
+                                                    sx={{ width: "100%" }}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} >
+                                                <div style={{ textAlign: "left", fontSize: "0.78rem" }}>FSAGX Adjusted</div>
+                                                <TextField
+                                                    id="return_on_investments"
+                                                    name="return_on_investments"
+                                                    size='small'
+                                                    color='success'
+                                                    value={userData.return_on_investments}
+                                                    onChange={(e) => handleChangeplan('return_on_investments', e.target.value)}
+                                                    sx={{ width: "100%" }}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} >
+                                                <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Total Amount</div>
+                                                <TextField
+                                                    id="other_earnings"
+                                                    name="other_earnings"
+                                                    size='small'
+                                                    color='success'
+                                                    value={userData.other_earnings}
+                                                    onChange={(e) => handleChangeplan('other_earnings', e.target.value)}
+                                                    sx={{ width: "100%" }}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} >
+                                                <Button variant="contained" type="submit"
+                                                    sx={{
+                                                        width: "100%", height: "2.6rem", fontSize: "1.1rem",
+                                                        backgroundColor: "#2196F3", boxShadow: "none", color: "white", marginTop: "1.1rem",
+                                                        textTransform: "capitalize"
+                                                        , "&:hover": {
+                                                            backgroundColor: "#2196F3", boxShadow: "none", color: "white",
+                                                            fontSize: "1.3rem", cursor: "pointer"
+                                                        }
+                                                    }} onClick={handlePost}>
+                                                    Submit
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Box>
+                        </CustomTabPanel>
+
                     </Container>
 
                 </Box>
