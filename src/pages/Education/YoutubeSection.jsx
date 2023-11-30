@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
-import {
-  Paper,
-  Typography,
-  Box,
-  IconButton,
-  Grid, TextField
-} from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Box, Grid, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 const YoutubeSearchSection = () => {
   const [query, setQuery] = useState('Finances');
   const [searchResults, setSearchResults] = useState([]);
   const [linksArray, setLinksArray] = useState([]);
+
+
 
   const searchYouTube = async (q) => {
     q = encodeURIComponent(q);
@@ -28,6 +24,13 @@ const YoutubeSearchSection = () => {
     const body = await response.json();
     setSearchResults(body.videos || []);
   };
+
+  useEffect(() => {
+    const initialQuery = 'finances';
+    searchYouTube(initialQuery);
+  }, []);
+
+
 
   const extractLinks = () => {
     // Extract links from videos and set the array
@@ -80,7 +83,7 @@ const YoutubeSearchSection = () => {
                           <img
                             src={link.thumbnail}
                             alt={`Thumbnail ${index + 1}`}
-                            style={{ width: '100%', height: '15rem', objectFit: 'cover', borderRadius: '10px' }}
+                            style={{ width: '100%', height: '10rem', objectFit: 'cover', borderRadius: '10px' }}
                           />
                         </a>
                         <div style={{

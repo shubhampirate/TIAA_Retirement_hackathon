@@ -1,9 +1,8 @@
 import { Box, Button, styled, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import React from "react";
-import Navbar from "./Navbar";
 import Properties from "./Properties";
-import Footer from "./Footer";
+import Footer from "../../Components/Footer";
 import List from '@mui/joy/List';
 import ListItem from '@mui/joy/ListItem';
 import ListItemDecorator from '@mui/joy/ListItemDecorator';
@@ -14,9 +13,9 @@ import Home from '@mui/icons-material/Home';
 import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
-import heroImg from "../media/img_1.jpeg";
-import heroImg_2 from "../media/img_2.jpeg";
-import heroImg_3 from "../media/img_3.jpeg";
+import heroImg from "../../media/img_1.jpeg";
+import heroImg_2 from "../../media/img_2.jpeg";
+import heroImg_3 from "../../media/img_3.jpeg";
 import CustomButton from "./CustomButton";
 import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 import HandshakeIcon from '@mui/icons-material/Handshake';
@@ -86,7 +85,7 @@ const Hero = () => {
               >
                 <span>Empower Your Retirement with</span>{" "}
                 <span style={{ color: "#387FF5", fontWeight: "bold" }}>
-                  AI-Driven Insights
+                  Retire.AI
                 </span>
               </Typography>
 
@@ -95,7 +94,7 @@ const Hero = () => {
                 variant="body2"
                 sx={{ fontSize: "18px", color: "#1C1F25", my: 4 }}
               >
-                Nimbus harnesses the power of artificial intelligence to transform your retirement goals into actionable insights, propelling you to new heights of legacy!
+                Retire.AI harnesses the power of artificial intelligence to transform your retirement goals into actionable insights, propelling you to new heights of legacy!
               </Typography>
               <div style={containerStyle}>
                 <Button

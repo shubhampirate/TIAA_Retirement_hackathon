@@ -1,7 +1,6 @@
 // import * as React from 'react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-// import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
@@ -11,30 +10,27 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Container from '@mui/material/Container';
+import axios from 'axios';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import SettingsIcon from '@mui/icons-material/Settings';
-import { mainListItems } from './listItems';
-import heroImg_4 from "../media/img_4.jpeg";
+import { mainListItems } from '../../Components/listItems';
 import LinearProgress from '@mui/material/LinearProgress';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
+import Swal from 'sweetalert2';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import InputAdornment from '@mui/material/InputAdornment';
-import Doctormap from '../Hooks/Doctormap';
+import Doctormap from '../../Hooks/Doctormap';
 import DeleteIcon from '@mui/icons-material/Delete';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
-import App from '../ComponentGoogle/App/App';
+import App from '../../ComponentGoogle/App/App';
+import GoogleTranslateComponent from '../../Components/GoogleTranslateComponent';
 
 const healthTopics = [
   {
@@ -123,32 +119,42 @@ const HealthTabContent = ({ label, content }) => {
     }));
   };
   const insurancePlans = [
-    { name: 'Plan A', premium: 100, rating: 4.5 },
-    { name: 'Plan B', premium: 120, rating: 3.8 },
-    { name: 'Plan C', premium: 150, rating: 4.2 },
-    { name: 'Plan D', premium: 90, rating: 4.8 },
-    { name: 'Plan E', premium: 110, rating: 3.5 },
-    { name: 'Plan F', premium: 130, rating: 4.0 },
-    { name: 'Plan G', premium: 95, rating: 4.7 },
-    { name: 'Plan H', premium: 140, rating: 3.9 },
-    { name: 'Plan I', premium: 105, rating: 4.3 },
-    { name: 'Plan J', premium: 125, rating: 4.6 },
+    { name: 'HealthGuard Gold', premium: 1500, rating: 4.5 },
+    { name: 'CareShield Plus', premium: 1800, rating: 4.0 },
+    { name: 'LifeSaver Pro', premium: 2000, rating: 4.2 },
+    { name: 'Wellness Assurance', premium: 1200, rating: 4.8 },
+    { name: 'SecureLife Plus', premium: 1600, rating: 3.5 },
+    { name: 'MediCare Elite', premium: 1900, rating: 4.0 },
+    { name: 'GuardianHealth Platinum', premium: 1700, rating: 4.7 },
+    { name: 'FamilyCare Deluxe', premium: 2200, rating: 4.2 },
+    { name: 'FutureWell Assurance', premium: 1400, rating: 4.6 },
+    { name: 'SeniorCare Gold', premium: 2000, rating: 4.3 },
+    { name: 'CarePlus Ultra', premium: 2500, rating: 4.9 },
+    { name: 'WellBeing Premier', premium: 1800, rating: 4.5 },
+    { name: 'GuardianSecure Platinum', premium: 2100, rating: 4.3 },
+    { name: 'LifeGuardian Supreme', premium: 2300, rating: 4.7 },
+    { name: 'FamilyWell Complete', premium: 2400, rating: 4.0 },
+    { name: 'MediProtect Elite', premium: 2000, rating: 4.6 },
+    { name: 'SeniorShield Gold', premium: 2200, rating: 4.2 },
+    { name: 'FutureCare Pro', premium: 1900, rating: 4.8 },
+    { name: 'GuardianLife Secure', premium: 2600, rating: 4.5 },
+    { name: 'HealthAssure Prime', premium: 1700, rating: 4.4 },
   ];
 
+
+  const [randomPlans, setRandomPlans] = useState([]);
+  const [show, setShow] = useState(false);
   const getRandomPlans = () => {
     // Shuffle the array to get a random order
     const shuffledPlans = insurancePlans.sort(() => Math.random() - 0.5);
-
-    // Take the first 5 plans
     const randomPlans = shuffledPlans.slice(0, 5);
-
     return randomPlans;
   };
 
   const handleButtonClick = () => {
-    const randomPlans = getRandomPlans();
+    setRandomPlans(getRandomPlans());
     console.log(randomPlans);
-    // You can now use these plans as needed, e.g., display them in your UI
+    setShow(true);
   };
 
   return (
@@ -285,7 +291,38 @@ const HealthTabContent = ({ label, content }) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6} style={{ paddingRight: "1rem" }}>
+          <div style={{
+            textAlign: "left", marginBottom: "2rem", fontSize: "1.2rem", marginTop: "2rem",
+            fontWeight: "500", marginLeft: "0.6rem"
+          }}>
+            Your next Health Insurance can be valued at ₹ 15204.5</div>
+          <div style={{ textAlign: "center", marginBottom: "0.5rem", fontSize: "1.25rem", fontWeight: "600" }}>Health Insurance Polcies</div>
+          <div className="center-table">
+            <table>
+              {show ? <>
+                <thead>
+                  <tr>
+                    <th style={{ width: '40%', textAlign: "left" }}>Health Insurance</th>
+                    <th style={{ width: '30%', textAlign: "left" }}>Premium</th>
+                    <th style={{ width: '30%', textAlign: "left" }}>Ratings</th>
+                  </tr>
+                </thead></> : <></>}
+              <tbody>
+                {randomPlans?.map((doc) => {
+                  return (
+                    <tr>
+                      <td style={{ textAlign: 'left' }}>{doc?.name}</td>
+                      <td style={{ textAlign: 'left' }}>₹ {doc?.premium}</td>
+                      <td style={{ textAlign: 'left' }}>{doc?.rating}</td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        </Grid>
+        {/* <Grid item xs={12} md={6}>
           <ImageList
             sx={{ width: "98%", height: 610, marginLeft: "0.5rem" }}
             variant="quilted"
@@ -303,22 +340,11 @@ const HealthTabContent = ({ label, content }) => {
               </ImageListItem>
             ))}
           </ImageList>
-        </Grid>
+        </Grid> */}
       </Grid>
-
-
     </Box>)
 
 }
-
-
-// <Box sx={{ p: 3 }}>
-//   <Typography variant="h5" mb={2}>{label}</Typography>
-//   <Typography>{content}</Typography>
-// </Box>
-
-
-
 
 const CalculateMediclaimTabContent = ({ label, content }) => {
   const [roomCharges, setRoomCharges] = useState(0);
@@ -328,7 +354,7 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
   const [roomChargesDeduction, setRoomChargesDeduction] = useState(0);
   const [doctorChargesDeduction, setDoctorChargesDeduction] = useState(0);
   const [calculations, setCalculations] = useState([]);
-  const [calculationId, setCalculationId] = useState(1);
+  const [show, setShow] = useState(false);
 
   const handleAddBill = () => {
     setBills([...bills, { amount: 0, pdf: null }]);
@@ -353,6 +379,43 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
     setBills(updatedBills);
   };
 
+  useEffect(() => {
+    loadList();
+  }, []);
+
+  const loadList = async () => {
+    const result = await axios.get(`https://wixstocle.pythonanywhere.com/api/mediclaim/`, {
+      headers: { "Authorization": `Token 11c868750d92deda81638c5a9a59177bdc7ae41a` },
+    });
+    console.log(result.data.data);
+    setCalculations(result.data.data);
+    setShow(true);
+
+    async function query(data) {
+      const response = await fetch(
+        "https://api-inference.huggingface.co/models/cxllin/Llama2-7b-Finance",
+        {
+          headers: { Authorization: "Bearer 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" },
+          method: "POST",
+          body: JSON.stringify(data),
+        }
+      );
+      const result = await response.json();
+      return result;
+    }
+
+    // Assuming you are calling this function inside a React component or useEffect
+    async function fetchData() {
+      try {
+        const response = await query({ "inputs": "Can you please let us know more details about your " });
+        console.log(JSON.stringify(response));
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+    fetchData();
+  }
+
   const handleCalculate = () => {
 
     const roomChargesValue = parseFloat(roomCharges);
@@ -366,7 +429,6 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
 
     setRoomChargesDeduction((15 / 100) * healthinsurance);
     setDoctorChargesDeduction((25 / 100) * healthinsurance)
-
     // Check if room charges exceed 15%
     const roomChargesExceed = roomCharges > roomChargesDeduction;
     // Check if doctor charges exceed 25%
@@ -379,27 +441,51 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
     // Deduct surplus amounts from the total bills
     const finalAmount = totalBills - roomChargesSurplus - doctorChargesSurplus;
 
-    const calculationDetails = {
-      id: calculationId,
-      roomCharges,
-      doctorCharges,
-      totalBillamount,
-      finalAmount: finalAmount.toFixed(2),
-    };
+    handleEdit(roomCharges, doctorCharges, totalBillamount, finalAmount.toFixed(2));
 
-    setCalculations([...calculations, calculationDetails]);
-    setCalculationId(calculationId + 1);
-
-    // You can use the calculated values as needed, such as displaying them or further processing.
-    console.log("Total Room and Doctor Charges:", total);
-    console.log("Total Bills:", totalBills);
-    console.log("Room Charges Surplus Deduction:", roomChargesSurplus);
-    console.log("Doctor Charges Surplus Deduction:", doctorChargesSurplus);
-    console.log("Final Amount after Deductions:", finalAmount);
     setFinalAmount(finalAmount);
 
 
   };
+
+
+  const handleEdit = async (roomCharges, doctorCharges, totalBillamount, finalAmount) => {
+    fetch(`https://wixstocle.pythonanywhere.com/api/mediclaim/`, {
+      method: 'POST',
+      headers: {
+        "Authorization": `Token 11c868750d92deda81638c5a9a59177bdc7ae41a`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "doctor_charges": doctorCharges,
+        "room_charges": roomCharges,
+        "bill_amount": totalBillamount,
+        "final_amount": finalAmount,
+        "user": "tony@gmail.com"
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data);
+        if (data.status == true) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfully Edited the details',
+            showConfirmButton: false,
+            timer: 3000
+          })
+        }
+        else {
+          Swal.fire({
+            icon: 'error',
+            title: data.message,
+            showConfirmButton: false,
+            timer: 3000
+          })
+        }
+        loadList();
+      });
+  }
 
   return (
     <Box sx={{ p: 3, textAlign: 'center' }}>
@@ -411,7 +497,7 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
           <div style={{ textAlign: "center", marginBottom: "0.5rem", fontSize: "1.25rem", fontWeight: "600" }}>Transactions History</div>
           <div className="center-table">
             <table>
-              <thead>
+              {show ? <><thead>
                 <tr>
                   <th style={{ width: '4%', textAlign: "left" }}>Sr.No</th>
                   <th style={{ width: '24%', textAlign: "left" }}>Room Charges</th>
@@ -419,16 +505,16 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
                   <th style={{ width: '24%', textAlign: "left" }}>Bill Amount</th>
                   <th style={{ width: '24%', textAlign: "left" }}>Final Amount</th>
                 </tr>
-              </thead>
+              </thead></> : <></>}
               <tbody>
                 {calculations?.map((doc) => {
                   return (
                     <tr>
                       <td style={{ textAlign: 'left' }}>{doc?.id}</td>
-                      <td style={{ textAlign: 'left' }}>{doc?.roomCharges}</td>
-                      <td style={{ textAlign: 'left' }}>{doc?.doctorCharges}</td>
-                      <td style={{ textAlign: 'left' }}>{doc?.totalBillamount}</td>
-                      <td style={{ textAlign: 'left' }}>{doc?.finalAmount}</td>
+                      <td style={{ textAlign: 'left' }}>₹ {doc?.room_charges}</td>
+                      <td style={{ textAlign: 'left' }}>₹ {doc?.doctor_charges}</td>
+                      <td style={{ textAlign: 'left' }}>₹ {doc?.bill_amount}</td>
+                      <td style={{ textAlign: 'left' }}>₹ {doc?.final_amount}</td>
                     </tr>
                   )
                 })}
@@ -551,16 +637,7 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
   );
 };
 
-const Title = styled(Typography)(({ theme }) => ({
-  fontSize: "25px",
-  color: "#042A57",
-  fontWeight: "bold",
-  textAlign: "left",
-  margin: theme.spacing(4, 0, 4, 0),
-  [theme.breakpoints.down("sm")]: {
-    fontSize: "30px",
-  },
-}));
+
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -582,65 +659,6 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 
-const ProgressBarBox = ({ title, value }) => {
-  let indicatorText = '';
-  let color = '';
-
-  if (value <= 30) {
-    indicatorText = 'Less';
-    color = '#BDFF7B';
-  } else if (value <= 70) {
-    indicatorText = 'Nearby Full';
-    color = '#FFE779';
-  } else {
-    indicatorText = 'Completely Full';
-    color = '#FC8965';
-  }
-
-  return (
-    <Grid item xs={12} sm={6} md={4}>
-      <Paper
-        sx={{
-          p: 2,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          borderRadius: '16px',
-        }}
-      >
-        <Typography variant="h6" sx={{ mb: 1, color: "#0066FF" }}>
-          {title}
-        </Typography>
-        <LinearProgress
-          variant="determinate"
-          value={value}
-          sx={{
-            width: '100%',
-            height: '12px',
-            borderRadius: '8px',
-            backgroundColor: '#f0f0f0',
-            marginBottom: '8px',
-            '& .MuiLinearProgress-bar': {
-              backgroundColor: color,
-            },
-          }}
-        />
-
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '100%',
-
-          }}
-        >
-          <Typography variant="body2">{indicatorText}</Typography>
-          <Typography variant="body2">{value}%</Typography>
-        </Box>
-      </Paper>
-    </Grid>
-  );
-};
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     '& .MuiDrawer-paper': {
@@ -682,12 +700,10 @@ export default function Health() {
     setSelectedTabIndex(newValue);
   };
 
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex', borderRadius: '16px', overflow: 'hidden', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }} >
         <CssBaseline />
-
         <AppBar position="absolute" open={open} sx={{ backgroundColor: "whitesmoke", boxShadow: 'none' }}>
           <Toolbar
             sx={{
@@ -695,8 +711,7 @@ export default function Health() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-            }}
-          >
+            }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <IconButton
                 edge="start"
@@ -706,11 +721,9 @@ export default function Health() {
                   marginRight: '36px',
                   ...(open && { display: 'none' }),
                   backgroundColor: "#fff"
-                }}
-              >
+                }}>
                 <MenuIcon />
               </IconButton>
-
             </Box>
           </Toolbar>
         </AppBar>
@@ -722,8 +735,7 @@ export default function Health() {
               alignItems: 'center',
               justifyContent: 'flex-end',
               px: [1],
-            }}
-          >
+            }}><GoogleTranslateComponent />
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
             </IconButton>
@@ -731,8 +743,6 @@ export default function Health() {
           <Divider />
           <List component="nav">
             {mainListItems}
-            {/* <Divider sx={{ my: 1 }} /> */}
-            {/* {secondaryListItems} */}
           </List>
         </Drawer>
         <Box
@@ -746,10 +756,8 @@ export default function Health() {
             height: '100vh',
             overflow: 'auto',
 
-          }}
-        >
+          }}>
           <Toolbar />
-
           {isSmallScreen ? (
             <Tabs value={selectedTabIndex} onChange={handleTabChange} centered>
               {healthTopics.map((topic, index) => (
@@ -776,14 +784,10 @@ export default function Health() {
                     <App />
                   ) :
                     <HealthTabContent key={index} label={topic.label} content={topic.content} />
-                )
-              )
-            )
+                )))
           ))}
-
         </Box>
       </Box>
-      {/* </Box> */}
     </ThemeProvider>
   );
 }

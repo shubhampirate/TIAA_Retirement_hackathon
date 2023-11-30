@@ -9,59 +9,62 @@ import SchoolIcon from '@mui/icons-material/School';
 import HelpCenterIcon from '@mui/icons-material/HelpCenter';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Link } from 'react-router-dom';
+import GoogleTranslateComponent from './GoogleTranslateComponent';
 
 
 export const mainListItems = (
-  <React.Fragment>
-    <Link to="/dashboard" style={{ textDecoration: "none", color: "black" }}>
-      <ListItemButton>
-        <ListItemIcon>
-          <DashboardIcon />
-        </ListItemIcon>
-        <ListItemText primary="Dashboard" />
-      </ListItemButton>
-    </Link>
-    <Link to="/health" style={{ textDecoration: "none", color: "black" }}>
-      <ListItemButton>
-        <ListItemIcon>
-          <MedicalInformationIcon />
-        </ListItemIcon>
-        <ListItemText primary="HeathCare" />
-      </ListItemButton>
-    </Link>
-    <Link to="/finance" style={{ textDecoration: "none", color: "black" }}>
-      <ListItemButton>
-        <ListItemIcon>
-          <SavingsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Finance Planning" />
-      </ListItemButton>
-    </Link>
-    <Link to="/education" style={{ textDecoration: "none", color: "black" }}>
-      <ListItemButton>
-        <ListItemIcon>
-          <SchoolIcon />
-        </ListItemIcon>
-        <ListItemText primary="Recreational Service" />
-      </ListItemButton>
-    </Link>
-    <Link to="/questions" style={{ textDecoration: "none", color: "black" }}>
-      <ListItemButton>
-        <ListItemIcon>
-          <HelpCenterIcon />
-        </ListItemIcon>
-        <ListItemText primary="FAQ" />
-      </ListItemButton>
-    </Link>
-    <Link to="/settings" style={{ textDecoration: "none", color: "black" }}>
-      <ListItemButton>
-        <ListItemIcon>
-          <SettingsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Profile" />
-      </ListItemButton>
-    </Link>
-  </React.Fragment >
+  <>
+    <React.Fragment>
+      <Link to="/dashboard" style={{ textDecoration: "none", color: "black" }}>
+        <ListItemButton>
+          <ListItemIcon>
+            <DashboardIcon />
+          </ListItemIcon>
+          <ListItemText primary="Dashboard" />
+        </ListItemButton>
+      </Link>
+      <Link to="/health" style={{ textDecoration: "none", color: "black" }}>
+        <ListItemButton>
+          <ListItemIcon>
+            <MedicalInformationIcon />
+          </ListItemIcon>
+          <ListItemText primary="HeathCare" />
+        </ListItemButton>
+      </Link>
+      <Link to="/finance" style={{ textDecoration: "none", color: "black" }}>
+        <ListItemButton>
+          <ListItemIcon>
+            <SavingsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Finance Planning" />
+        </ListItemButton>
+      </Link>
+      <Link to="/education" style={{ textDecoration: "none", color: "black" }}>
+        <ListItemButton>
+          <ListItemIcon>
+            <SchoolIcon />
+          </ListItemIcon>
+          <ListItemText primary="Educational Service" />
+        </ListItemButton>
+      </Link>
+      <Link to="/questions" style={{ textDecoration: "none", color: "black" }}>
+        <ListItemButton>
+          <ListItemIcon>
+            <HelpCenterIcon />
+          </ListItemIcon>
+          <ListItemText primary="FAQ" />
+        </ListItemButton>
+      </Link>
+      <Link to="/settings" style={{ textDecoration: "none", color: "black" }}>
+        <ListItemButton>
+          <ListItemIcon>
+            <SettingsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Profile" />
+        </ListItemButton>
+      </Link>
+    </React.Fragment >
+  </>
 );
 
 // export const secondaryListItems = (

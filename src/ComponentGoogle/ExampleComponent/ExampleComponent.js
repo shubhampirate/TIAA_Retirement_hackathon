@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Button, Toast } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ExampleComponent = ({ children }) => {
   const [show, toggleShow] = useState(true);

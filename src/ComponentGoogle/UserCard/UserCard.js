@@ -1,22 +1,23 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Card, CardContent, Typography } from '@mui/material';
+
 const UserCard = (props) => {
   const style = {
     backgroundColor: '#fff',
-    color: '#000'
+    color: '#000',
+    margin: '8px', // Simulates Bootstrap's mb-2 class
+    textAlign: 'center',
   };
+
   return (
-    <Card  className="mb-2 text-center" style={style}>
-      <Card.Body>
-        <Card.Title>
-          Welcome {props.user.name}
-        </Card.Title>
-        <Card.Subtitle>
+    <Card style={style}>
+      <CardContent>
+        <div style={{fontSize:"1.25rem", fontWeight:"500"}}>
           Your Google Fit Stats are aggregated below!
-        </Card.Subtitle>
-      </Card.Body>
+        </div>
+      </CardContent>
     </Card>
   );
-}
+};
+
 export default UserCard;

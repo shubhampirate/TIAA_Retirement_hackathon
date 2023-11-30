@@ -3,7 +3,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 import CardRowComponent from '../CardRowComponent/CardRowComponent.js';
 import UserCard from '../UserCard/UserCard.js';
 import ChartComponent from '../ChartComponent/ChartComponent.js';
-import 'bootstrap/dist/css/bootstrap.min.css';
 const { getRequestHeaders, getWeeklyData } = require('../../Utility/DataRequestManager.js');
 
 const Dashboard = (props) => {
@@ -23,7 +22,7 @@ const Dashboard = (props) => {
   return (
     <div>
       <Container className="p-3">
-        <div style={{backgroundColor:"#fff", color:'#000'}}>
+        <div style={{backgroundColor:"#fff", color:'#000', textAlign:"center"}}>
           <h1 className="header">Welcome To Fit Me Up Visualizer</h1>
           {props.user.haslogin ?
             null : <div>

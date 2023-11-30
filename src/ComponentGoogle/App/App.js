@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import Dashboard  from '../Dashboard/Dashboard';
 import './App.css';
@@ -60,7 +59,7 @@ const App = () => {
       <Navbar collapseOnSelect expand="lg" style={{backgroundColor: '#fff'}}>
         <Nav className="mr-auto">
         </Nav>
-        <Nav>
+        <Nav style={{textAlign:"right"}}>
           {user.haslogin ?
             <GoogleLogout
               clientId={CLIENT_ID}

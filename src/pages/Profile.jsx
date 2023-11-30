@@ -12,33 +12,19 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { blue, indigo } from '@mui/material/colors';
-// import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-// import NotificationsIcon from '@mui/icons-material/Notifications';
-import SettingsIcon from '@mui/icons-material/Settings';
-import { mainListItems } from './listItems';
-// import Chart from './Chart';
-// import Deposits from './Deposits';
+import { mainListItems } from '../Components/listItems';
 import TextField from '@mui/material/TextField';
-import EditIcon from '@mui/icons-material/Edit';
-import LogoutIcon from '@mui/icons-material/Logout';
-import heroImg_4 from "../media/img_4.jpeg";
-import heroImg_5 from "../media/img_5.jpeg";
 import Button from '@mui/material/Button';
 import LinearProgress from '@mui/material/LinearProgress';
 import Avatar from '@mui/material/Avatar';
-
-// import YourComponent from './YourComponent';
-import SearchIcon from '@mui/icons-material/Search';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import InputBase from '@mui/material/InputBase';
 import useAlan from '../Hooks/useAlan';
-
+import Savings from '../Components/Savings';
+import GoogleTranslateComponent from '../Components/GoogleTranslateComponent';
 
 const drawerWidth = 240;
 
@@ -61,65 +47,6 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 
-const ProgressBarBox = ({ title, value }) => {
-  let indicatorText = '';
-  let color = '';
-
-  if (value <= 30) {
-    indicatorText = 'Less';
-    color = '#BDFF7B';
-  } else if (value <= 70) {
-    indicatorText = 'Nearby Full';
-    color = '#FFE779';
-  } else {
-    indicatorText = 'Completely Full';
-    color = '#FC8965';
-  }
-
-  return (
-    <Grid item xs={12} sm={6} md={4}>
-      <Paper
-        sx={{
-          p: 2,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          borderRadius: '16px',
-        }}
-      >
-        <Typography variant="h6" sx={{ mb: 1, color: "#0066FF" }}>
-          {title}
-        </Typography>
-        <LinearProgress
-          variant="determinate"
-          value={value}
-          sx={{
-            width: '100%',
-            height: '12px',
-            borderRadius: '8px',
-            backgroundColor: '#f0f0f0',
-            marginBottom: '8px',
-            '& .MuiLinearProgress-bar': {
-              backgroundColor: color,
-            },
-          }}
-        />
-
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '100%',
-
-          }}
-        >
-          <Typography variant="body2">{indicatorText}</Typography>
-          <Typography variant="body2">{value}%</Typography>
-        </Box>
-      </Paper>
-    </Grid>
-  );
-};
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     '& .MuiDrawer-paper': {
@@ -149,20 +76,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function Settings() {
+export default function Profile() {
 
   useAlan();
-  const [isEditing, setIsEditing] = useState(false);
-  const [userData, setUserData] = useState([]
-    //   {
-    //   username: 'Dummy Username',
-    //   dob: '01/01/1990',
-    //   firstName: 'Dummy First Name',
-    //   lastName: 'Dummy Last Name',
-    //   email: 'dummy@email.com',
-    //   password: '********',
-    // }
-  );
+  const [userData, setUserData] = useState([]);
 
   useEffect(() => {
     loadList();
@@ -175,7 +92,6 @@ export default function Settings() {
     console.log(result.data.data);
     setUserData(result.data.data);
   }
-
 
   const handleChange = (field, value) => {
     setUserData((prevData) => ({
@@ -226,7 +142,6 @@ export default function Settings() {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex', borderRadius: '16px', overflow: 'hidden', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }} >
         <CssBaseline />
-
         <AppBar position="absolute" open={open} sx={{ backgroundColor: "whitesmoke", boxShadow: 'none' }}>
           <Toolbar
             sx={{
@@ -234,8 +149,7 @@ export default function Settings() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-            }}
-          >
+            }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <IconButton
                 edge="start"
@@ -249,23 +163,9 @@ export default function Settings() {
               >
                 <MenuIcon />
               </IconButton>
-
-              {/* Search tab */}
-              {/* <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', borderRadius: '4px', padding: '4px' }}>
-        <IconButton>
-          <SearchIcon />
-        </IconButton>
-        <InputBase
-          placeholder="Search..."
-          sx={{ ml: 1 }}
-        />
-      </Box> */}
-
             </Box>
-
           </Toolbar>
         </AppBar>
-
         <Drawer variant="permanent" open={open}>
           <Toolbar
             sx={{
@@ -273,8 +173,7 @@ export default function Settings() {
               alignItems: 'center',
               justifyContent: 'flex-end',
               px: [1],
-            }}
-          >
+            }}><GoogleTranslateComponent />
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
             </IconButton>
@@ -282,8 +181,6 @@ export default function Settings() {
           <Divider />
           <List component="nav">
             {mainListItems}
-            {/* <Divider sx={{ my: 1 }} /> */}
-            {/* {secondaryListItems} */}
           </List>
         </Drawer>
         <Box
@@ -296,21 +193,17 @@ export default function Settings() {
             flexGrow: 1,
             height: '100vh',
             overflow: 'auto',
-
-          }}
-        >
+          }}>
           <Toolbar />
-          {/* </Container> */}
-
-
-          {/* Start Here */}
-
           <Box style={{ margin: "0.5rem 1rem" }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6} md={4}>
                 <Grid container spacing={1}>
-                  <Grid item xs={12} style={{ marginLeft: "30%" }}>
-                    <Avatar alt={userData.first_name} sx={{ width: 150, height: 150, bgcolor: blue[500], fontSize: "2rem" }} > RM</Avatar>
+                  <Grid item xs={12} style={{ marginLeft: "35%" }}>
+                    <Avatar alt={userData.first_name} sx={{ width: 100, height: 100, bgcolor: blue[500], fontSize: "2rem" }} > JS</Avatar>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Savings />
                   </Grid>
                 </Grid>
               </Grid>
@@ -466,7 +359,6 @@ export default function Settings() {
           </Box>
         </Box>
       </Box>
-      {/* </Box> */}
     </ThemeProvider>
   );
 }
