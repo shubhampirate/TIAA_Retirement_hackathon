@@ -102,10 +102,10 @@ const Properties = () => {
                     color: "#1C1F25",
                     fontWeight: "bold",
                   }}>
-                  Estate Planning
+                  Personalized Voice Assistance & ChatBot
                 </Typography>
                 <StyledTypography sx={{ color: "#5A6473", fontSize: "16px", mt: 1, }}>
-                  Secure your family's future with meticulous estate planning, supported by a wealth of educational resources. From wills to trusts, empower yourself with the knowledge needed to make informed decisions for a lasting legacy.
+                  Embark on a personalized journey toward financial security with our voice and chat-assisted retirement planning. Tailored advice and intuitive conversations guide you through a unique path to achieve your retirement goals seamlessly.
                 </StyledTypography>
               </Item>
             </Grid>
@@ -134,7 +134,7 @@ const Properties = () => {
                     color: "#1C1F25",
                     fontWeight: "bold",
                   }}>
-                  Legacy Planning
+                  Finance Planning
                 </Typography>
                 <StyledTypography sx={{ color: "#5A6473", fontSize: "16px", mt: 1, }}>
                   Shape a meaningful legacy with our personalized planning services. From charitable giving to wealth transfer, we assist you in creating a lasting impact, ensuring your values endure for generations to come.

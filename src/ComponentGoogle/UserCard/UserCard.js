@@ -7,6 +7,7 @@ const UserCard = (props) => {
     color: '#000',
     margin: '8px', // Simulates Bootstrap's mb-2 class
     textAlign: 'center',
+    boxShadow:"none"
   };
 
   return (

@@ -46,7 +46,7 @@ export const Navbar = () => {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List>
+      {/* <List>
         {["Home", "About", "Services", "Contact"].map(
           (text, index) => (
             <ListItem key={text} disablePadding>
@@ -55,7 +55,6 @@ export const Navbar = () => {
                   {index === 0 && <HomeIcon />}
                   {index === 1 && <FeaturedPlayListIcon />}
                   {index === 2 && <MiscellaneousServicesIcon />}
-                  {/* {index === 2 && <ListAltIcon />} */}
                   {index === 3 && <ContactsIcon />}
                 </ListItemIcon>
                 <ListItemText primary={text} />
@@ -63,7 +62,7 @@ export const Navbar = () => {
             </ListItem>
           )
         )}
-      </List>
+      </List> */}
     </Box>
   );
 
@@ -132,16 +131,18 @@ export const Navbar = () => {
           >
             {list("left")}
           </Drawer>
-          <NavbarLogo src={logoImg} alt="logo" />
+          <div style={{ fontSize: "1.5rem", fontWeight: "700", marginLeft: "-1.3rem" }}>Retire.AI <br />
+            <span style={{ fontSize: "0.85rem", fontWeight: "500" }}>Presented by Pico Zen</span></div>
+
+          {/* <NavbarLogo src={logoImg} alt="logo" /> */}
         </Box>
 
-        <NavbarLinksBox>
+        {/* <NavbarLinksBox>
           <NavLink variant="body2">Home</NavLink>
           <NavLink variant="body2">About</NavLink>
           <NavLink variant="body2">Services</NavLink>
-          {/* <NavLink variant="body2">Listed</NavLink> */}
           <NavLink variant="body2">Contact</NavLink>
-        </NavbarLinksBox>
+        </NavbarLinksBox> */}
       </Box>
 
       <Box

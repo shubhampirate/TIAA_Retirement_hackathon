@@ -22,7 +22,7 @@ import HandshakeIcon from '@mui/icons-material/Handshake';
 import EmailIcon from '@mui/icons-material/Email';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import { Link, useNavigate } from "react-router-dom";
-
+import Navbar from "../../Components/Navbar"
 const Hero = () => {
 
   const CustomBox = styled(Box)(({ theme }) => ({
@@ -69,9 +69,9 @@ const Hero = () => {
 
   return (
     <>
-      <Box sx={{ backgroundColor: "#ffffff", marginTop: "8rem" }}>
+      <Box sx={{ backgroundColor: "#ffffff", marginTop: "1rem" }}>
         <Container>
-          {/* <Navbar /> */}
+          <Navbar />
           <CustomBox>
             <Box sx={{ flex: "1" }}>
               <Typography
@@ -122,7 +122,7 @@ const Hero = () => {
               <img
                 src={heroImg}
                 alt="heroImg"
-                style={{ maxWidth: "100%", maxHeight: "80%" }}
+                style={{ maxWidth: "100%", maxHeight: "80%", marginLeft: "4.2rem" }}
               />
             </Box>
           </CustomBox>

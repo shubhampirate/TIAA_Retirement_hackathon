@@ -8,6 +8,7 @@ import SavingsIcon from '@mui/icons-material/Savings';
 import SchoolIcon from '@mui/icons-material/School';
 import HelpCenterIcon from '@mui/icons-material/HelpCenter';
 import SettingsIcon from '@mui/icons-material/Settings';
+import SmartToyIcon from '@mui/icons-material/SmartToy';
 import { Link } from 'react-router-dom';
 import GoogleTranslateComponent from './GoogleTranslateComponent';
 
@@ -55,12 +56,20 @@ export const mainListItems = (
           <ListItemText primary="FAQ" />
         </ListItemButton>
       </Link>
-      <Link to="/settings" style={{ textDecoration: "none", color: "black" }}>
+      <Link to="/profile" style={{ textDecoration: "none", color: "black" }}>
         <ListItemButton>
           <ListItemIcon>
             <SettingsIcon />
           </ListItemIcon>
           <ListItemText primary="Profile" />
+        </ListItemButton>
+      </Link>
+      <Link to="/retireaibot" style={{ textDecoration: "none", color: "black" }}>
+        <ListItemButton>
+          <ListItemIcon>
+            <SmartToyIcon />
+          </ListItemIcon>
+          <ListItemText primary="Retire AI Bot" />
         </ListItemButton>
       </Link>
     </React.Fragment >

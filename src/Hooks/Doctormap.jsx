@@ -111,10 +111,10 @@ const Doctormap = () => {
                     <table>
                         <thead>
                             <tr>
-                                <th style={{ width: '30%', textAlign: "left" }}>Name</th>
-                                <th style={{ width: '30%', textAlign: "left" }}>Address</th>
-                                <th style={{ width: '25%', textAlign: "left" }}>Colony</th>
-                                <th style={{ width: '15%', textAlign: "left" }}>Type</th>
+                                <th style={{ width: '40%', textAlign: "left", color: "white" }}>Name</th>
+                                <th style={{ width: '40%', textAlign: "left", color: "white" }}>Address</th>
+                                {/* <th style={{ width: '25%', textAlign: "left" }}>Colony</th> */}
+                                <th style={{ width: '20%', textAlign: "left", color: "white" }}>Type</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -124,7 +124,7 @@ const Doctormap = () => {
                                         style={{ cursor: "pointer" }}>
                                         <td style={{ textAlign: 'left' }}>{doc?.name}</td>
                                         <td style={{ textAlign: 'left' }}>{doc?.full_address}</td>
-                                        <td style={{ textAlign: 'left' }}>{doc?.context?.locality?.name}</td>
+                                        {/* <td style={{ textAlign: 'left' }}>{doc?.context?.locality?.name}</td> */}
                                         <td style={{ textAlign: 'left', textTransform: "capitalize" }}>{doc?.poi_category[0]}</td>
                                     </tr>
                                 )

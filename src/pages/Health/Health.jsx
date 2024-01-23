@@ -12,7 +12,7 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import axios from 'axios';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
+import { MenuItem, Select, InputLabel, Card, CardActionArea, CardContent, CardMedia } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { mainListItems } from '../../Components/listItems';
@@ -31,6 +31,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import App from '../../ComponentGoogle/App/App';
 import GoogleTranslateComponent from '../../Components/GoogleTranslateComponent';
+import { BarChart } from '@mui/x-charts';
 
 const healthTopics = [
   {
@@ -100,14 +101,12 @@ const HealthTabContent = ({ label, content }) => {
   }
   const [userData, setUserData] = useState(
     {
-      age: '52',
-      sum: '45000',
-      history: 'No',
+      smoker: 'No',
+      history: 'None',
       coverage: 'Family',
       duration: '5 years',
       med_history: "None",
       hospital: 'Yes',
-      volunteer: "None",
       plan: 'Comprehensive'
     }
   );
@@ -150,7 +149,6 @@ const HealthTabContent = ({ label, content }) => {
     const randomPlans = shuffledPlans.slice(0, 5);
     return randomPlans;
   };
-
   const handleButtonClick = () => {
     setRandomPlans(getRandomPlans());
     console.log(randomPlans);
@@ -160,33 +158,245 @@ const HealthTabContent = ({ label, content }) => {
   return (
     <Box>
       <Grid container spacing={2} style={{ paddingTop: "1rem" }}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={0.5} />
+        <Grid item xs={12} md={7.5}>
+          <Grid container spacing={2} style={{ marginRight: "1rem" }}>
+            <Grid item xs={12} style={{ marginRight: "1rem" }}>
+              <Grid container spacing={2} style={{
+                padding: "10px 0px 12px 0px",
+                marginRight: "5rem", marginTop: "-1.5rem"
+              }}>
+                <Grid item xs={12} style={{ marginLeft: "-12px" }}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md={4}>
+                      <Card sx={{ maxWidth: 350, boxShadow: "none" }}>
+                        <CardActionArea>
+                          <CardContent>
+                            <div style={{ fontSize: "1.15rem", fontWeight: "550" }}>
+                              Quality Health Network at Your Fingertips
+                            </div>
+                            <LinearProgress variant="determinate" value={0} color="primary" style={{ borderRadius: "10%", margin: "16px 0px" }} />
+                            <Typography variant="body2" color="text.secondary" style={{ textAlign: "justify" }}>
+                              Experience the future of healthcare with our user-friendly website, where quality health
+                              services are just a click away. Advanced technologies to access medical information,
+                              and receive personalized health advices.
+                            </Typography>
+                          </CardContent>
+                        </CardActionArea>
+                      </Card>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                      <Card sx={{ maxWidth: 350, boxShadow: "none" }}>
+                        <CardActionArea>
+                          <CardContent>
+                            <div style={{ fontSize: "1.15rem", fontWeight: "550" }}>
+                              A care team Dedicated just for you and your loved ones
+                            </div>
+                            <LinearProgress variant="determinate" value={0} color="success" style={{ borderRadius: "10%", margin: "16px 0px" }} />
+                            <Typography variant="body2" color="text.secondary" style={{ textAlign: "justify" }} >
+                              Step into the future of healthcare through with us for easy retrieval of medical
+                              information. Our dedicated care team is here to prioritize your well being and good health,
+                              ensuring a tailored & accessible healthcare experience.
+                            </Typography>
+                          </CardContent>
+                        </CardActionArea>
+                      </Card>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                      <Card sx={{ maxWidth: 350, boxShadow: "none" }}>
+                        <CardActionArea>
+                          <CardContent>
+                            <div style={{ fontSize: "1.15rem", fontWeight: "550" }}>
+                              Peronalized Experience to Save Time & Money
+                            </div>
+                            <LinearProgress variant="determinate" value={0} color="warning" style={{ borderRadius: "10%", margin: "16px 0px" }} />
+                            <Typography variant="body2" color="text.secondary" textAlign={'justify'}>
+                              Indulge in your personalized experience that not only saves you time but also puts more
+                              money back in your pocket. We streamline your journey,
+                              ensuring solutions that maximize efficiency and minimize costs.
+                            </Typography>
+                          </CardContent>
+                        </CardActionArea>
+                      </Card>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={12} style={{ marginRight: "1rem" }}>
+              <Grid container spacing={2} style={{
+                backgroundColor: "white", padding: "10px 0px 12px 0px",
+                marginRight: "5rem", marginTop: "0.25rem"
+              }}>
+                <Grid item xs={12}>
+                  <div style={{ textAlign: "center", marginBottom: "0.5rem", fontSize: "1.25rem", fontWeight: "600" }}
+                    onClick={handleButtonClick}>Health Insurance Policies</div>
+                  <div className="center-table">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th style={{ width: '40%', textAlign: "left", color: "white" }}>Health Insurance</th>
+                          <th style={{ width: '30%', textAlign: "left", color: "white" }}>Premium</th>
+                          <th style={{ width: '30%', textAlign: "left", color: "white" }}>Ratings</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {randomPlans?.map((doc) => {
+                          return (
+                            <tr>
+                              <td style={{ textAlign: 'left' }}>{doc?.name}</td>
+                              <td style={{ textAlign: 'left' }}>₹ {doc?.premium}</td>
+                              <td style={{ textAlign: 'left' }}>{doc?.rating}</td>
+                            </tr>
+                          )
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} md={3.75} paddingRight={1}>
+          <Grid container spacing={2} style={{ backgroundColor: "white", padding: "10px 0px 12px 0px", marginTop: "0.25px" }}>
+            <Grid item xs={12} style={{ fontSize: "1.45rem", fontWeight: "600", paddingRight: "10px" }}>
+              Personalised Health Insurance Plans
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <InputLabel id="demo-simple-select-standard-label" style={{ marginBottom: "0.5rem" }}>Smoker</InputLabel>
+              <Select
+                variant='standard'
+                size='small'
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                value={userData.smoker}
+                onChange={(e) => handleChange('smoker', e.target.value)}
+                sx={{ width: "100%" }}>
+                <MenuItem value="yes">Yes</MenuItem>
+                <MenuItem value="no">No</MenuItem>
+              </Select>
+            </Grid>
+            <Grid item xs={12} md={6} style={{ paddingRight: "10px" }}>
+              <InputLabel id="demo-simple-select-standard-label" style={{ marginBottom: "0.5rem" }}>Coverage</InputLabel>
+              <Select
+                variant='standard'
+                size='small'
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                value={userData.coverage}
+                onChange={(e) => handleChange('coverage', e.target.value)}
+                label="Coverage"
+                sx={{ width: "100%" }}>
+                <MenuItem value="Family">Family</MenuItem>
+                <MenuItem value="Individual">Individual</MenuItem>
+                <MenuItem value="Business">Business</MenuItem>
+              </Select>
+            </Grid>
+            <Grid item xs={12} style={{ paddingRight: "10px" }}>
+              <div style={{ textAlign: "left", fontSize: "0.9rem", marginBottom: "0.8rem" }}>Any Pre-existing Medical Conditions</div>
+              <TextField
+                id="history"
+                name="history"
+                variant='standard'
+                color='success'
+                size='small'
+                value={userData.history}
+                onChange={(e) => handleChange('history', e.target.value)}
+                sx={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <InputLabel id="demo-simple-select-standard-label" style={{ marginBottom: "0.5rem" }}>Coverage Duration</InputLabel>
+              <Select
+                variant='standard'
+                size='small'
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                value={userData.duration}
+                onChange={(e) => handleChange('duration', e.target.value)}
+                label="Duration"
+                sx={{ width: "100%" }}>
+                <MenuItem value={5}>5 years</MenuItem>
+                <MenuItem value={7}>7 years</MenuItem>
+                <MenuItem value={10}>10 years</MenuItem>
+                <MenuItem value={15}>15 years</MenuItem>
+                <MenuItem value={20}>20 years</MenuItem>
+                <MenuItem value={25}>25 years</MenuItem>
+              </Select>
+            </Grid>
+            <Grid item xs={12} md={6} style={{ paddingRight: "10px" }}>
+              <InputLabel id="demo-simple-select-standard-label" style={{ marginBottom: "0.5rem" }}>Type of Plan</InputLabel>
+              <Select
+                variant='standard'
+                size='small'
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                value={userData.plan}
+                onChange={(e) => handleChange('plan', e.target.value)}
+                label="Smoker"
+                sx={{ width: "100%" }}>
+                <MenuItem value="Basic">Basic</MenuItem>
+                <MenuItem value="Comprehensive">Comprehensive</MenuItem>
+              </Select>
+            </Grid>
+            <Grid item xs={12} style={{ paddingRight: "10px" }}>
+              <div style={{ textAlign: "left", fontSize: "0.9rem", marginBottom: "0.8rem" }}>Preffered Hospital Network</div>
+              <TextField
+                id="hospital"
+                name="hospital"
+                color='success'
+                size='small'
+                variant='standard'
+                value={userData.hospital}
+                onChange={(e) => handleChange('hospital', e.target.value)}
+                sx={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid item xs={12} style={{ paddingRight: "10px" }}>
+              <div style={{ textAlign: "left", fontSize: "0.9rem", marginBottom: "0.8rem" }}>Medical History Details</div>
+              <TextField
+                id="med_history"
+                name="med_history"
+                color='success'
+                size='small'
+                variant='standard'
+                value={userData.med_history}
+                onChange={(e) => handleChange('med_history', e.target.value)}
+                sx={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid item xs={12} style={{ paddingRight: "10px" }}>
+              <Button variant="contained" type="submit"
+                sx={{
+                  width: "100%", height: "2.6rem", fontSize: "1.1rem",
+                  backgroundColor: "#2196F3", boxShadow: "none", color: "white", marginTop: "1.3rem",
+                  textTransform: "capitalize"
+                  , "&:hover": {
+                    backgroundColor: "#2196F3", boxShadow: "none", color: "white",
+                    fontSize: "1.3rem", cursor: "pointer"
+                  }
+                }} onClick={handleButtonClick} >
+                Submit
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+        {/* <Grid item xs={12} md={6}>
           <Grid container spacing={2} style={{ paddingLeft: "0.75rem" }}>
             <Grid item xs={12}>
               <div style={{ textAlign: "left", marginBottom: "0.5rem", fontSize: "1.75rem", fontWeight: "650" }}>
                 Allow us to assist you in discovering the optimal retirement health claim</div>
             </Grid>
             <Grid item xs={12} md={6} >
-              <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Age of the Insured</div>
+              <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Smoker</div>
               <TextField
-                id="age"
-                name="age"
+                id="smoker"
+                name="smoker"
                 color='success'
-                value={userData.age}
+                value={userData.smoker}
                 size='small'
-                onChange={(e) => handleChange('age', e.target.value)}
-                sx={{ width: "100%" }}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Sum Insured</div>
-              <TextField
-                id="sum"
-                name="sum"
-                color='success'
-                size='small'
-                value={userData.sum}
-                onChange={(e) => handleChange('sum', e.target.value)}
+                onChange={(e) => handleChange('smoker', e.target.value)}
                 sx={{ width: "100%" }}
               />
             </Grid>
@@ -252,18 +462,6 @@ const HealthTabContent = ({ label, content }) => {
               />
             </Grid>
             <Grid item xs={12} md={6}>
-              <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Voluntary Deductibles</div>
-              <TextField
-                id="volunteer"
-                name="volunteer"
-                color='success'
-                size='small'
-                value={userData.volunteer}
-                onChange={(e) => handleChange('volunteer', e.target.value)}
-                sx={{ width: "100%" }}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
               <div style={{ textAlign: "left", fontSize: "0.78rem" }}>Type of Plan</div>
               <TextField
                 id="plan"
@@ -296,8 +494,8 @@ const HealthTabContent = ({ label, content }) => {
             textAlign: "left", marginBottom: "2rem", fontSize: "1.2rem", marginTop: "2rem",
             fontWeight: "500", marginLeft: "0.6rem"
           }}>
-            Your next Health Insurance can be valued at ₹ 15204.5</div>
-          <div style={{ textAlign: "center", marginBottom: "0.5rem", fontSize: "1.25rem", fontWeight: "600" }}>Health Insurance Polcies</div>
+            Your next Health Insurance can be valued at ₹ 5,00,000</div>
+          <div style={{ textAlign: "center", marginBottom: "0.5rem", fontSize: "1.25rem", fontWeight: "600" }}>Health Insurance Policies</div>
           <div className="center-table">
             <table>
               {show ? <>
@@ -321,7 +519,7 @@ const HealthTabContent = ({ label, content }) => {
               </tbody>
             </table>
           </div>
-        </Grid>
+        </Grid> */}
         {/* <Grid item xs={12} md={6}>
           <ImageList
             sx={{ width: "98%", height: 610, marginLeft: "0.5rem" }}
@@ -342,7 +540,7 @@ const HealthTabContent = ({ label, content }) => {
           </ImageList>
         </Grid> */}
       </Grid>
-    </Box>)
+    </Box >)
 
 }
 
@@ -357,7 +555,7 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
   const [show, setShow] = useState(false);
 
   const handleAddBill = () => {
-    setBills([...bills, { amount: 0, pdf: null }]);
+    setBills([...bills, { amount: '', pdf: null }]);
   };
 
   const handleDeleteBill = (index) => {
@@ -441,13 +639,38 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
     // Deduct surplus amounts from the total bills
     const finalAmount = totalBills - roomChargesSurplus - doctorChargesSurplus;
 
+    setFinalAmount(finalAmount);
+  };
+
+  const handleClaim = () => {
+
+    const roomChargesValue = parseFloat(roomCharges);
+    const doctorChargesValue = parseFloat(doctorCharges);
+    const healthinsurance = 500000;
+
+    const total = roomChargesValue + doctorChargesValue;
+    const totalBills = total + bills.reduce((total, bill) => total + bill.amount, 0)
+
+    const totalBillamount = bills.reduce((total, bill) => total + bill.amount, 0)
+
+    setRoomChargesDeduction((15 / 100) * healthinsurance);
+    setDoctorChargesDeduction((25 / 100) * healthinsurance)
+    // Check if room charges exceed 15%
+    const roomChargesExceed = roomCharges > roomChargesDeduction;
+    // Check if doctor charges exceed 25%
+    const doctorChargesExceed = doctorCharges > doctorChargesDeduction;
+
+    // Calculate surplus amounts for room charges and doctor charges
+    const roomChargesSurplus = roomChargesExceed ? roomCharges - roomChargesDeduction : 0;
+    const doctorChargesSurplus = doctorChargesExceed ? doctorCharges - doctorChargesDeduction : 0;
+
+    // Deduct surplus amounts from the total bills
+    const finalAmount = totalBills - roomChargesSurplus - doctorChargesSurplus;
+
     handleEdit(roomCharges, doctorCharges, totalBillamount, finalAmount.toFixed(2));
 
     setFinalAmount(finalAmount);
-
-
   };
-
 
   const handleEdit = async (roomCharges, doctorCharges, totalBillamount, finalAmount) => {
     fetch(`https://wixstocle.pythonanywhere.com/api/mediclaim/`, {
@@ -487,50 +710,121 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
       });
   }
 
+  const room = [500000, 50500, 510000, 10000, 100000];
+  const doctor = [50000, 50000, 451200, 750000, 125000];
+  const billAmnt = [118000, 110080, 784500, 512000, 238100];
+  const finalAmnt = [100000, 100000, 804500, 512000, 238100];
+  const xLabels = [
+    'Invoice 2',
+    'Invoice 3',
+    'Invoice 4',
+    'Invoice 5',
+    'Invoice 6',
+  ];
+
   return (
     <Box sx={{ p: 3, textAlign: 'center' }}>
       <Typography variant="h5" mb={2}>{label}</Typography>
 
       {/* Hospital room charges */}
       <Grid container spacing={2}>
-        <Grid item xs={12} md={7}>
-          <div style={{ textAlign: "center", marginBottom: "0.5rem", fontSize: "1.25rem", fontWeight: "600" }}>Transactions History</div>
-          <div className="center-table">
-            <table>
-              {show ? <><thead>
-                <tr>
-                  <th style={{ width: '4%', textAlign: "left" }}>Sr.No</th>
-                  <th style={{ width: '24%', textAlign: "left" }}>Room Charges</th>
-                  <th style={{ width: '24%', textAlign: "left" }}>Doctor Charges</th>
-                  <th style={{ width: '24%', textAlign: "left" }}>Bill Amount</th>
-                  <th style={{ width: '24%', textAlign: "left" }}>Final Amount</th>
-                </tr>
-              </thead></> : <></>}
-              <tbody>
-                {calculations?.map((doc) => {
-                  return (
+        <Grid item xs={12} md={7} >
+          <Grid container spacing={2} >
+            <Grid item xs={12} style={{ backgroundColor: "white", padding: "10px", marginRight: "1rem", marginLeft: "0.5rem" }}>
+              <div style={{
+                textAlign: "center", marginBottom: "0.5rem",
+                fontSize: "1.2rem", fontWeight: "525",
+              }}>Transaction History</div>
+              <div className="center-table">
+                <table>
+                  {show ? <><thead>
                     <tr>
-                      <td style={{ textAlign: 'left' }}>{doc?.id}</td>
-                      <td style={{ textAlign: 'left' }}>₹ {doc?.room_charges}</td>
-                      <td style={{ textAlign: 'left' }}>₹ {doc?.doctor_charges}</td>
-                      <td style={{ textAlign: 'left' }}>₹ {doc?.bill_amount}</td>
-                      <td style={{ textAlign: 'left' }}>₹ {doc?.final_amount}</td>
+                      <th style={{ width: '4%', textAlign: "left", color: "white" }}>Sr.No</th>
+                      <th style={{ width: '24%', textAlign: "left", color: "white" }}>Room Charges</th>
+                      <th style={{ width: '24%', textAlign: "left", color: "white" }}>Doctor Charges</th>
+                      <th style={{ width: '24%', textAlign: "left", color: "white" }}>Bill Amount</th>
+                      <th style={{ width: '24%', textAlign: "left", color: "white" }}>Final Amount</th>
                     </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-          </div>
+                  </thead></> : <></>}
+                  <tbody>
+                    {calculations?.map((doc) => {
+                      return (
+                        <tr>
+                          <td style={{ textAlign: 'left' }}>{doc?.id}</td>
+                          <td style={{ textAlign: 'left' }}>₹ {doc?.room_charges}</td>
+                          <td style={{ textAlign: 'left' }}>₹ {doc?.doctor_charges}</td>
+                          <td style={{ textAlign: 'left' }}>₹ {doc?.bill_amount}</td>
+                          <td style={{ textAlign: 'left' }}>₹ {doc?.final_amount}</td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </Grid>
+            <Grid item xs={12} style={{ backgroundColor: "white", padding: "2px", marginRight: "1rem", marginLeft: "0.5rem", marginTop: "1rem" }}>
+              {/* <div style={{ textAlign: "center", marginBottom: "0.5rem", fontSize: "1.25rem", fontWeight: "600" }}></div> */}
+              <div className="center-table">
+                <BarChart
+                  height={300}
+                  series={[
+                    { data: room, label: 'Room Charge', id: 'rc', color: "#3d5afe" },
+                    { data: doctor, label: 'Doctor Charge', id: 'dc', color: "#008394" },
+                    { data: billAmnt, label: 'Bill Amount', id: 'ba', color: "#00e676" },
+                    { data: finalAmnt, label: 'Final Amount', id: 'fa', color: "#ff9100" },
+                  ]}
+                  slotProps={{
+                    legend: {
+                      labelStyle: {
+                        fontSize: 11,
+                        padding: 5
+                      },
+                    }
+                  }}
+                  xAxis={[{ data: xLabels, scaleType: 'band' }]}
+                />
+                {/* <table>
+                  {show ? <><thead>
+                    <tr>
+                      <th style={{ width: '4%', textAlign: "left" }}>Sr.No</th>
+                      <th style={{ width: '24%', textAlign: "left" }}>Room Charges</th>
+                      <th style={{ width: '24%', textAlign: "left" }}>Doctor Charges</th>
+                      <th style={{ width: '24%', textAlign: "left" }}>Bill Amount</th>
+                      <th style={{ width: '24%', textAlign: "left" }}>Final Amount</th>
+                    </tr>
+                  </thead></> : <></>}
+                  <tbody>
+                    {calculations?.map((doc) => {
+                      return (
+                        <tr>
+                          <td style={{ textAlign: 'left' }}>{doc?.id}</td>
+                          <td style={{ textAlign: 'left' }}>₹ {doc?.room_charges}</td>
+                          <td style={{ textAlign: 'left' }}>₹ {doc?.doctor_charges}</td>
+                          <td style={{ textAlign: 'left' }}>₹ {doc?.bill_amount}</td>
+                          <td style={{ textAlign: 'left' }}>₹ {doc?.final_amount}</td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table> */}
+              </div>
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={12} md={5}>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} style={{ backgroundColor: "white", padding: "10px" }}>
             <Grid item xs={12}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <div style={{ textAlign: "left", marginBottom: "0.5rem", fontSize: "2rem", fontWeight: "650" }}>
-                    We'll help calculate your medical claim.</div>
+                  <div style={{ textAlign: "left", marginBottom: "0.5rem", fontSize: "1.5rem", fontWeight: "650" }}>
+                    Calculate your Medi Claim Bill</div>
                 </Grid>
-                <Grid item xs={7}>
+                <Grid item xs={12}>
+                  <div style={{ textAlign: 'left', marginBottom: '0.5rem', marginTop: "0.5rem", fontSize: "1.1rem" }}>
+                    Your Claimed Amount is ₹ {finalAmount.toFixed(2)}<br />
+                  </div>
+                </Grid>
+                <Grid item xs={6}>
                   <div style={{ textAlign: "left", marginBottom: "0.5rem" }}>Hospital Room Charges</div>
                   <TextField
                     type="text"
@@ -540,7 +834,7 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
                     onChange={(e) => setRoomCharges(e.target.value)}
                   />
                 </Grid>
-                <Grid item xs={5}>
+                <Grid item xs={6} style={{ paddingRight: "5px" }}>
                   <div style={{ textAlign: "left", marginBottom: "0.5rem" }}>15% of Health Insurance</div>
                   <TextField
                     disabled
@@ -551,9 +845,9 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} >
               <Grid container spacing={1}>
-                <Grid item xs={7}>
+                <Grid item xs={6}>
                   <div style={{ textAlign: "left", marginBottom: "0.5rem" }}>Doctor Charges</div>
                   <TextField
                     type="text"
@@ -563,7 +857,7 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
                     sx={{ height: "50%", width: "100%" }}
                   />
                 </Grid>
-                <Grid item xs={5}>
+                <Grid item xs={6} style={{ paddingRight: "5px" }}>
                   <div style={{ textAlign: "left", marginBottom: "0.5rem" }}>25% Deduction</div>
                   <TextField
                     disabled
@@ -574,7 +868,6 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
                 </Grid>
               </Grid>
             </Grid>
-
             <Grid item xs={12}>
               <div style={{ textAlign: 'left', marginBottom: '0.5rem' }}>Billing Transactions /
                 <span onClick={handleAddBill} style={{ cursor: "pointer" }}>Add Bills</span></div>
@@ -585,14 +878,14 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
                       <Grid item xs={8}>
                         <div style={{ textAlign: 'left', marginBottom: '0.5rem' }}>{`Bill ${index + 1} Amount:`}</div>
                         <TextField
-                          type="number"
+                          type="text"
                           value={bill.amount}
                           size='small'
                           onChange={(e) => handleBillAmountChange(index, e.target.value)}
                           sx={{ height: '50%', width: '100%' }}
                         />
                       </Grid>
-                      <Grid item xs={1} style={{ marginTop: '2rem' }}>
+                      <Grid item xs={1.25} style={{ marginTop: '2rem' }}>
                         <UploadFileIcon
                           sx={{ fontSize: 35, cursor: 'pointer' }}
                           type="file"
@@ -601,10 +894,10 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
                           onChange={(e) => handlePdfUpload(index, e.target.files[0])}
                         />
                       </Grid>
-                      <Grid item xs={1} style={{ marginTop: '2rem' }}>
+                      <Grid item xs={1.25} style={{ marginTop: '2rem' }}>
                         <DeleteIcon sx={{ fontSize: 35, cursor: 'pointer' }} onClick={() => handleDeleteBill(index)} />
                       </Grid>
-                      <Grid item xs={1} style={{ marginTop: '2rem' }}>
+                      <Grid item xs={1.25} style={{ marginTop: '2rem' }}>
                         <NoteAddIcon sx={{ fontSize: 35, cursor: 'pointer' }} onClick={handleAddBill} />
                       </Grid>
                     </Grid>
@@ -614,20 +907,25 @@ const CalculateMediclaimTabContent = ({ label, content }) => {
             </Grid>
             <Grid item xs={12}>
               <Grid container spacing={2}>
-                <Grid item xs={4}>
+                <Grid item xs={6}>
                   <Button onClick={handleCalculate}
                     size='small'
                     sx={{
-                      backgroundColor: "#387FF5", color: "white", textDecoration: "none",
-                      padding: "10px 20px", width: "100%", height: "2.5rem"
+                      backgroundColor: "#2196f3", color: "white", textDecoration: "none", fontSize: "1.15rem",
+                      padding: "10px 20px", width: "100%", height: "2.5rem", textTransform: "capitalize"
                     }}
                   >Calculate </Button>
                 </Grid>
-                <Grid item xs={8}>
-                  <div style={{ textAlign: 'left', marginBottom: '0.5rem', marginTop: "0.5rem" }}>
-                    Your Final Amount is ₹ {finalAmount.toFixed(2)}<br />
-                  </div>
+                <Grid item xs={6} style={{ paddingRight: "5px" }}>
+                  <Button onClick={handleClaim}
+                    size='small'
+                    sx={{
+                      backgroundColor: "#ff6333", color: "white", textDecoration: "none", fontSize: "1.15rem",
+                      padding: "10px 20px", width: "100%", height: "2.5rem", textTransform: "capitalize"
+                    }}
+                  >Claim</Button>
                 </Grid>
+
               </Grid>
             </Grid>
           </Grid>

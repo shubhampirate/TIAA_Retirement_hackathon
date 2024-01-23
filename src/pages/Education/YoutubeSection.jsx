@@ -17,7 +17,7 @@ const YoutubeSearchSection = () => {
         method: "GET",
         headers: {
           "x-rapidapi-host": "youtube-search-results.p.rapidapi.com",
-          "x-rapidapi-key": "9c7a4c6703mshb9d3604341529d1p1c70ddjsnf5506a762ba0" /* Paste your RapidAPI key here. */,
+          "x-rapidapi-key": "7c6ea047ffmsh052597ca6ce30e6p127754jsn40c703c8ae73" /* Paste your RapidAPI key here. */,
         },
       }
     );
@@ -25,10 +25,10 @@ const YoutubeSearchSection = () => {
     setSearchResults(body.videos || []);
   };
 
-  useEffect(() => {
-    const initialQuery = 'finances';
-    searchYouTube(initialQuery);
-  }, []);
+  // useEffect(() => {
+  //   const initialQuery = 'finances';
+  //   searchYouTube(initialQuery);
+  // }, []);
 
 
 
